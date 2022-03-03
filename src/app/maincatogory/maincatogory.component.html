@@ -1,0 +1,52 @@
+<div>
+    
+    <p-table #dt [value]="datas"  dataKey="id" [columns]="cols" [reorderableColumns]="true"
+    [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+     [paginator]="true" (onPage)="paginate()"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['name','number']">
+        <ng-template pTemplate="caption" >
+            <div style="display: flex;" class="display-flex align-items-center justify-content-between tabhead">
+                Main Category Table
+                <!-- <mat-icon>add</mat-icon> -->
+                <!-- <button pButton type="button" icon="pi pi-plus" class="ui-button-info" [label]="'Add'" pAddRow
+                    [table]="dt" (click)="newRow(d.name,dt)"></button> -->
+                    <div>
+                        <button mat-fab class="addbutton" (click)="addnew()" ><mat-icon>add</mat-icon></button>
+                    </div>
+            </div>
+        </ng-template>
+            <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width:3rem" class="lightbluethinbg "></th>
+                <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'imageurl' ? '25%' : '' }">
+                    <span *ngIf="col.field !== 'imageurl'">{{col.header}}</span>
+                    <span *ngIf="col.field == 'imageurl'" >{{col.header}}</span>
+                </th>
+              </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                <tr class="p-selectable-row row-datas" [pReorderableRow]="index" >
+      
+                    <td  [pReorderableRowHandle]="order()">
+                        <span  class="pi pi-bars"  ></span>
+                    </td>
+                    <td *ngFor="let col of columns">
+
+                        <span *ngIf="col.field !== 'imageurl' && col.field !== 'isactive'" class="tablebackground">{{rowData[col.field]}}</span>
+                        <span *ngIf="col.field == 'isactive'" class="tablebackground"><mat-slide-toggle 
+                            class="example-margin"
+                            [checked]="rowData[col.field]"
+                            >
+                        </mat-slide-toggle></span>
+                        <span *ngIf="col.field == 'imageurl'" class="tablebackground" (click)="viewimage()"><img src={{rowData[col.field]}} alt="demo"></span>
+                        <span *ngIf="col.field == ''" class="tablebackground"><mat-icon (click)="edit(rowData['id'])">edit</mat-icon>&nbsp;&nbsp;&nbsp;<mat-icon (click)="deleteone(rowData['id'])">delete</mat-icon></span>
+                    </td>
+                
+      
+                </tr>
+              </ng-template>
+
+    </p-table>
+   
+    </div>

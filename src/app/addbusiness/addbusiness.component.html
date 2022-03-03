@@ -1,0 +1,68 @@
+<div class="col-12 grid-margin ">
+    <div class="card " >
+      <div class="card-body lightbluethinbg">
+        <h4 class="card-title">Add Business</h4>
+        <form class="form-sample">
+          <!-- <p class="card-description">
+            Personal info
+          </p> -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Is Active</label>
+                <div class="col-sm-9">
+                  <!-- <input type="text" class="form-control" /> -->
+                  <mat-slide-toggle
+                            class="example-margin"
+                            [checked]="true"
+                            >
+                        </mat-slide-toggle>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3" *ngFor="let item of subcaterories">
+              <mat-checkbox>{{item}}</mat-checkbox>
+              </div>
+          </div>
+          <div class="card">
+ <div class="card-header">
+         Crop Image
+      </div>
+      <div class="card-body">
+        <input type="file" (change)="fileChangeEvent($event)" />
+        <div class="row" style="margin-top: 15px;">
+            <div class="text-center col-md-8">
+                <h5>Crop Image</h5>
+                <image-cropper 
+                
+                [imageChangedEvent]="imageChangedEvent" 
+                [maintainAspectRatio]="true" 
+                [aspectRatio]="4 / 3"
+                [resizeToWidth]="256" 
+                format="png" 
+                (imageCropped)="imageCropped($event)" 
+                (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()" 
+                (loadImageFailed)="loadImageFailed()"></image-cropper>
+            </div>
+            <div class="text-center col-md-4">
+                <h5>Preview</h5>
+                <img [src]="croppedImage" />
+            </div>
+        </div>
+      </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
