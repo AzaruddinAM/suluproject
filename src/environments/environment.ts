@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  'Category': 'http://'+window.location.hostname+':3000/category',// category
+  // 'Mobileapp': 'http://'+window.location.hostname+':3000/mobileapp',// mobileapp
+  'Mobileapp': 'http://'+window.location.hostname+':3000/api',// mobileapp
+  'Droptable': 'http://'+window.location.hostname+':3000/create_table',// create_table 
+  'File': 'http://'+window.location.hostname+':3000/category/file',// file 
 };
 
 /*

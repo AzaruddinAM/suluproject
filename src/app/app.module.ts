@@ -33,13 +33,15 @@ import { AddsubcategoryComponent } from './addsubcategory/addsubcategory.compone
 import { BusinessComponent } from './business/business.component';
 import { AddbusinessComponent } from './addbusiness/addbusiness.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-
+import { AuthInterceptor } from './services/auth.interceptor';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { UsersComponent } from './users/users.component';
 const APP_CONTAINERS = [
   MainlayoutComponent
 ];
 @NgModule({
   declarations: [
-    
     RegisterComponent,
     LoginComponent,
     AppComponent,
@@ -57,9 +59,12 @@ const APP_CONTAINERS = [
     SubcategoryComponent,
     AddsubcategoryComponent,
     BusinessComponent,
-    AddbusinessComponent
+    AddbusinessComponent,
+    UsersComponent
   ],
   imports: [
+    MatInputModule,
+    MatFormFieldModule,
     HttpClientModule,
     TableModule,
     MatSlideToggleModule,
@@ -74,7 +79,7 @@ const APP_CONTAINERS = [
     ReactiveFormsModule,
     ChartsModule
   ],
-  providers: [ThemeService],
+  providers: [ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

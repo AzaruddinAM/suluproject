@@ -8,20 +8,65 @@
             Personal info
           </p> -->
           <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row">
+            <div class="col-md-3">
+              <!-- <div class="form-group row">
                 <label class="col-sm-3 col-form-label" >Name</label>
                 <div class="col-sm-9">
-                  <input type="text" formControlName="Name" class="form-control" />
+                  <input type="text" formControlName="name" class="form-control" />
                 </div>
-              </div>
+                
+              </div> -->
+              <mat-form-field class="sizefull">
+                <input matInput class="text-danger" placeholder="Name" formControlName="name" required>
+                <!-- <input type="text" formControlName="name" class="form-control" /> -->
+
+                <!-- <mat-icon matSuffix >account_circle</mat-icon> -->
+                <mat-error *ngFor="let validation of main_category_validation_message.name">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('name').hasError(validation.type) && (addmaincategory.get('name').dirty || addmaincategory.get('name').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
             </div>
-            <div class="col-md-6">
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label" >Is Active</label>
+            <div class="col-md-3">
+              <!-- <div class="form-group row">
+                <label class="col-sm-3 col-form-label" >Arabic Name</label>
                 <div class="col-sm-9">
-                  <!-- <input type="text" class="form-control" /> -->
-                  <mat-slide-toggle formControlName="Isactive"
+                  <input type="text" formControlName="arabic_name" class="form-control" />
+                </div>
+              </div> -->
+              <mat-form-field class="sizefull">
+                <input matInput placeholder="Arabic Name" formControlName="arabic_name" required>
+                <!-- <input type="text" formControlName="name" class="form-control" /> -->
+
+                <!-- <mat-icon matSuffix >account_circle</mat-icon> -->
+                <mat-error *ngFor="let validation of main_category_validation_message.arabic_name">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_name').hasError(validation.type) && (addmaincategory.get('arabic_name').dirty || addmaincategory.get('arabic_name').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          
+
+            <div class="col-md-3">
+              <!-- <div class="form-group row">
+                <label class="col-sm-6 col-form-label" >Order</label>
+                <div class="col-sm-6">
+                  <input type="number" formControlName="order_column" class="form-control" />
+                  <mat-error *ngFor="let validation of main_category_validation_message.order_column">
+                    <mat-error class="error-message" *ngIf="addmaincategory.get('order_column').hasError(validation.type) && (addmaincategory.get('order_column').dirty || addmaincategory.get('order_column').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </div>
+              </div> -->
+              <mat-form-field class="sizefull">
+                <input matInput type="number" placeholder="Order" formControlName="order_column" required>
+                <mat-error *ngFor="let validation of main_category_validation_message.order_column">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('order_column').hasError(validation.type) && (addmaincategory.get('order_column').dirty || addmaincategory.get('order_column').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label" >Is Active</label>
+                <div class="col-sm-6">
+                  <mat-slide-toggle formControlName="is_active"
                             class="example-margin"
                             [checked]="true"
                             >
@@ -30,9 +75,10 @@
               </div>
             </div>
           </div>
+          <!-- [formControlName]="item.name" -->
           <div class="row">
             <div class="col-md-3"  *ngFor="let item of subcaterories; let i=index">
-              <mat-checkbox [checked]="item.value" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" [formControlName]="item.name">{{item.name}}</mat-checkbox>
+              <mat-checkbox [checked]="item.value" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" >{{item.name}}</mat-checkbox>
               </div>
           </div>
           <div class="card">
@@ -40,7 +86,7 @@
          Crop Image
       </div>
       <div class="card-body">
-        <input type="file"  (change)="fileChangeEvent($event)" />
+        <input type="file" id="browseAttachment"  (change)="fileChangeEvent($event)" accept="image/*" />
         <div class="row" style="margin-top: 15px;">
             <div class="text-center col-md-8">
                 <h5>Crop Image</h5>

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-mainlayout',
   templateUrl: './mainlayout.component.html',
-  styleUrls: ['./mainlayout.component.scss']
+  styleUrls: ['./mainlayout.component.scss'],
+  providers: [ApiService],
+
 })
 export class MainlayoutComponent implements OnInit {
 
