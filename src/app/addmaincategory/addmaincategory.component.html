@@ -78,7 +78,7 @@
           <!-- [formControlName]="item.name" -->
           <div class="row">
             <div class="col-md-3"  *ngFor="let item of subcaterories; let i=index">
-              <mat-checkbox [checked]="item.value" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" >{{item.name}}</mat-checkbox>
+              <mat-checkbox [checked]="item.value" (change)="changesubcategory(i,$event.checked)" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" >{{item.name}}</mat-checkbox>
               </div>
           </div>
           <div class="card">

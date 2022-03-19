@@ -30,10 +30,10 @@ export class AddbusinessComponent implements OnInit {
     
       params: { [k: string]: any; };
       addmaincategory:FormGroup
-      main_category_id: any;
+      business_id: any;
       testfile:string | Blob
       selecetdFile: string;
-      main_category_validation_message:any={}
+      business_validation_message:any={}
       // @Input() public appFormControl: NgControl;
     constructor(private router : Router,
     //   private fb : FormBuilder,
@@ -44,33 +44,55 @@ export class AddbusinessComponent implements OnInit {
      }
   
     ngOnInit(): void {
-      this.main_category_validation_message = this.validationmessagesService.Main_Category_Validation_Message;
+      this.business_validation_message = this.validationmessagesService.Business_Validation_Message;
       this.params=history.state;
-      this.main_category_id=this.params.main_category_id
+      this.business_id=this.params.business_id
       this.datas=JSON.parse(this.params.data)
-      if(this.main_category_id !=='new')
+      if(this.business_id !=='new')
       {
-      alert(JSON.stringify(this.params))
+      // alert(JSON.stringify(this.params))
       // let index = this.datas.findIndex(item=>item.id==this.id)
       
       this.addmaincategory= new FormGroup({
         // name , image_url , order_column ,  is_active , id 
         name: new FormControl(this.datas['name'], [Validators.required]),
         arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
-        image_url: new FormControl(this.datas['image_url'], [Validators.required]),
-        order_column: new FormControl(this.datas['order_column'], [Validators.required]),
         is_active: new FormControl(this.datas['is_active'], [Validators.required]),
+        sub_name: new FormControl(this.datas['sub_name'], [Validators.required]),
+        arabic_sub_name: new FormControl(this.datas['arabic_sub_name'], [Validators.required]),
+        discription: new FormControl(this.datas['discription'], [Validators.required]),
+        arabic_description: new FormControl(this.datas['arabic_description'], [Validators.required]),
+        address: new FormControl(this.datas['address'], [Validators.required]),
+        latitude: new FormControl(this.datas['latitude'], [Validators.required]),
+        longitude: new FormControl(this.datas['longitude'], [Validators.required]),
+        phone_number: new FormControl(this.datas['phone_number'], [Validators.required]),
+        alt_phone_number: new FormControl(this.datas['alt_phone_number'], [Validators.required]),
+        email: new FormControl(this.datas['email'], [Validators.required]),
+        slug: new FormControl(this.datas['slug'], [Validators.required]),
+        rating: new FormControl(this.datas['rating'], [Validators.required]),
+        web: new FormControl(this.datas['web'], [Validators.required]),
+        social_media: new FormControl(this.datas['social_media'], [Validators.required]),
+        timing: new FormControl(this.datas['timing'], [Validators.required]),
+        service_name: new FormControl(this.datas['service_name'], [Validators.required]),
+        arabic_service_name: new FormControl(this.datas['arabic_service_name'], [Validators.required]),
+
+
+        // image_url: new FormControl(this.datas['image_url'], [Validators.required]),
+        // order_column: new FormControl(this.datas['order_column'], [Validators.required]),
   
-        main_category_id:new FormControl(this.main_category_id, [Validators.required])
+        // business_id:new FormControl(this.business_id, [Validators.required])
         // Isactive: ['', Validators.required],
         // Image: ['', Validators.required],
         // subcaterories: this.fb.array(this.subcaterories),
+        // name, arabic_name, is_active, sub_name, arabic_sub_name,description,arabic_description,
+        //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,   
+        // web, social_media, timing, service_name, arabic_service_name
   
       });
-      this.subcaterories.forEach(element => {
-        this.addmaincategory.addControl(element.name, new FormControl(element.value, Validators.required));
+      // this.subcaterories.forEach(element => {
+      //   this.addmaincategory.addControl(element.name, new FormControl(element.value, Validators.required));
   
-      });
+      // });
       // https://www.gstatic.com/webp/gallery/1.jpg
     //   this.imageChangedEvent= this.http
     //   .get("https://www.gstatic.com/webp/gallery/1.jpg", {
@@ -84,24 +106,39 @@ export class AddbusinessComponent implements OnInit {
       console.log(this.imageChangedEvent);
       }
       else{
-        let main_category_id=Math.random().toString(36).substr(2, 9);
+        let business_id=Math.random().toString(36).substr(2, 9);
         this.addmaincategory= new FormGroup({
           name: new FormControl('', [Validators.required]),
-          arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
-          image_url: new FormControl('assets/images/maincategory/demo.png', [Validators.required]),
-          order_column: new FormControl('', [Validators.required]),
-          is_active: new FormControl('', [Validators.required]),
+        arabic_name: new FormControl('', [Validators.required]),
+        is_active: new FormControl('', [Validators.required]),
+        sub_name: new FormControl('', [Validators.required]),
+        arabic_sub_name: new FormControl('', [Validators.required]),
+        discription: new FormControl('', [Validators.required]),
+        arabic_description: new FormControl('', [Validators.required]),
+        address: new FormControl('', [Validators.required]),
+        latitude: new FormControl('', [Validators.required]),
+        longitude: new FormControl('', [Validators.required]),
+        phone_number: new FormControl('', [Validators.required]),
+        alt_phone_number: new FormControl('', [Validators.required]),
+        email: new FormControl('', [Validators.required]),
+        slug: new FormControl('', [Validators.required]),
+        rating: new FormControl('', [Validators.required]),
+        web: new FormControl('', [Validators.required]),
+        social_media: new FormControl('', [Validators.required]),
+        timing: new FormControl('', [Validators.required]),
+        service_name: new FormControl('', [Validators.required]),
+        arabic_service_name: new FormControl('', [Validators.required]),
   
-          // main_category_id:new FormControl(main_category_id, [Validators.required])
+          // business_id:new FormControl(business_id, [Validators.required])
           // Isactive: ['', Validators.required],
           // Image: ['', Validators.required],
           // subcaterories: this.fb.array(this.subcaterories),
     
         });
-        this.subcaterories.forEach(element => {
-          this.addmaincategory.addControl(element.name, new FormControl(element.value, Validators.required));
+        // this.subcaterories.forEach(element => {
+        //   this.addmaincategory.addControl(element.name, new FormControl(element.value, Validators.required));
     
-        });
+        // });
         // https://www.gstatic.com/webp/gallery/1.jpg
     //     this.imageChangedEvent= this.http
     //     .get("https://www.gstatic.com/webp/gallery/1.jpg", {
@@ -127,24 +164,24 @@ export class AddbusinessComponent implements OnInit {
   
       // name, image_url, order_column, is_active
       console.log(body);
-      if(this.main_category_id == 'new')
+      if(this.business_id == 'new')
       {
-      this.api.Postwithouttoken(environment["Category"] + "/add_main_category" ,body )
-      .subscribe(add_main_category => {
+      this.api.Postwithouttoken(environment["Category"] + "/add_business" ,body )
+      .subscribe(add_business => {
   
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
-      console.log(add_main_category);
+      console.log(add_business);
       // this.router.navigate()
       this.router.navigate(['/maincatogory'])
   
       })
     }
     else{
-      this.api.Postwithouttoken(environment["Category"] + "/edit_main_category" ,body )
-      .subscribe(edit_main_category => {
+      this.api.Postwithouttoken(environment["Category"] + "/edit_business" ,body )
+      .subscribe(edit_business => {
   
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
-      console.log(edit_main_category);
+      console.log(edit_business);
       this.router.navigate(['/maincatogory'])
       })
     }

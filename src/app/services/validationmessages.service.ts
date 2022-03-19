@@ -38,7 +38,74 @@ export class ValidationmessagesService {
     //   { type: 'required', message: 'fielde required'}
     // ]
   };
-
+  Sub_Category_Validation_Message=
+  {
+    'name': [
+      { type: 'required', message: 'Name is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged Name'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'Name not registered.. Try again.'},
+    ],
+    'arabic_name': [
+      { type: 'required', message: 'Arabic Name is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged Arabic Name'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'Arabic Name not registered.. Try again.'},
+    ],
+    'image_url':[
+      { type: 'required', message: 'Image is required'}
+    ],
+    'order_column':[
+      // {type:'required', message: 'Order is required'}
+    ],
+    'main_category_id':[
+      // {type:'required', message: 'Id is required'}
+    ],
+    'is_active':[
+      // { type: 'required', message: 'Is active is required'}
+    ],
+    // 'statusContent':[
+    //   { type: 'required', message: 'field required'},
+    //   { type: 'validContent', message: 'Only accept  " '+localStorage.getItem('erase')+' " ' }
+    // ],
+    // 'masterrole':[
+    //   { type: 'required', message: 'fielde required'}
+    // ]
+  };
+  Business_Validation_Message=
+  {
+    'name': [
+      { type: 'required', message: 'Name is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged Name'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'Name not registered.. Try again.'},
+    ],
+    'arabic_name': [
+      { type: 'required', message: 'Arabic Name is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged Arabic Name'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'Arabic Name not registered.. Try again.'},
+    ],
+    'image_url':[
+      { type: 'required', message: 'Image is required'}
+    ],
+    'order_column':[
+      // {type:'required', message: 'Order is required'}
+    ],
+    'main_category_id':[
+      // {type:'required', message: 'Id is required'}
+    ],
+    'is_active':[
+      // { type: 'required', message: 'Is active is required'}
+    ],
+    // 'statusContent':[
+    //   { type: 'required', message: 'field required'},
+    //   { type: 'validContent', message: 'Only accept  " '+localStorage.getItem('erase')+' " ' }
+    // ],
+    // 'masterrole':[
+    //   { type: 'required', message: 'fielde required'}
+    // ]
+  };
 //   callback_validation_messages = 
 //   {
 //     'campaign' : [

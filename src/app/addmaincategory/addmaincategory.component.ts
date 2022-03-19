@@ -248,4 +248,8 @@ dataURItoBlob(dataURI) {
   const blob = new Blob([int8Array], { type: 'image/png' });    
   return blob;
 }
+changesubcategory(index,value){
+  this.subcaterories[index].value=value
+}
+
 }

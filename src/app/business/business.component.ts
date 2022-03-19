@@ -13,12 +13,32 @@ import { ApiService } from '../services/api.service';
 export class BusinessComponent implements OnInit {
   @ViewChild('dt') table: TableModule;
   cols :Array<{field:string,header:string}>= [
-    { field: 'main_category_id', header: 'Id' },
-    { field: 'image_url', header: 'Image' },
+    { field: 'business_id', header: 'Id' },
     { field: 'name', header: 'Name' },
-    { field: 'arabic_name', header: 'Arabic Name' },
+    // { field: 'arabic_name', header: 'Arabic Name' },
     // { field: 'number', header: 'number' },
-    { field: 'order_column', header: 'Order' },
+    { field: 'image_url', header: 'Image' },
+    // name, arabic_name, is_active, sub_name, arabic_sub_name,description,arabic_description,
+    //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,   
+    // web, social_media, timing, service_name, arabic_service_name 
+    { field: 'sub_name', header: 'sub_name' },
+    // { field: 'arabic_sub_name', header: 'arabic_sub_name' },
+    // { field: 'description', header: 'description' },
+    // { field: 'arabicdescription', header: 'arabicdescription' },
+    // { field: 'address', header: 'address' },
+    // { field: 'latitude', header: 'latitude' },
+    // { field: 'longitude', header: 'longitude' },
+    { field: 'phone_number', header: 'phone_number' },
+    // { field: 'alt_phone_number', header: 'alt_phone_number' },
+    { field: 'email', header: 'email' },
+    // { field: 'slug', header: 'slug' },
+    { field: 'rating', header: 'rating' },
+    // { field: 'web', header: 'web' },
+    // { field: 'social_media', header: 'social_media' },
+    // { field: 'timing', header: 'timing' },
+    // { field: 'service_name', header: 'service_Name' },
+    // { field: 'arabic_service_name', header: 'arabic_service_name' },
+    // { field: 'order_column', header: 'Order' },
     { field: 'is_active', header: 'Isactive' },
     { field: '', header: '' }
 ];
@@ -49,12 +69,12 @@ export class BusinessComponent implements OnInit {
     let body = 'data='+'test'+'&date='+Date();
     console.log(body);
     
-    this.apis.Postwithouttoken(environment["Category"] + "/get_main_category" ,body )
+    this.apis.Postwithouttoken(environment["Category"] + "/get_business" ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
-    .subscribe(maincategorydata => {
+    .subscribe(businessdata => {
 
-      this.datas =(maincategorydata.status)?  maincategorydata.data:[]
+      this.datas =(businessdata.status)?  businessdata.data:[]
     console.log(this.datas);
     
     })
@@ -62,18 +82,18 @@ export class BusinessComponent implements OnInit {
  
   addnew(){
     // alert("add")
-    this.router.navigate(['/addbusiness'], { state: { main_category_id:'new' , data:JSON.stringify({})}})
+    this.router.navigate(['/addbusiness'], { state: { business_id:'new' , data:JSON.stringify({})}})
   }
-  toggle(event:MatSlideToggleChange,index:number,main_category_id:number){
+  toggle(event:MatSlideToggleChange,index:number,business_id:number){
     console.log('toggle', event.checked+" index :"+index);
-    let body = 'main_category_id='+main_category_id+'&is_active='+event.checked+'&date='+Date();
+    let body = 'business_id='+business_id+'&is_active='+event.checked+'&date='+Date();
     console.log(body);
     
-    this.apis.Postwithouttoken(environment["Category"] + "/active_main_category" ,body )
-    .subscribe(active_main_category => {
+    this.apis.Postwithouttoken(environment["Category"] + "/active_business" ,body )
+    .subscribe(active_business => {
 
       // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
-    console.log(active_main_category);
+    console.log(active_business);
     
     })
         // this.useDefault = event.checked;
@@ -81,7 +101,7 @@ export class BusinessComponent implements OnInit {
   edit(data){
     console.log(data);
     // alert(id)
-    this.router.navigate(['/addbusiness'], { state: { main_category_id:data.main_category_id , data:JSON.stringify(data)}})
+    this.router.navigate(['/addbusiness'], { state: { business_id:data.business_id , data:JSON.stringify(data)}})
     
   }
   deleteone(id:string){
@@ -91,7 +111,7 @@ export class BusinessComponent implements OnInit {
     // let body = 'data='+'test'+'&date='+Date();
     // console.log(body);
     
-    // this.apis.Postwithouttoken(environment["Category"] + "/get_main_category" ,body )
+    // this.apis.Postwithouttoken(environment["Category"] + "/get_business" ,body )
     // .subscribe(maincategorydata => {
 
     //   this.datas =(maincategorydata.status)?  maincategorydata.data:[]

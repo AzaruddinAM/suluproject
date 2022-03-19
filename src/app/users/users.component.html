@@ -26,7 +26,7 @@
         </ng-template>
             <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="width:3rem" class="lightbluethinbg "></th>
+                <!-- <th style="width:3rem" class="lightbluethinbg "></th> -->
                 <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '25%' : '' }">
                     <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                     <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
@@ -40,17 +40,17 @@
                         <span  class="pi pi-bars"  ></span>
                     </td> -->
                     <td *ngFor="let col of columns">
-                    <span>{{col.field}}</span>
-                        <!-- <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
+                    <!-- <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'">{{col.field}}</span> -->
+                        <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
                         <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle 
                             class="example-margin"
-                            (change)="toggle($event,index,rowData['main_category_id'])"
+                            (change)="toggle($event,index,rowData['users_id'])"
                             [checked]="rowData[col.field]"
                             >
                         </mat-slide-toggle></span>
                         <span *ngIf="col.field == 'image_url'" class="tablebackground" (click)="viewimage()"><img src={{rowData[col.field]}} alt="demo"></span>
-                        <span *ngIf="col.field == ''" class="tablebackground"><mat-icon (click)="edit(rowData)">edit</mat-icon>&nbsp;&nbsp;&nbsp;
-                        </span> -->
+                        <!-- <span *ngIf="col.field == ''" class="tablebackground"><mat-icon (click)="edit(rowData)">edit</mat-icon>&nbsp;&nbsp;&nbsp; -->
+                        <!-- </span> -->
                     </td>
                 
       

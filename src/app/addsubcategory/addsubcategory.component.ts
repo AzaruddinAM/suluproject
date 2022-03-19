@@ -42,7 +42,7 @@ export class AddsubcategoryComponent implements OnInit {
      }
   
     ngOnInit(): void {
-      this.sub_category_validation_message = this.validationmessagesService.Main_Category_Validation_Message;
+      this.sub_category_validation_message = this.validationmessagesService.Sub_Category_Validation_Message;
       this.params=history.state;
       this.sub_category_id=this.params.sub_category_id
       this.datas=JSON.parse(this.params.data)

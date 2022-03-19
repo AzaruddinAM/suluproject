@@ -1,7 +1,7 @@
 <div class="col-12 grid-margin ">
   <div class="card " >
     <div class="card-body lightbluethinbg">
-      <h4 class="card-title">Add Main Category</h4>
+      <h4 class="card-title">Add Business</h4>
       <form class="form-sample" [formGroup]="addmaincategory"  >
         <!-- (ngSubmit)="onSubmit()" -->
         <!-- <p class="card-description">
@@ -9,19 +9,10 @@
         </p> -->
         <div class="row">
           <div class="col-md-3">
-            <!-- <div class="form-group row">
-              <label class="col-sm-3 col-form-label" >Name</label>
-              <div class="col-sm-9">
-                <input type="text" formControlName="name" class="form-control" />
-              </div>
-              
-            </div> -->
+           
             <mat-form-field class="sizefull">
               <input matInput class="text-danger" placeholder="Name" formControlName="name" required>
-              <!-- <input type="text" formControlName="name" class="form-control" /> -->
-
-              <!-- <mat-icon matSuffix >account_circle</mat-icon> -->
-              <mat-error *ngFor="let validation of main_category_validation_message.name">
+              <mat-error *ngFor="let validation of business_validation_message.name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('name').hasError(validation.type) && (addmaincategory.get('name').dirty || addmaincategory.get('name').touched)">{{validation.message}}</mat-error>
               </mat-error>
             </mat-form-field>
@@ -38,27 +29,8 @@
               <!-- <input type="text" formControlName="name" class="form-control" /> -->
 
               <!-- <mat-icon matSuffix >account_circle</mat-icon> -->
-              <mat-error *ngFor="let validation of main_category_validation_message.arabic_name">
+              <mat-error *ngFor="let validation of business_validation_message.arabic_name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_name').hasError(validation.type) && (addmaincategory.get('arabic_name').dirty || addmaincategory.get('arabic_name').touched)">{{validation.message}}</mat-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-        
-
-          <div class="col-md-3">
-            <!-- <div class="form-group row">
-              <label class="col-sm-6 col-form-label" >Order</label>
-              <div class="col-sm-6">
-                <input type="number" formControlName="order_column" class="form-control" />
-                <mat-error *ngFor="let validation of main_category_validation_message.order_column">
-                  <mat-error class="error-message" *ngIf="addmaincategory.get('order_column').hasError(validation.type) && (addmaincategory.get('order_column').dirty || addmaincategory.get('order_column').touched)">{{validation.message}}</mat-error>
-                </mat-error>
-              </div>
-            </div> -->
-            <mat-form-field class="sizefull">
-              <input matInput type="number" placeholder="Order" formControlName="order_column" required>
-              <mat-error *ngFor="let validation of main_category_validation_message.order_column">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('order_column').hasError(validation.type) && (addmaincategory.get('order_column').dirty || addmaincategory.get('order_column').touched)">{{validation.message}}</mat-error>
               </mat-error>
             </mat-form-field>
           </div>
@@ -74,11 +46,170 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-3"  *ngFor="let item of subcaterories; let i=index">
-            <mat-checkbox [checked]="item.value" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" [formControlName]="item.name">{{item.name}}</mat-checkbox>
-            </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Sub Name" formControlName="sub_name" required>
+              <mat-error *ngFor="let validation of business_validation_message.sub_name">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('sub_name').hasError(validation.type) && (addmaincategory.get('sub_name').dirty || addmaincategory.get('sub_name').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Sub Name" formControlName="arabic_sub_name" required>
+              <mat-error *ngFor="let validation of business_validation_message.arabic_sub_name">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_sub_name').hasError(validation.type) && (addmaincategory.get('arabic_sub_name').dirty || addmaincategory.get('arabic_sub_name').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Description" formControlName="description" required>
+              <mat-error *ngFor="let validation of business_validation_message.description">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('description').hasError(validation.type) && (addmaincategory.get('description').dirty || addmaincategory.get('description').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Arabic Description" formControlName="arabic_description" required>
+              <mat-error *ngFor="let validation of business_validation_message.arabic_description">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_description').hasError(validation.type) && (addmaincategory.get('arabic_description').dirty || addmaincategory.get('arabic_description').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Address" formControlName="address" required>
+              <mat-error *ngFor="let validation of business_validation_message.address">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('address').hasError(validation.type) && (addmaincategory.get('address').dirty || addmaincategory.get('address').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Latitude" formControlName="latitude" required>
+              <mat-error *ngFor="let validation of business_validation_message.latitude">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('latitude').hasError(validation.type) && (addmaincategory.get('latitude').dirty || addmaincategory.get('latitude').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Longitude" formControllongitude="longitude" required>
+              <mat-error *ngFor="let validation of business_validation_message.longitude">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('longitude').hasError(validation.type) && (addmaincategory.get('longitude').dirty || addmaincategory.get('longitude').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Phone Number" formControlName="phone_number" required>
+              <mat-error *ngFor="let validation of business_validation_message.phone_number">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('phone_number').hasError(validation.type) && (addmaincategory.get('phone_number').dirty || addmaincategory.get('phone_number').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="alt_phone_number" formControlName="alt_phone_number" required>
+              <mat-error *ngFor="let validation of business_validation_message.alt_phone_number">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('alt_phone_number').hasError(validation.type) && (addmaincategory.get('alt_phone_number').dirty || addmaincategory.get('alt_phone_number').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
+             
+          </div>
+          <div class="col-md-3">
+            
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Email" formControlName="email" required>
+              <mat-error *ngFor="let validation of business_validation_message.email">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('email').hasError(validation.type) && (addmaincategory.get('email').dirty || addmaincategory.get('email').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Slug" formControlName="slug" required>
+              <mat-error *ngFor="let validation of business_validation_message.slug">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('slug').hasError(validation.type) && (addmaincategory.get('slug').dirty || addmaincategory.get('slug').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
+             
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Rating" formControlName="rating" required>
+              <mat-error *ngFor="let validation of business_validation_message.rating">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('rating').hasError(validation.type) && (addmaincategory.get('rating').dirty || addmaincategory.get('rating').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
+             
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Web" formControlName="web" required>
+              <mat-error *ngFor="let validation of business_validation_message.web">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('web').hasError(validation.type) && (addmaincategory.get('web').dirty || addmaincategory.get('web').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
+             
+          </div>
+          <div class="col-md-3">
+            <!-- // name, arabic_name, is_active, sub_name, arabic_sub_name,description,arabic_description,
+            //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,   
+            // web, social_media, timing, service_name, arabic_service_name -->
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Social Media" formControlName="social_media" required>
+              <mat-error *ngFor="let validation of business_validation_message.social_media">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('social_media').hasError(validation.type) && (addmaincategory.get('social_media').dirty || addmaincategory.get('social_media').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
+             
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Timing" formControlName="timing" required>
+              <mat-error *ngFor="let validation of business_validation_message.timing">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('timing').hasError(validation.type) && (addmaincategory.get('timing').dirty || addmaincategory.get('timing').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
+             
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Service Name" formControlName="service_name" required>
+              <mat-error *ngFor="let validation of business_validation_message.service_name">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('service_name').hasError(validation.type) && (addmaincategory.get('service_name').dirty || addmaincategory.get('service_name').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
+             
+          </div>
+          <div class="col-md-3">
+           
+            <mat-form-field class="sizefull">
+              <input matInput class="text-danger" placeholder="Arabic Service Name" formControlName="arabic_service_name" required>
+              <mat-error *ngFor="let validation of business_validation_message.arabic_service_name">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_service_name').hasError(validation.type) && (addmaincategory.get('arabic_service_name').dirty || addmaincategory.get('arabic_service_name').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
+             
+          </div>
         </div>
         <div class="card">
 <div class="card-header">
