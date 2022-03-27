@@ -2,13 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { FormGroup,FormControl, Validators, FormBuilder, NgControl } from '@angular/forms';
-import { data } from 'jquery';
-import { map, catchError } from 'rxjs/operators';
-import { Http, RequestOptions,Headers } from '@angular/http';
-import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
+import { FirbaseService } from '../services/firbase.service';
+
 import { ValidationmessagesService } from '../services/validationmessages.service';
+import { Observable } from "rxjs";
 interface JsonEntryForm {
   name: string;
   arabic_name: string;
@@ -45,12 +44,19 @@ export class AddmaincategoryComponent implements OnInit {
     testfile:string | Blob
     selecetdFile: string;
     main_category_validation_message:any={}
+    fbs;
+    downloadURL: Observable<string>;
+    percentage:number=-1
+    cropperhide:boolean=false
+    progresshow:boolean=false
     // @Input() public appFormControl: NgControl;
   constructor(private router : Router,
     private fb : FormBuilder,
-    private http:HttpClient,
+    // private http:HttpClient,
     private api:ApiService,
-    private validationmessagesService:ValidationmessagesService) {
+    private validationmessagesService:ValidationmessagesService,
+    // private storage:AngularFireStorage,
+    private firebase:FirbaseService) {
     this.params = this.router.getCurrentNavigation().extras.state;
     this.addmaincategory= this.fb.group({
         
@@ -145,6 +151,10 @@ export class AddmaincategoryComponent implements OnInit {
   })
   }
   onSubmit(){
+    
+  this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+  console.log(this.addmaincategory.get('image_url').value);
+
     console.log("onSubmit");
     console.log(this.addmaincategory.value);
     console.log(this.subcaterories);
@@ -182,47 +192,82 @@ export class AddmaincategoryComponent implements OnInit {
     
   }
   fileChangeEvent(event: any): void {
-    // this.imageChangedEvent = event;
-    this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
+    this.imageChangedEvent = event;
+    // this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
     
 }
+ uploadtofirebase(){
+  this.progresshow=true
+  const filePath = `maincategory/`;
+  let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value:'unknown'
+  this.firebase.uploadfile(this.croppedImage,filePath,imagename)
+  .subscribe(
+    percentage => {
+      this.percentage = Math.round(percentage ? percentage : 0);
+      console.log(this.percentage);
+      if(this.percentage==100){
+        this.cropperhide=true
+        this.progresshow=false
+  // this.addmaincategory.get('image_url')
+console.log(localStorage.getItem('imageurl'));
+this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+
+      }
+      
+    },
+    error => {
+      console.log(error);
+    }
+  )
+  // .subscribe(data=>{
+
+  // }
+  // )
+  // console.log(imageurl);
+  
+  // this.addmaincategory.get('image_url').setValue(this.firebase.uploadfile(this.croppedImage,filePath,'azar'))
+  console.log(this.addmaincategory.get('image_url').value);
+  
+}
 imageCropped(event:ImageCroppedEvent) {
-
+//  this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
+    this.croppedImage = event.base64;
+  
+    
     // console.log(event);
-    // this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
-    // this.croppedImage = event.base64;
-    console.log(event);
-    this.croppedImage = event.base64
-    const base64 = '...';
-    const imageName = 'name.png';
-    const imageBlob = this.dataURItoBlob(event.base64)
-    const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
-    this.testfile=imageFile
-    var formData = new FormData();
-    formData.append("file", this.testfile);
-    this.imageChangedEvent = event;
-    var name = document.getElementById('browseAttachment'); 
+   
+//     console.log(event);
+//     this.croppedImage = event.base64
+//     const base64 = '...';
+//     const imageName = 'name.png';
+//     const imageBlob = this.dataURItoBlob(event.base64)
+//     const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
+//     this.testfile=imageFile
+//     var formData = new FormData();
+//     formData.append("file", this.testfile);
+//     this.imageChangedEvent = event;
+//     var name = document.getElementById('browseAttachment'); 
 
-    var nameType = name['files'].item(0).type;
-    console.log(nameType);
-    console.log(formData);
+//     var nameType = name['files'].item(0).type;
+//     console.log(nameType);
+//     console.log(formData);
     
-    this.http.post(environment['File'], formData)
-.subscribe((response)=>{
-  console.log('response receved is ', response);
-  if(response['status'] == 'success'){
-  this.selecetdFile =response['serverpath']+encodeURI(imageName)//event.target.files[0].name)
-  //  environment['App.withoutToken']+'?filename='+encodeURI(event.target.files[0].name)
-  console.log(this.selecetdFile);
-  // http://localhost/multerimages/msgwrong4.png
-  // this.sendMsg(id,this.selecetdFile,'IMAGE',event.target.files[0].name,nameType);
-  }
-  else{
-    console.log("error");
+//     this.http.post(environment['File'], formData)
+// .subscribe((response)=>{
+//   console.log('response receved is ', response);
+//   if(response['status'] == 'success'){
+//   this.selecetdFile =response['serverpath']+encodeURI(imageName)//event.target.files[0].name)
+//   //  environment['App.withoutToken']+'?filename='+encodeURI(event.target.files[0].name)
+//   console.log(this.selecetdFile);
+//   // http://localhost/multerimages/msgwrong4.png
+//   // this.sendMsg(id,this.selecetdFile,'IMAGE',event.target.files[0].name,nameType);
+//   }
+//   else{
+//     console.log("error");
     
-    // this._snackBar.open('File not uploaded','Upload error',this.config)
-  }
-})
+//     // this._snackBar.open('File not uploaded','Upload error',this.config)
+//   }
+// })
 }
 imageLoaded() {
     // alert("1")
@@ -248,8 +293,39 @@ dataURItoBlob(dataURI) {
   const blob = new Blob([int8Array], { type: 'image/png' });    
   return blob;
 }
+
 changesubcategory(index,value){
   this.subcaterories[index].value=value
+}
+// onFileSelected(event) {
+//   var n = Date.now();
+//   const file = event.target.files[0];
+//   const filePath = `maincategory/${n}`;
+//   const fileRef = this.storage.ref(filePath);
+//   const task = this.storage.upload(`maincategory/${n}`, file);
+//   console.log(task);
+  
+//   task
+//     .snapshotChanges()
+//     .pipe(
+//       finalize(() => {
+//         this.downloadURL = fileRef.getDownloadURL();
+//         this.downloadURL.subscribe(url => {
+//           if (url) {
+//             this.fbs = url;
+//           }
+//           console.log(this.fbs);
+//         });
+//       })
+//     )
+//     .subscribe(url => {
+//       if (url) {
+//         console.log(url);
+//       }
+//     });
+// }
+cropperHide(){
+  this.cropperhide=false
 }
 
 }

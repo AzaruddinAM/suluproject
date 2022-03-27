@@ -17,7 +17,7 @@ export class BusinessComponent implements OnInit {
     { field: 'name', header: 'Name' },
     // { field: 'arabic_name', header: 'Arabic Name' },
     // { field: 'number', header: 'number' },
-    { field: 'image_url', header: 'Image' },
+    // { field: 'image_url', header: 'Image' },
     // name, arabic_name, is_active, sub_name, arabic_sub_name,description,arabic_description,
     //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,   
     // web, social_media, timing, service_name, arabic_service_name 

@@ -37,6 +37,18 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UsersComponent } from './users/users.component';
+import {
+  AngularFireStorageModule,
+  AngularFireStorageReference,
+  AngularFireUploadTask,
+  BUCKET
+} from "@angular/fire/storage";
+// import { BUCKET } from '@angular/fire/compat/storage';
+// import { AngularFirestore } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSelectModule} from '@angular/material/select';
 const APP_CONTAINERS = [
   MainlayoutComponent
 ];
@@ -63,6 +75,12 @@ const APP_CONTAINERS = [
     UsersComponent
   ],
   imports: [
+    // StorageBucket
+    // AngularFirestore,
+    MatSelectModule,
+    MatProgressBarModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     MatInputModule,
     MatFormFieldModule,
     HttpClientModule,
@@ -78,8 +96,11 @@ const APP_CONTAINERS = [
     FormsModule,
     ReactiveFormsModule,
     ChartsModule
+    
   ],
-  providers: [ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: BUCKET, useValue: "dalelna-abb4e.appspot.com" }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

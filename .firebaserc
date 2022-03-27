@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "dalelna-abb4e": {
+      "hosting": {
+        "demo1": [
+          "dalelna-abb4e"
+        ]
+      }
+    }
+  }
+}
