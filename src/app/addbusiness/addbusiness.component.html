@@ -122,7 +122,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Longitude" formControllongitude="longitude" required>
+              <input matInput class="text-danger" placeholder="Longitude" formControlName="longitude" required>
               <mat-error *ngFor="let validation of business_validation_message.longitude">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('longitude').hasError(validation.type) && (addmaincategory.get('longitude').dirty || addmaincategory.get('longitude').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -261,9 +261,9 @@
           <div class="row">
             <div class="col-md-3">
   
-            <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
+            <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload1.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
           
-          <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload/>
+          <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload1/>
         </div>
         <div class="col-md-6">
          
@@ -271,7 +271,7 @@
         </div>
         <div class="col-md-3">
          
-          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase()"  tooltip="Click to Add Image" value="ADD IMAGE">
+          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase(fileupload1)"  tooltip="Click to Add Image" value="ADD IMAGE">
         </div>
           </div>
            <div class="row" style="margin-top: 15px;">
@@ -296,7 +296,7 @@
         <div *ngIf="cropperhide && addmaincategory.get('imagetype').value=='1'" class="text-center row">
           <div class="col-md-6 p-1">
   
-            <img [src]="this.type1images[0].showurl" />
+            <img [src]="type1images[0].showurl" />
           </div>
           <div class="col-md-6 p-1 d-flex flex-column">
             <div class="row-md-6 p-1">
@@ -315,11 +315,11 @@
         </div>
         <div class="col-md-6">
          
-          <mat-progress-bar *ngIf="progresshow" mode="indeterminate" [value]="percentage"></mat-progress-bar>
+          <mat-progress-bar *ngIf="progresshow" mode="indeterminate" ></mat-progress-bar>
         </div>
         <div class="col-md-3">
          
-          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="multipleuploadtofirebase()"  tooltip="Click to Add Image" value="ADD IMAGE">
+          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="multipleuploadtofirebase(fileupload)"  tooltip="Click to Add Image" value="ADD IMAGE">
         </div>
           </div>
            <div class="row" style="margin-top: 15px;">

@@ -1,20 +1,20 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
-import { ValidationmessagesService } from '../services/validationmessages.service';
 import { FirbaseService } from '../services/firbase.service';
+import { ValidationmessagesService } from '../services/validationmessages.service';
 
 @Component({
-  selector: 'app-addsubcategory',
-  templateUrl: './addsubcategory.component.html',
-  styleUrls: ['./addsubcategory.component.scss']
+  selector: 'app-notification',
+  templateUrl: './notification.component.html',
+  styleUrls: ['./notification.component.scss']
 })
-export class AddsubcategoryComponent implements OnInit {
-    title = 'ngImageCrop';
+export class NotificationComponent implements OnInit {
+  businessnames:Array<any>=[{name:"business1",business_id:"2"}]
+  title = 'ngImageCrop';
     // imageurl:any="assets/images/maincategory/demo.png"
     imageChangedEvent: any = '';
     croppedImage: any = '';
@@ -32,7 +32,7 @@ export class AddsubcategoryComponent implements OnInit {
       sub_category_id: any;
       testfile:string | Blob
       selecetdFile: string;
-      sub_category_validation_message:any={}
+      notification_validation_message:any={}
       percentage:number=-1
       cropperhide:boolean=false
       progresshow:boolean=false
@@ -40,8 +40,6 @@ export class AddsubcategoryComponent implements OnInit {
       afterupload
       // @Input() public appFormControl: NgControl;
     constructor(private router : Router,
-      private fb : FormBuilder,
-      private http:HttpClient,
       private api:ApiService,
       private validationmessagesService:ValidationmessagesService,
       private firebase:FirbaseService) {
@@ -49,57 +47,26 @@ export class AddsubcategoryComponent implements OnInit {
      }
   
     ngOnInit(): void {
-      this.sub_category_validation_message = this.validationmessagesService.Sub_Category_Validation_Message;
-      this.params=history.state;
-      this.sub_category_id=this.params.sub_category_id
-      this.datas=JSON.parse(this.params.data)
-      if(this.sub_category_id !=='new')
-      {
-        this.addoredit='edit'
-      // alert(JSON.stringify(this.params))
-      // let index = this.datas.findIndex(item=>item.id==this.id)
+      let body='Date='+new Date()
+      this.api.Postwithouttoken(environment['Category']+'/get_business_isactive',body)
+      .subscribe(item=>{
+        this.businessnames = (item.status)?item.data:[]
+      })
+      this.notification_validation_message = this.validationmessagesService.notification_validation_message;
+      // this.params=history.state;
+      // this.sub_category_id=this.params.sub_category_id
+      // this.datas=JSON.parse(this.params.data)
       
-      this.addmaincategory= new FormGroup({
-        // name , image_url , order_column ,  is_active , id 
-        name: new FormControl(this.datas['name'], [Validators.required]),
-        arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
-        image_url: new FormControl(this.datas['image_url'], [Validators.required]),
-        order_column: new FormControl(this.datas['order_column'], [Validators.required]),
-        is_active: new FormControl(this.datas['is_active'], [Validators.required]),
-  
-        sub_category_id:new FormControl(this.sub_category_id, [Validators.required])
-        // Isactive: ['', Validators.required],
-        // Image: ['', Validators.required],
-        // subcaterories: this.fb.array(this.subcaterories),
-  
-      });
-      this.afterupload=this.addmaincategory.get('image_url').value
-    //   this.subcaterories.forEach(element => {
-    //     this.addmaincategory.addControl(element.name, new FormControl(element.value, Validators.required));
-  
-    //   });
-      // https://www.gstatic.com/webp/gallery/1.jpg
-    //   this.imageChangedEvent= this.http
-    //   .get("https://www.gstatic.com/webp/gallery/1.jpg", {
-    //     responseType: 'arraybuffer'
-    //  })
-    //   .pipe(
-    //     map((response:any) => {
-    //       return new File([response], "myImage.png");
-    //     })
-    //   );
-      console.log(this.imageChangedEvent);
-      }
-      else{
-        this.addoredit='add'
-        let sub_category_id=Math.random().toString(36).substr(2, 9);
+      //   this.addoredit='add'
+      //   let sub_category_id=Math.random().toString(36).substr(2, 9);
         this.addmaincategory= new FormGroup({
-          name: new FormControl('', [Validators.required]),
-          arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
-          image_url: new FormControl('assets/images/maincategory/demo.png', [Validators.required]),
-          order_column: new FormControl('', [Validators.required]),
-          is_active: new FormControl(true, [Validators.required]),
-  
+          title: new FormControl('', [Validators.required]),
+          body: new FormControl('', [Validators.required]),
+          type: new FormControl('0', [Validators.required]),
+          // order_column: new FormControl('', [Validators.required]),
+          // is_active: new FormControl(true, [Validators.required]),
+          // business_name:new FormControl('', [Validators.required]),
+          url:new FormControl('', [Validators.required]),
           // sub_category_id:new FormControl(sub_category_id, [Validators.required])
           // Isactive: ['', Validators.required],
           // Image: ['', Validators.required],
@@ -121,10 +88,10 @@ export class AddsubcategoryComponent implements OnInit {
     //       })
     //     );
         console.log(this.imageChangedEvent);
-      }
+      
     }
     onSubmit(){
-  this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+  // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
       console.log("onSubmit");
       console.log(this.addmaincategory.value);
       
@@ -136,28 +103,29 @@ export class AddsubcategoryComponent implements OnInit {
   
       // name, image_url, order_column, is_active
       console.log(body);
-      if(this.sub_category_id == 'new')
-      {
-      this.api.Postwithouttoken(environment["Category"] + "/add_sub_category" ,body )
+      // if(this.sub_category_id == 'new')
+      // {
+      this.api.Postwithouttoken(environment["Category"] + "/add_notification" ,body )
       .subscribe(add_sub_category => {
   
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(add_sub_category);
+      this.addmaincategory.reset()
       // this.router.navigate()
-      this.router.navigate(['/subcategory'])
+      // this.router.navigate(['/subcategory'])
 
   
       })
-    }
-    else{
-      this.api.Postwithouttoken(environment["Category"] + "/edit_sub_category" ,body )
-      .subscribe(edit_sub_category => {
+    // }
+    // else{
+    //   this.api.Postwithouttoken(environment["Category"] + "/edit_sub_category" ,body )
+    //   .subscribe(edit_sub_category => {
   
-        // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
-      console.log(edit_sub_category);
-      this.router.navigate(['/subcategory'])
-      })
-    }
+    //     // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
+    //   console.log(edit_sub_category);
+    //   this.router.navigate(['/subcategory'])
+    //   })
+    // }
       
     }
     fileChangeEvent(event: any): void {

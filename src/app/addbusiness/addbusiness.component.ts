@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
 import { ValidationmessagesService } from '../services/validationmessages.service';
 import { FirbaseService } from '../services/firbase.service';
+import { tap,finalize } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-addbusiness',
@@ -18,7 +20,7 @@ export class AddbusinessComponent implements OnInit {
 
   
     title = 'ngImageCrop';
-    imageurl:any="assets/images/maincategory/demo.png"
+    // imageurl:any="assets/images/maincategory/demo.png"
     imageChangedEvent: any = '';
     croppedImage: any ;
     subcaterories:any =[]
@@ -45,13 +47,15 @@ export class AddbusinessComponent implements OnInit {
       percentage:number=-1
       cropperhide:boolean=false
       progresshow:boolean=false
+      addoredit='add'
       // @Input() public appFormControl: NgControl;
     constructor(private router : Router,
       private fb : FormBuilder,
       private http:HttpClient,
       private api:ApiService,
       private validationmessagesService:ValidationmessagesService,
-      private firebase: FirbaseService) {
+      private firebase: FirbaseService,
+      private storage:AngularFireStorage,) {
       this.params = this.router.getCurrentNavigation().extras.state;
       this.addmaincategory= this.fb.group({
         name: new FormControl('ajju1', [Validators.required]),
@@ -59,7 +63,7 @@ export class AddbusinessComponent implements OnInit {
       is_active: new FormControl(true, [Validators.required]),
       sub_name: new FormControl('sub_name1', [Validators.required]),
       arabic_sub_name: new FormControl('arabic_sub1', [Validators.required]),
-      discription: new FormControl('discription', [Validators.required]),
+      description: new FormControl('description', [Validators.required]),
       arabic_description: new FormControl('arabic_description', [Validators.required]),
       address: new FormControl('address', [Validators.required]),
       mapingname: new FormControl('mapingname', [Validators.required]),
@@ -76,7 +80,7 @@ export class AddbusinessComponent implements OnInit {
       timing: new FormControl('timing', [Validators.required]),
       service_name: new FormControl({s1:"",data:['s1','s2']}, [Validators.required]),
       arabic_service_name: new FormControl({sa1:"",data:['sa1','sa2']}, [Validators.required]),
-      imagetype: new FormControl()
+      imagetype: new FormControl('1', [Validators.required]),
 
       })
      }
@@ -86,15 +90,22 @@ export class AddbusinessComponent implements OnInit {
       this.params=history.state;
       this.business_id=this.params.business_id
       this.datas=JSON.parse(this.params.data)
-      let body = 'date='+Date();
-      this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
-      .subscribe(sub_category => {
+      let body = 'date='+Date()+'&business_id='+this.business_id;
+      // this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
+      var api
+    if(this.business_id ==='new')
+      api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
+    else
+     api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list_in_business" ,body )
+      api.subscribe(sub_category => {
         // this.subcaterories= sub_category.data
         this.subcaterories = (sub_category.status) ? sub_category.data:[]
-        this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
+        // this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
         console.log(this.subcaterories);
       if(this.business_id !=='new')
       {
+      this.addoredit='edit'
+
       // alert(JSON.stringify(this.params))
       // let index = this.datas.findIndex(item=>item.id==this.id)
       
@@ -105,7 +116,7 @@ export class AddbusinessComponent implements OnInit {
         is_active: new FormControl(this.datas['is_active'], [Validators.required]),
         sub_name: new FormControl(this.datas['sub_name'], [Validators.required]),
         arabic_sub_name: new FormControl(this.datas['arabic_sub_name'], [Validators.required]),
-        discription: new FormControl(this.datas['discription'], [Validators.required]),
+        description: new FormControl(this.datas['description'], [Validators.required]),
         arabic_description: new FormControl(this.datas['arabic_description'], [Validators.required]),
         address: new FormControl(this.datas['address'], [Validators.required]),
         latitude: new FormControl(this.datas['latitude'], [Validators.required]),
@@ -151,6 +162,8 @@ export class AddbusinessComponent implements OnInit {
       console.log(this.imageChangedEvent);
       }
       else{
+      this.addoredit='add'
+
         let business_id=Math.random().toString(36).substr(2, 9);
        
   
@@ -231,81 +244,198 @@ export class AddbusinessComponent implements OnInit {
       // this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
       
   }
-  uploadtofirebase(){
+  uploadtofirebase(files){
         let business_image_id =Math.random().toString(36).substr(2, 9);
 
-    localStorage.removeItem("image_url");
+    localStorage.removeItem("imageurl");
     this.progresshow=true
     const filePath = `business/type1/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
-    this.firebase.uploadfile(this.croppedImage,filePath,imagename)
-    .subscribe(
-      percentage => {
-        this.percentage = Math.round(percentage ? percentage : 0);
-        console.log(this.percentage);
-        if(this.percentage==100){
-          this.cropperhide=true
-          this.progresshow=false
-    // this.addmaincategory.get('image_url')
-  console.log(localStorage.getItem('imageurl'));
-  // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+    var n = imagename+'_'+Date.now();
+    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const file = byteString
+    console.log(file);
+    const fileRef = this.storage.ref(filePath+n);
+    const task = this.storage.upload(filePath+n, file);
+    console.log(task);
+    
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL =  fileRef.getDownloadURL();
+          
+          this.downloadURL
+          .pipe(
+            tap({
+              next: (x) => {
+                console.log('tap success', x);
+              },
+              error: (err) => {
+                console.log('tap error', err);
+              },
+              complete: () => {console.log('tap complete')
+              
+              console.log(localStorage.getItem('imageurl'));
+            }
+            }),
+            finalize(() => {
+            console.log(this.fbs);
+            files.value=""
+                console.log(this.type1images);
+                
+                this.progresshow=false
+                this.cropperhide=true
+                // localStorage.setItem('imageurl',encodeURIComponent(this.fbs))
+                this.type1images=[{business_image_id:business_image_id,url:encodeURIComponent(this.fbs),showurl:this.fbs,type:this.addmaincategory.get('imagetype').value}]
+                console.log(this.type1images);
+              // return 'completed'
+            }
+            )
+            )
+            .subscribe(url => {
+              if (url) {
+                this.fbs = url;
+                // localStorage.setItem('imageurl',encodeURIComponent(url))
+          
+            }
+          });
+        })
+      )
+      .subscribe(
+  
+      );
+      // return task.percentageChanges();
+    // this.firebase.uploadfile(this.croppedImage,filePath,imagename)
+    // .pipe(
+    //   tap({
+    //     next: (x) => {
+    //       console.log('tap success', x);
+    //       // this.isLoading = false;
+    //     },
+    //     error: (err) => {
+    //       console.log('tap error', err);
+    //       // this.isLoading = false;
+    //     },
+    //     complete: () => {console.log('tap complete')
 
-  this.type1images=[{business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value}]
-  
-        }
+    //     console.log(localStorage.getItem('imageurl'));
+
+    //   }
+    //   }),
+    //   finalize(() => {
+    //     file.value=""
+    //     console.log(this.type1images);
         
-      },
-      error => {
-        console.log(error);
-      }
-    )
-    // .subscribe(data=>{
-  
-    // }
+    //     this.progresshow=false
+    //     this.cropperhide=true
+    //     this.type1images=[{business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value}]
+    //     console.log(this.type1images);
+    //   })
     // )
-    // console.log(imageurl);
-    
-    // this.addmaincategory.get('image_url').setValue(this.firebase.uploadfile(this.croppedImage,filePath,'azar'))
-    console.log(this.addmaincategory.get('image_url').value);
-    
+    // .subscribe(
+    //   percentage => {
+    //     this.percentage = Math.round(percentage ? percentage : 0);
+    //     console.log(this.percentage);
+    //     if(this.percentage==100){
+    //     }
+        
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   }
+    // )
+  
   }
-  multipleuploadtofirebase(){
+  multipleuploadtofirebase(files){
     let business_image_id =Math.random().toString(36).substr(2, 9);
 
-    localStorage.removeItem("image_url");
+    localStorage.removeItem("imageurl");
     this.progresshow=true
     const filePath = `business/type2/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
-    this.firebase.uploadfile(this.croppedImage,filePath,imagename)
-    .subscribe(
-      percentage => {
-        this.percentage = Math.round(percentage ? percentage : 0);
-        console.log(this.percentage);
-        if(this.percentage==100){
-          this.cropperhide=true
-          this.progresshow=false
-    // this.addmaincategory.get('image_url')
-  console.log(localStorage.getItem('imageurl'));
-  // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
-
-  this.images.push({business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value})
+    var n = imagename+'_'+Date.now();
+    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const file = byteString
+    console.log(file);
+    const fileRef = this.storage.ref(filePath+n);
+    const task = this.storage.upload(filePath+n, file);
+    console.log(task);
+    
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL =  fileRef.getDownloadURL();
+          
+          this.downloadURL
+          .pipe(
+            tap({
+              next: (x) => {
+                console.log('tap success', x);
+              },
+              error: (err) => {
+                console.log('tap error', err);
+              },
+              complete: () => {console.log('tap complete')
+              
+              console.log(localStorage.getItem('imageurl'));
+            }
+            }),
+            finalize(() => {
+            console.log(this.fbs);
+            files.value=""
+                console.log(this.type1images);
+                
+                this.progresshow=false
+                this.cropperhide=true
+                // localStorage.setItem('imageurl',encodeURIComponent(this.fbs))
+                this.images.push({business_image_id:business_image_id,url:encodeURIComponent(this.fbs),showurl:this.fbs,type:this.addmaincategory.get('imagetype').value})
+                console.log(this.type1images);
+            
+    // this.images.push({business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value})
+    
+              // return 'completed'
+            }
+            )
+            )
+            .subscribe(url => {
+              if (url) {
+                this.fbs = url;
+                // localStorage.setItem('imageurl',encodeURIComponent(url))
+          
+            }
+          });
+        })
+      )
+      .subscribe(
   
-        }
+      );
+    // this.firebase.uploadfile(this.croppedImage,filePath,imagename)
+    // .subscribe(
+    //   percentage => {
+    //     this.percentage = Math.round(percentage ? percentage : 0);
+    //     console.log(this.percentage);
+    //     if(this.percentage==100){
+    //       setTimeout(() => {
+            
+    //         this.cropperhide=true
+    //         this.progresshow=false
+    //   // this.addmaincategory.get('image_url')
+    // console.log(localStorage.getItem('imageurl'));
+    // // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+    //         file.value=""
+    // this.images.push({business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value})
+    
+    //       }, 500);
+    //     }
         
-      },
-      error => {
-        console.log(error);
-      }
-    )
-    // .subscribe(data=>{
-  
-    // }
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   }
     // )
-    // console.log(imageurl);
-    
-    // this.addmaincategory.get('image_url').setValue(this.firebase.uploadfile(this.croppedImage,filePath,'azar'))
-    // console.log(this.addmaincategory.get('image_url').value);
-    
+
   }
   imageCropped(event:ImageCroppedEvent) {
   
@@ -358,6 +488,20 @@ export class AddbusinessComponent implements OnInit {
       // alert("3")
   
       /* show message */
+  }
+  dataURLtoFile(dataurl, filename) {
+ 
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), 
+        n = bstr.length, 
+        u8arr = new Uint8Array(n);
+        
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    
+    return new File([u8arr], filename, {type:mime});
   }
   dataURItoBlob(dataURI) {
     const byteString = window.atob(dataURI);

@@ -25,9 +25,9 @@ interface JsonEntryForm {
 export class AddmaincategoryComponent implements OnInit {
 
   title = 'ngImageCrop';
-  imageurl:any="assets/images/maincategory/demo.png"
+  // imageurl:any="assets/images/maincategory/demo.png"
   imageChangedEvent: any = '';
-  croppedImage: any = 'assets/images/maincategory/demo.png';
+  croppedImage: any = '';
   subcaterories:any =[]
   // [{name:'sub1',value:true},{name:'sub2',value:true},{name:'sub3',value:false},{name:'sub4',value:true},]
   datas={}
@@ -49,6 +49,8 @@ export class AddmaincategoryComponent implements OnInit {
     percentage:number=-1
     cropperhide:boolean=false
     progresshow:boolean=false
+    addoredit:string='add'
+    afteruploadimage
     // @Input() public appFormControl: NgControl;
   constructor(private router : Router,
     private fb : FormBuilder,
@@ -64,8 +66,8 @@ export class AddmaincategoryComponent implements OnInit {
       arabic_name: new FormControl('',Validators.compose([Validators.required])),
       image_url: new FormControl('assets/images/maincategory/demo.png',Validators.compose([Validators.required])),
       order_column: new FormControl(3,Validators.compose([Validators.required])),
-      is_active: new FormControl(true,Validators.compose([Validators.required]))
-
+      is_active: new FormControl(true,Validators.compose([Validators.required])),
+      main_category_id:new FormControl('',Validators.compose([Validators.required]))
       // main_category_id:new FormControl(main_category_id, [Validators.required])
       // Isactive: ['', Validators.required],
       // Image: ['', Validators.required],
@@ -79,26 +81,34 @@ export class AddmaincategoryComponent implements OnInit {
     this.params=history.state;
     this.main_category_id=this.params.main_category_id
     this.datas=JSON.parse(this.params.data)
-    let body = 'date='+Date();
-    this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
-    .subscribe(sub_category => {
+    let body = 'date='+Date()+'&main_category_id='+this.main_category_id;
+    var api
+    if(this.main_category_id ==='new')
+      api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
+    else
+     api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list_in_main_category" ,body )
+    api.subscribe(sub_category => {
       // this.subcaterories= sub_category.data
       this.subcaterories = (sub_category.status) ? sub_category.data:[]
-      this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
+      // this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
       console.log(this.subcaterories);
       
     
     if(this.main_category_id !=='new')
     {
-    // alert(JSON.stringify(this.params))
-    // let index = this.datas.findIndex(item=>item.id==this.id)
-  this.addmaincategory.get('name').setValue(this.datas['name'])
-  this.addmaincategory.get('arabic_name').setValue(this.datas['arabic_name'])
-  this.addmaincategory.get('image_url').setValue(this.datas['image_url'])
-  this.addmaincategory.get('order_column').setValue(this.datas['order_column'])
-  this.addmaincategory.get('is_active').setValue(this.datas['is_active'])
-
-    // this.addmaincategory= new FormGroup({
+      this.addoredit='edit'
+      
+      // alert(JSON.stringify(this.params))
+      // let index = this.datas.findIndex(item=>item.id==this.id)
+      this.addmaincategory.get('name').setValue(this.datas['name'])
+      this.addmaincategory.get('arabic_name').setValue(this.datas['arabic_name'])
+      this.addmaincategory.get('image_url').setValue(this.datas['image_url'])
+      this.addmaincategory.get('order_column').setValue(this.datas['order_column'])
+      this.addmaincategory.get('is_active').setValue(this.datas['is_active'])
+      this.addmaincategory.get('main_category_id').setValue(this.main_category_id)
+      
+      this.afteruploadimage=this.addmaincategory.get('image_url').value
+      // this.addmaincategory= new FormGroup({
     //   // name , image_url , order_column ,  is_active , id 
     //   name: new FormControl(this.datas['name'], [Validators.required]),
     //   arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
@@ -129,6 +139,7 @@ export class AddmaincategoryComponent implements OnInit {
   //   console.log(this.imageChangedEvent);
     }
     else{
+      this.addoredit='add'
       // let main_category_id=Math.random().toString(36).substr(2, 9);
       // alert("alert")
 
@@ -192,11 +203,12 @@ export class AddmaincategoryComponent implements OnInit {
     
   }
   fileChangeEvent(event: any): void {
+    this.croppedImage=''
     this.imageChangedEvent = event;
     // this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
     
 }
- uploadtofirebase(){
+ uploadtofirebase(file){
   this.progresshow=true
   const filePath = `maincategory/`;
   let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value:'unknown'
@@ -209,6 +221,7 @@ export class AddmaincategoryComponent implements OnInit {
         this.cropperhide=true
         this.progresshow=false
   // this.addmaincategory.get('image_url')
+  file.value=""
 console.log(localStorage.getItem('imageurl'));
 this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
 
@@ -226,12 +239,14 @@ this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
   // console.log(imageurl);
   
   // this.addmaincategory.get('image_url').setValue(this.firebase.uploadfile(this.croppedImage,filePath,'azar'))
-  console.log(this.addmaincategory.get('image_url').value);
+  // console.log(this.addmaincategory.get('image_url').value);
   
 }
 imageCropped(event:ImageCroppedEvent) {
-//  this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
-    this.croppedImage = event.base64;
+  // alert("crop")
+  //  this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
+  this.croppedImage = event.base64;
+  this.afteruploadimage=this.croppedImage
   
     
     // console.log(event);

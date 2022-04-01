@@ -106,6 +106,24 @@ export class ValidationmessagesService {
     //   { type: 'required', message: 'fielde required'}
     // ]
   };
+  notification_validation_message =
+  {
+    'title': [
+      { type: 'required', message: 'Title is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged title'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'Title not registered.. Try again.'},
+    ],
+    'body': [
+      { type: 'required', message: 'body is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged body'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'body not registered.. Try again.'},
+    ],
+    'type':[
+      { type: 'required', message: 'Type is required'}
+    ],
+  }
 //   callback_validation_messages = 
 //   {
 //     'campaign' : [

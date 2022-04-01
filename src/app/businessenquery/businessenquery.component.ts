@@ -1,21 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-businessenquery',
+  templateUrl: './businessenquery.component.html',
+  styleUrls: ['./businessenquery.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class BusinessenqueryComponent implements OnInit {
 
   constructor(private apis:ApiService) { }
   datas=[]
   cols :Array<{field:string,header:string}>= [
-
-    { field: 'users_id', header: 'User Id' },
+    // "name" VARCHAR(100),
+		// "business_name" VARCHAR(100),
+	  //   "type" VARCHAR(100),
+	  //   "email" VARCHAR(100),
+	  //   "phone_number" VARCHAR(100),
+    //     "is_active" BOOLEAN DEFAULT true,
+	  //   "sub_category" VARCHAR(100),
+    { field: 'business_enquiries_id', header: 'Business Enquiries Id' },
     { field: 'name', header: 'Name' },
+    { field: 'business_name', header: 'Business Name' },
+    { field: 'type', header: 'Type' },
+
     { field: 'email', header: 'Email' },
     // { field: 'user_token', header: 'Arabic Name' },
     { field: 'phone_number', header: 'Phone Number' },
@@ -25,7 +33,7 @@ export class UsersComponent implements OnInit {
     // { field: 'avatar', header: 'Avatar' },
     // { field: 'user_ip', header: 'Arabic Name' },
     { field: 'image_url', header: 'Image' },
-    // { field: 'notification_status', header: 'Isactive' },
+    { field: 'sub_category', header: 'Sub Category' },
     // { field: 'otp', header: 'Id' },
     // { field: 'role', header: 'Image' },
     // { field: 'gender', header: 'Gender' },
@@ -57,7 +65,7 @@ data;
     let body = 'data='+'test'+'&date='+Date();
     console.log(body);
     
-    this.apis.Postwithouttoken(environment["Category"] + "/get_business" ,body )
+    this.apis.Postwithouttoken(environment["Category"] + "/get_business_enqueries" ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
     .subscribe(usersdata => {
@@ -67,42 +75,5 @@ data;
     
     })
   }
-  paginate(){
-    console.log("paginate");
-    
-  }
-  toggle(event:MatSlideToggleChange,index:number,users_id:number){
 
-    console.log('toggle', event.checked+" index :"+index);
-    let body = 'users_id='+users_id+'&is_active='+event.checked+'&date='+Date();
-    console.log(body);
-    
-    this.apis.Postwithouttoken(environment["Category"] + "/active_users" ,body )
-    .subscribe(active_users => {
-this.datas[index].isactive=event.checked
-      // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
-    console.log(active_users);
-    
-    })
-        // this.useDefault = event.checked;
-  }
-  viewimage()
-  {
-console.log(this.datas);
-
-  }
-  get(){
-    let body = 'data='+this.data+'&date='+Date();
-    console.log(body);
-    
-    this.apis.Postwithouttoken(environment["Mobileapp"] + this.api ,body )
-    // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
-
-    .subscribe(maincategorydata => {
-
-      this.datas =(maincategorydata.status)?  maincategorydata.data:[]
-    console.log(this.datas);
-    
-    })
-  }
 }

@@ -1,0 +1,139 @@
+<div class="col-12 grid-margin ">
+    <div class="card " >
+      <div class="card-body lightbluethinbg">
+        <h4 class="card-title">Add Notification</h4>
+        <form class="form-sample" [formGroup]="addmaincategory"  >
+          <!-- (ngSubmit)="onSubmit()" -->
+          <!-- <p class="card-description">
+            Personal info
+          </p> -->
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="sizefull">
+                <input matInput class="text-danger" placeholder="Title" formControlName="title" required>
+                <mat-error *ngFor="let validation of notification_validation_message.title">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('title').hasError(validation.type) && (addmaincategory.get('title').dirty || addmaincategory.get('title').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-8">
+                <mat-form-field class="sizefull w-100">
+                  <input matInput class="text-danger" placeholder="Body" formControlName="body" required>
+                  <mat-error *ngFor="let validation of notification_validation_message.body">
+                    <mat-error class="error-message" *ngIf="addmaincategory.get('body').hasError(validation.type) && (addmaincategory.get('body').dirty || addmaincategory.get('body').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+             
+            <!-- <div class="col-md-3">
+              <div class="form-group row">
+                <label class="col-sm-6 col-form-label" >Is Active</label>
+                <div class="col-sm-6">
+                  <mat-slide-toggle formControlName="is_active"
+                            class="example-margin"
+                            [checked]="true"
+                            >
+                        </mat-slide-toggle>
+                </div>
+              </div>
+            </div> -->
+          </div>
+          <div class="row p-4">
+            <mat-radio-group formControlName="type" class="d-flex flex-md-row justify-content-md-around w-100" aria-label="Select an option">
+                <mat-radio-button class="pe-5" [value]="1">None</mat-radio-button>
+                <mat-radio-button class="pe-5" [value]="2">Business</mat-radio-button>
+                <mat-radio-button class="pe-5" [value]="3">Link</mat-radio-button>
+              </mat-radio-group>
+
+
+          </div>
+          <div class="row pe-4" *ngIf="this.addmaincategory.get('type').value==2">
+            <div class="col-md-4 ">
+                <mat-form-field appearance="fill">
+                    <mat-label>Business</mat-label>
+                    <mat-select formControlName="url">
+                      <mat-option *ngFor="let item of businessnames" [value]="item.business_id">{{item.name}}</mat-option>
+            
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
+          <div class="row pe-4" *ngIf="this.addmaincategory.get('type').value==3">
+            <div class="col-md-8">
+                <mat-form-field class="sizefull w-100">
+                    <input matInput class="text-danger" placeholder="Url" formControlName="url" required>
+                    <mat-error *ngFor="let validation of notification_validation_message.url">
+                      <mat-error class="error-message" *ngIf="addmaincategory.get('url').hasError(validation.type) && (addmaincategory.get('url').dirty || addmaincategory.get('url').touched)">{{validation.message}}</mat-error>
+                    </mat-error>
+                  </mat-form-field>
+              </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-md-3"  *ngFor="let item of subcaterories; let i=index">
+              <mat-checkbox [checked]="item.value" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" [formControlName]="item.name">{{item.name}}</mat-checkbox>
+              </div>
+          </div> -->
+          <!-- <div class="card">
+
+      <div *ngIf="!cropperhide" class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+  
+          <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
+        
+        <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload/>
+      </div>
+      <div class="col-md-6">
+       
+        <mat-progress-bar *ngIf="progresshow" mode="indeterminate" [value]="percentage"></mat-progress-bar>
+      </div>
+      <div class="col-md-3">
+       
+        <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase(fileupload)"  tooltip="Click to Add Image" value="ADD IMAGE">
+      </div>
+  
+        </div>
+        <div class="row" style="margin-top: 15px;">
+            <div class="text-center col-md-8">
+                <h5>Crop Image</h5>
+                <image-cropper 
+                width="200px"
+                height="200px"
+                class="imagecropsize"
+                [imageChangedEvent]="imageChangedEvent" 
+                [maintainAspectRatio]="true" 
+                [aspectRatio]="4 / 4"
+                format="png" 
+                (imageCropped)="imageCropped($event)" 
+                (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()" 
+                (loadImageFailed)="loadImageFailed()"></image-cropper>
+            </div>
+            <div class="text-center col-md-4">
+                <h5>Preview</h5>
+                <img *ngIf="addoredit=='add'" width="150px" height="150px" [src]="croppedImage" />
+                <img *ngIf="addoredit=='edit'" width="150px" height="150px" [src]="afterupload" />
+            </div>
+        </div>
+      </div>
+      <div *ngIf="cropperhide" class="text-center row">
+        <div class="col-md-6 p-1">
+  
+          <img  width="150px" height="150px" [src]="afterupload"  />
+  
+        </div>
+        <div class="col-md-6 p-1 d-flex flex-column">
+          <div class="row-md-6 p-1">
+            <input class="text-center float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide()" value="CHANGE IMAGE">
+          </div>
+      
+        </div>
+      </div>
+    </div> -->
+    <div class="row p-3">
+      <input class="text-center mr-4 float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD NOTIFICATION">
+    </div>
+        </form>
+      </div>
+    </div>
+  </div>

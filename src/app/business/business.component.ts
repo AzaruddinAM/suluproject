@@ -30,7 +30,7 @@ export class BusinessComponent implements OnInit {
     // { field: 'longitude', header: 'longitude' },
     { field: 'phone_number', header: 'phone_number' },
     // { field: 'alt_phone_number', header: 'alt_phone_number' },
-    { field: 'email', header: 'email' },
+    // { field: 'email', header: 'email' },
     // { field: 'slug', header: 'slug' },
     { field: 'rating', header: 'rating' },
     // { field: 'web', header: 'web' },
