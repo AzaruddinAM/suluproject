@@ -19,10 +19,10 @@ export class BusinessenqueryComponent implements OnInit {
 	  //   "phone_number" VARCHAR(100),
     //     "is_active" BOOLEAN DEFAULT true,
 	  //   "sub_category" VARCHAR(100),
-    { field: 'business_enquiries_id', header: 'Business Enquiries Id' },
+    // { field: 'business_enquiries_id', header: 'Business Enquiries Id' },
     { field: 'name', header: 'Name' },
     { field: 'business_name', header: 'Business Name' },
-    { field: 'type', header: 'Type' },
+    // { field: 'type', header: 'Type' },
 
     { field: 'email', header: 'Email' },
     // { field: 'user_token', header: 'Arabic Name' },
@@ -32,7 +32,7 @@ export class BusinessenqueryComponent implements OnInit {
     // { field: 'longitude', header: 'Image' },
     // { field: 'avatar', header: 'Avatar' },
     // { field: 'user_ip', header: 'Arabic Name' },
-    { field: 'image_url', header: 'Image' },
+    // { field: 'image_url', header: 'Image' },
     { field: 'sub_category', header: 'Sub Category' },
     // { field: 'otp', header: 'Id' },
     // { field: 'role', header: 'Image' },
@@ -42,7 +42,7 @@ export class BusinessenqueryComponent implements OnInit {
     // { field: 'is_active', header: 'Is Active' },
     // { field: 'password', header: 'password' },
     // { field: 'language', header: 'language' },
-    { field: '', header: '' }
+    // { field: '', header: '' }
 
 // latitude: "2.333333"
 // longitude: "4.333333"

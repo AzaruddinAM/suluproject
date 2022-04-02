@@ -82,5 +82,11 @@ background-color: #b66dff !important;
     border-radius: 10px;
     border-color: rgba(105,240,174,.54);
 }
+.prevent-click{
+    pointer-events: none;
+  }
+  .authorize-click{
+    pointer-events: auto !important;
+  }
 
 

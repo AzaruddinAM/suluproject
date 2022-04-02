@@ -21,9 +21,13 @@ export class AddbusinessComponent implements OnInit {
   
     title = 'ngImageCrop';
     // imageurl:any="assets/images/maincategory/demo.png"
+    arabic_service_name = new FormControl();
+    service_name = new FormControl();
+
     imageChangedEvent: any = '';
     croppedImage: any ;
     subcaterories:any =[]
+    galleryimages:any =[]
     images:any =[]
     // [{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'}]
     type1images:any=[]
@@ -48,6 +52,10 @@ export class AddbusinessComponent implements OnInit {
       cropperhide:boolean=false
       progresshow:boolean=false
       addoredit='add'
+  error: string;
+  locations:any=[]
+  arabic_service_name_options:any=[]
+  service_name_options:any=[]
       // @Input() public appFormControl: NgControl;
     constructor(private router : Router,
       private fb : FormBuilder,
@@ -58,28 +66,29 @@ export class AddbusinessComponent implements OnInit {
       private storage:AngularFireStorage,) {
       this.params = this.router.getCurrentNavigation().extras.state;
       this.addmaincategory= this.fb.group({
-        name: new FormControl('ajju1', [Validators.required]),
-      arabic_name: new FormControl('ajjuarabic1', [Validators.required]),
+        name: new FormControl('', [Validators.required]),
+      arabic_name: new FormControl('', [Validators.required]),
       is_active: new FormControl(true, [Validators.required]),
-      sub_name: new FormControl('sub_name1', [Validators.required]),
-      arabic_sub_name: new FormControl('arabic_sub1', [Validators.required]),
-      description: new FormControl('description', [Validators.required]),
-      arabic_description: new FormControl('arabic_description', [Validators.required]),
-      address: new FormControl('address', [Validators.required]),
-      mapingname: new FormControl('mapingname', [Validators.required]),
-      arabic_mapingname: new FormControl('arabic_mapingname', [Validators.required]),
-      latitude: new FormControl(46545.56, [Validators.required]),
-      longitude: new FormControl(45665.66, [Validators.required]),
-      phone_number: new FormControl('12345678', [Validators.required]),
-      alt_phone_number: new FormControl('3456789', [Validators.required]),
-      email: new FormControl('dfchgv@hgdf.dsds', [Validators.required]),
-      slug: new FormControl('slug', [Validators.required]),
-      rating: new FormControl('rating', [Validators.required]),
-      web: new FormControl('web', [Validators.required]),
-      social_media: new FormControl('social', [Validators.required]),
-      timing: new FormControl('timing', [Validators.required]),
-      service_name: new FormControl({s1:"",data:['s1','s2']}, [Validators.required]),
-      arabic_service_name: new FormControl({sa1:"",data:['sa1','sa2']}, [Validators.required]),
+      sub_name: new FormControl('', [Validators.required]),
+      arabic_sub_name: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      arabic_description: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      arabic_address: new FormControl('', [Validators.required]),
+      mapingname: new FormControl('', [Validators.required]),
+      // arabic_mapingname: new FormControl('arabic_mapingname', [Validators.required]),
+      latitude: new FormControl(0.00, [Validators.required]),
+      longitude: new FormControl(0.00, [Validators.required]),
+      phone_number: new FormControl('', [Validators.required]),
+      alt_phone_number: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      slug: new FormControl('', [Validators.required]),
+      rating: new FormControl('', [Validators.required]),
+      web: new FormControl('', [Validators.required]),
+      social_media: new FormControl('', [Validators.required]),
+      timing: new FormControl('', [Validators.required]),
+      service_name: new FormControl('', [Validators.required]),
+      arabic_service_name: new FormControl('', [Validators.required]),
       imagetype: new FormControl('1', [Validators.required]),
 
       })
@@ -94,21 +103,57 @@ export class AddbusinessComponent implements OnInit {
       // this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
       var api
     if(this.business_id ==='new')
-      api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
+      api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list_location" ,body )
     else
-     api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list_in_business" ,body )
+     api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list_in_business_locations" ,body )
       api.subscribe(sub_category => {
         // this.subcaterories= sub_category.data
-        this.subcaterories = (sub_category.status) ? sub_category.data:[]
+        this.subcaterories = (sub_category.status) ? sub_category.sub_category_data:[]
+        this.locations = (sub_category.status) ? sub_category.location_data:[]
         // this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
         console.log(this.subcaterories);
       if(this.business_id !=='new')
       {
       this.addoredit='edit'
+        this.api.Postwithouttoken(environment['Category']+'/get_businessimages_location',body)
+        .subscribe(
+          items=>{
+            if(items.status){
+              items.images.forEach(element => {
+                let json={}
+                json['url']=element.image_url
+                json['show']=decodeURIComponent(element.image_url)
+                json['type']=element.type
+                if(element.type=='1')
+                  this.type1images.push(json)
+                else if(element.type=='2')
+                  this.images.push(json)
+                else if(element.type=='3')
+                  this.galleryimages.push(json)
+              });
+              items.locations.forEach(element => {
+                this.addmaincategory.get('mappingname').setValue(element.name)
+                // this.addmaincategory.get('arabic_mapingname').setValue(element.arabic_name)
+                this.addmaincategory.get('latitude').setValue(element.latitude)
+                this.addmaincategory.get('longitude').setValue(element.longitude)
 
+                // mapingname= new FormControl('mapingname', [Validators.required]),
+                // arabic_mapingname: new FormControl('arabic_mapingname', [Validators.required]),
+                // latitude: new FormControl(46545.56, [Validators.required]),
+                // longitude: new FormControl(45665.66, [Validators.required]),
+              });
+            }
+            else{
+              console.log("reponse error");
+              
+            }
+          }
+        )
+
+        
       // alert(JSON.stringify(this.params))
       // let index = this.datas.findIndex(item=>item.id==this.id)
-      
+      // let body2='business_id='+
       this.addmaincategory= new FormGroup({
         // name , image_url , order_column ,  is_active , id 
         name: new FormControl(this.datas['name'], [Validators.required]),
@@ -119,8 +164,10 @@ export class AddbusinessComponent implements OnInit {
         description: new FormControl(this.datas['description'], [Validators.required]),
         arabic_description: new FormControl(this.datas['arabic_description'], [Validators.required]),
         address: new FormControl(this.datas['address'], [Validators.required]),
-        latitude: new FormControl(this.datas['latitude'], [Validators.required]),
-        longitude: new FormControl(this.datas['longitude'], [Validators.required]),
+        arabic_address: new FormControl(this.datas['arabic_address'], [Validators.required]),
+
+        // latitude: new FormControl(this.datas['latitude'], [Validators.required]),
+        // longitude: new FormControl(this.datas['longitude'], [Validators.required]),
         phone_number: new FormControl(this.datas['phone_number'], [Validators.required]),
         alt_phone_number: new FormControl(this.datas['alt_phone_number'], [Validators.required]),
         email: new FormControl(this.datas['email'], [Validators.required]),
@@ -131,7 +178,7 @@ export class AddbusinessComponent implements OnInit {
         timing: new FormControl(this.datas['timing'], [Validators.required]),
         service_name: new FormControl(this.datas['service_name'], [Validators.required]),
         arabic_service_name: new FormControl(this.datas['arabic_service_name'], [Validators.required]),
-        imagetype: new FormControl(this.datas['imagetype'], [Validators.required])
+        imagetype: new FormControl('1', [Validators.required])
 
         // image_url: new FormControl(this.datas['image_url'], [Validators.required]),
         // order_column: new FormControl(this.datas['order_column'], [Validators.required]),
@@ -193,22 +240,33 @@ export class AddbusinessComponent implements OnInit {
     }
     onSubmit(){
       // console.log("onSubmit");
+      if(this.type1images.length>0)
+      {
       console.log("onSubmit");
       console.log(this.addmaincategory.value);
       console.log(this.subcaterories);
       let body 
       this.subcaterories = this.subcaterories.filter(item=>item.value==true)
-      if(this.addmaincategory.get('imagetype').value=='1')
-      {
-        this.type1images =this.type1images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
-      body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(this.type1images)+'&date='+Date();
+      var images=[]
+      images = [...this.type1images,...this.images,...this.galleryimages]
+      images=images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
+      // console.log(this.locations);
+      // console.log(this.addmaincategory.get('mapingname').value);
       
-    }
-      else if(this.addmaincategory.get('imagetype').value=='2'){
-        this.images =this.images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
-      body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(this.images)+'&date='+Date();
+      var index=this.locations.findIndex(item=>item.name==this.addmaincategory.get('mapingname').value)
       
-      }
+    //   if(this.addmaincategory.get('imagetype').value=='1')
+    //   {
+    //     this.type1images =this.type1images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
+    //   body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(this.type1images)+'&date='+Date();
+      
+    // }
+    //   else if(this.addmaincategory.get('imagetype').value=='2'){
+    //     this.images =this.images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
+    // +'&service_name='+JSON.stringify(this.service_name_options)+'&arabic_service_name='+JSON.stringify(this.arabic_service_name_options)
+      body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(images)+'&location_id='+this.locations[index].location_id+'&date='+Date();
+      
+      // }
       // 'name='+this.addmaincategory.get('Name').value+
       // 'image_url='+this.addmaincategory.get('Image').value+
       // 'name='+this.addmaincategory.get('Name').value+
@@ -237,7 +295,13 @@ export class AddbusinessComponent implements OnInit {
       this.router.navigate(['/maincatogory'])
       })
     }
-      
+  }
+  else{
+    this.error="Should provide Main image"
+    setTimeout(() => {
+      this.error=""
+    }, 3000);
+  }
     }
     fileChangeEvent(event: any): void {
       this.imageChangedEvent = event;
@@ -389,20 +453,15 @@ export class AddbusinessComponent implements OnInit {
                 
                 this.progresshow=false
                 this.cropperhide=true
-                // localStorage.setItem('imageurl',encodeURIComponent(this.fbs))
                 this.images.push({business_image_id:business_image_id,url:encodeURIComponent(this.fbs),showurl:this.fbs,type:this.addmaincategory.get('imagetype').value})
                 console.log(this.type1images);
-            
-    // this.images.push({business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value})
     
-              // return 'completed'
             }
             )
             )
             .subscribe(url => {
               if (url) {
                 this.fbs = url;
-                // localStorage.setItem('imageurl',encodeURIComponent(url))
           
             }
           });
@@ -411,31 +470,68 @@ export class AddbusinessComponent implements OnInit {
       .subscribe(
   
       );
-    // this.firebase.uploadfile(this.croppedImage,filePath,imagename)
-    // .subscribe(
-    //   percentage => {
-    //     this.percentage = Math.round(percentage ? percentage : 0);
-    //     console.log(this.percentage);
-    //     if(this.percentage==100){
-    //       setTimeout(() => {
-            
-    //         this.cropperhide=true
-    //         this.progresshow=false
-    //   // this.addmaincategory.get('image_url')
-    // console.log(localStorage.getItem('imageurl'));
-    // // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
-    //         file.value=""
-    // this.images.push({business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value})
-    
-    //       }, 500);
-    //     }
-        
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    // )
+ 
+  }
+  multiplegalleryuploadtofirebase(files){
+    let business_image_id =Math.random().toString(36).substr(2, 9);
 
+    localStorage.removeItem("imageurl");
+    this.progresshow=true
+    const filePath = `business/type3/`;
+    let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
+    var n = imagename+'_'+Date.now();
+    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const file = byteString
+    console.log(file);
+    const fileRef = this.storage.ref(filePath+n);
+    const task = this.storage.upload(filePath+n, file);
+    console.log(task);
+    
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL =  fileRef.getDownloadURL();
+          
+          this.downloadURL
+          .pipe(
+            tap({
+              next: (x) => {
+                console.log('tap success', x);
+              },
+              error: (err) => {
+                console.log('tap error', err);
+              },
+              complete: () => {console.log('tap complete')
+              
+              console.log(localStorage.getItem('imageurl'));
+            }
+            }),
+            finalize(() => {
+            console.log(this.fbs);
+            files.value=""
+                console.log(this.galleryimages);
+                
+                this.progresshow=false
+                this.cropperhide=true
+                this.galleryimages.push({business_image_id:business_image_id,url:encodeURIComponent(this.fbs),showurl:this.fbs,type:this.addmaincategory.get('imagetype').value})
+                console.log(this.galleryimages);
+    
+            }
+            )
+            )
+            .subscribe(url => {
+              if (url) {
+                this.fbs = url;
+          
+            }
+          });
+        })
+      )
+      .subscribe(
+  
+      );
+ 
   }
   imageCropped(event:ImageCroppedEvent) {
   
@@ -517,8 +613,22 @@ export class AddbusinessComponent implements OnInit {
 changesubcategory(index,value){
   this.subcaterories[index].value=value
 }
-cropperHide(){
+cropperHide(type){
+  this.addmaincategory.get('imagetype').setValue(type)
   this.cropperhide=false
+}
+changedata(type,event){
+  console.log(type);
+  console.log(event);
+  if(type=='service_name'){
+    this.service_name_options.push(this.service_name.value)
+    this.service_name.setValue('')
+  }
+  else if(type=='arabic_service_name'){
+    this.arabic_service_name_options.push(this.arabic_service_name.value)
+    this.arabic_service_name.setValue('')
+  }
+  
 }
   
 }
