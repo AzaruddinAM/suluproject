@@ -90,7 +90,7 @@ export class AddmaincategoryComponent implements OnInit {
     api.subscribe(sub_category => {
       // this.subcaterories= sub_category.data
       this.subcaterories = (sub_category.status) ? sub_category.data:[]
-      // this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
+      this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
       console.log(this.subcaterories);
       
     

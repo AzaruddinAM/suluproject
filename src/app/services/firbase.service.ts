@@ -53,7 +53,7 @@ export class FirbaseService {
           .subscribe(url => {
             if (url) {
               this.fbs = url;
-              localStorage.setItem('imageurl',encodeURIComponent(url))
+              // localStorage.setItem('imageurl',encodeURIComponent(url))
         
           }
         });

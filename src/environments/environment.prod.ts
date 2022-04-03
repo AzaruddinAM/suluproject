@@ -1,10 +1,10 @@
 export const environment = {
   production: true,
-  'Category': 'http://sulaimankc.live/v1/category',// category
-  // 'Mobileapp': 'http://sulaimankc.live/mobileapp',// mobileapp
-  'Mobileapp': 'http://sulaimankc.live/v1/api',// mobileapp
-  'Droptable': 'http://sulaimankc.live/v1/create_table',// create_table 
-  'File': 'http://sulaimankc.live/category/v1/file',// file 
+  'Category': 'https://dalelna.co/v1/category',// category
+  // 'Mobileapp': 'http://dalelna.co/mobileapp',// mobileapp
+  'Mobileapp': 'https://dalelna.co/v1/api',// mobileapp
+  'Droptable': 'https://dalelna.co/v1/create_table',// create_table 
+  'File': 'https://dalelna.co/category/v1/file',// file 
   firebaseConfig : {
     apiKey: "AIzaSyDrIJrfYmg88ZF0Tnm6vwXOKdiTyU3mTLM",
     authDomain: "dalelna-abb4e.firebaseapp.com",
