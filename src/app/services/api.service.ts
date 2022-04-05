@@ -47,11 +47,15 @@ export class ApiService {
     .pipe(map((response: any) => {return response}))
     .pipe(catchError(err=>{
       if (err.status == 401) {
+        console.log("404");
+        
         //alert('EMPTY');
       } else {
         if (err.status == 0) {
           console.log('Server offaayi  ...');
         }
+        console.log(err);
+        
         return throwError(err);
       }
     }))

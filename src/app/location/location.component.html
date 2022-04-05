@@ -1,0 +1,88 @@
+<div class="col-12 grid-margin ">
+    <div class="card " >
+      <div class="card-body lightbluethinbg">
+        <h4 class="card-title">Add Location</h4>
+        <form class="form-sample" [formGroup]="addmaincategory"  >
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="sizefull">
+                <input matInput class="text-danger" placeholder="Name" formControlName="name" required>
+                <mat-error *ngFor="let validation of notification_validation_message.name">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('name').hasError(validation.type) && (addmaincategory.get('name').dirty || addmaincategory.get('name').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="sizefull">
+                  <input matInput class="text-danger" placeholder="Arabic Name" formControlName="arabic_name" required>
+                  <mat-error *ngFor="let validation of notification_validation_message.arabic_name">
+                    <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_name').hasError(validation.type) && (addmaincategory.get('arabic_name').dirty || addmaincategory.get('arabic_name').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            <div class="col-md-4">
+
+              <mat-form-field class="sizefull">
+                <input matInput class="text-danger" placeholder="Latitude" formControlName="latitude" required>
+                <mat-error *ngFor="let validation of notification_validation_message.latitude">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('latitude').hasError(validation.type) && (addmaincategory.get('latitude').dirty || addmaincategory.get('latitude').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+
+            <mat-form-field class="sizefull">
+                <input matInput class="text-danger" placeholder="Longitude" formControlName="longitude" required>
+                <mat-error *ngFor="let validation of notification_validation_message.longitude">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('longitude').hasError(validation.type) && (addmaincategory.get('longitude').dirty || addmaincategory.get('longitude').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-8">
+                <mat-form-field class="sizefull w-100">
+                  <input matInput class="text-danger" placeholder="Body" formControlName="body" required>
+                  <mat-error *ngFor="let validation of notification_validation_message.body">
+                    <mat-error class="error-message" *ngIf="addmaincategory.get('body').hasError(validation.type) && (addmaincategory.get('body').dirty || addmaincategory.get('body').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div> -->
+             
+   
+          </div>
+          <!-- <div class="row p-4">
+            <mat-radio-group formControlName="type" class="d-flex flex-md-row justify-content-md-around w-100" aria-label="Select an option">
+                <mat-radio-button class="pe-5" [value]="1">None</mat-radio-button>
+                <mat-radio-button class="pe-5" [value]="2">Business</mat-radio-button>
+                <mat-radio-button class="pe-5" [value]="3">Link</mat-radio-button>
+              </mat-radio-group>
+
+
+          </div>
+          <div class="row pe-4" *ngIf="this.addmaincategory.get('type').value==2">
+            <div class="col-md-4 ">
+                <mat-form-field appearance="fill">
+                    <mat-label>Business</mat-label>
+                    <mat-select formControlName="url">
+                      <mat-option *ngFor="let item of businessnames" [value]="item.business_id">{{item.name}}</mat-option>
+            
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+          </div>
+          <div class="row pe-4" *ngIf="this.addmaincategory.get('type').value==3">
+            <div class="col-md-8">
+                <mat-form-field class="sizefull w-100">
+                    <input matInput class="text-danger" placeholder="Url" formControlName="url" required>
+                    <mat-error *ngFor="let validation of notification_validation_message.url">
+                      <mat-error class="error-message" *ngIf="addmaincategory.get('url').hasError(validation.type) && (addmaincategory.get('url').dirty || addmaincategory.get('url').touched)">{{validation.message}}</mat-error>
+                    </mat-error>
+                  </mat-form-field>
+              </div>
+          </div> -->
+    <div class="row p-3">
+      <input class="text-center mr-4 float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD LOCATION">
+    </div>
+        </form>
+      </div>
+    </div>
+  </div>

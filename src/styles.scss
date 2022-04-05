@@ -76,3 +76,17 @@ background-color: #b66dff !important;
     border-color: black !important;
     border-width: thin !important
 }
+.addbutton{
+    width: 70px;
+    background-color: rgba(105,240,174,.54);
+    border-radius: 10px;
+    border-color: rgba(105,240,174,.54);
+}
+.prevent-click{
+    pointer-events: none;
+  }
+  .authorize-click{
+    pointer-events: auto !important;
+  }
+
+

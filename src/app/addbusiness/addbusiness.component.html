@@ -11,7 +11,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Name" formControlName="name" required>
+              <input matInput  placeholder="Name" formControlName="name" required>
               <mat-error *ngFor="let validation of business_validation_message.name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('name').hasError(validation.type) && (addmaincategory.get('name').dirty || addmaincategory.get('name').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -49,7 +49,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Sub Name" formControlName="sub_name" required>
+              <input matInput  placeholder="Sub Name" formControlName="sub_name" required>
               <mat-error *ngFor="let validation of business_validation_message.sub_name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('sub_name').hasError(validation.type) && (addmaincategory.get('sub_name').dirty || addmaincategory.get('sub_name').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -58,62 +58,68 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Sub Name" formControlName="arabic_sub_name" required>
+              <input matInput  placeholder="Sub Name" formControlName="arabic_sub_name" required>
               <mat-error *ngFor="let validation of business_validation_message.arabic_sub_name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_sub_name').hasError(validation.type) && (addmaincategory.get('arabic_sub_name').dirty || addmaincategory.get('arabic_sub_name').touched)">{{validation.message}}</mat-error>
               </mat-error>
             </mat-form-field>
           </div>
         
+         
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Description" formControlName="description" required>
-              <mat-error *ngFor="let validation of business_validation_message.description">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('description').hasError(validation.type) && (addmaincategory.get('description').dirty || addmaincategory.get('description').touched)">{{validation.message}}</mat-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-           
-            <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Arabic Description" formControlName="arabic_description" required>
-              <mat-error *ngFor="let validation of business_validation_message.arabic_description">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_description').hasError(validation.type) && (addmaincategory.get('arabic_description').dirty || addmaincategory.get('arabic_description').touched)">{{validation.message}}</mat-error>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-           
-            <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Address" formControlName="address" required>
+              <input matInput  placeholder="Address" formControlName="address" required>
               <mat-error *ngFor="let validation of business_validation_message.address">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('address').hasError(validation.type) && (addmaincategory.get('address').dirty || addmaincategory.get('address').touched)">{{validation.message}}</mat-error>
               </mat-error>
             </mat-form-field>
           </div>
           <div class="col-md-3">
+            <div class="col-md-3">
            
-            <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Mapingname" formControlName="mapingname" required>
+              <mat-form-field class="sizefull">
+                <input matInput  placeholder="Arabic Address" formControlName="arabic_address" required>
+                <mat-error *ngFor="let validation of business_validation_message.arabic_address">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_address').hasError(validation.type) && (addmaincategory.get('arabic_address').dirty || addmaincategory.get('arabic_address').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            </div>
+            <div class="col-md-3">
+            <!-- <mat-form-field class="sizefull">
+              <input matInput  placeholder="Mapingname" formControlName="mapingname" required>
               <mat-error *ngFor="let validation of business_validation_message.mapingname">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('mapingname').hasError(validation.type) && (addmaincategory.get('mapingname').dirty || addmaincategory.get('mapingname').touched)">{{validation.message}}</mat-error>
               </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
+            <mat-form-field class="sizefull">
+              <!-- <input matInput  placeholder="Image Type" formControlName="imagetype" required> -->
+              <mat-label>Location Name</mat-label>
+              <mat-select formControlName="mapingname" required>
+                <mat-option *ngFor="let item of locations" [value]="item.name">{{item.name}}</mat-option>
+                <!-- <mat-option value="2">Sub Image</mat-option>
+                <mat-option value="3">Gallery</mat-option> -->
+
+                </mat-select>
+              <mat-error *ngFor="let validation of business_validation_message.mapingname">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('mapingname').hasError(validation.type) && (addmaincategory.get('mapingname').dirty || addmaincategory.get('mapingname').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
           </div>
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Arabic Mapingname" formControlName="arabic_mapingname" required>
+              <input matInput  placeholder="Arabic Mapingname" formControlName="arabic_mapingname" required>
               <mat-error *ngFor="let validation of business_validation_message.arabic_mapingname">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_mapingname').hasError(validation.type) && (addmaincategory.get('arabic_mapingname').dirty || addmaincategory.get('arabic_mapingname').touched)">{{validation.message}}</mat-error>
               </mat-error>
             </mat-form-field>
-          </div>
+          </div> -->
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Latitude" formControlName="latitude" required>
+              <input matInput  placeholder="Latitude" formControlName="latitude" required>
               <mat-error *ngFor="let validation of business_validation_message.latitude">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('latitude').hasError(validation.type) && (addmaincategory.get('latitude').dirty || addmaincategory.get('latitude').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -122,7 +128,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Longitude" formControllongitude="longitude" required>
+              <input matInput  placeholder="Longitude" formControlName="longitude" required>
               <mat-error *ngFor="let validation of business_validation_message.longitude">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('longitude').hasError(validation.type) && (addmaincategory.get('longitude').dirty || addmaincategory.get('longitude').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -131,7 +137,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Phone Number" formControlName="phone_number" required>
+              <input matInput  placeholder="Phone Number" formControlName="phone_number" required>
               <mat-error *ngFor="let validation of business_validation_message.phone_number">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('phone_number').hasError(validation.type) && (addmaincategory.get('phone_number').dirty || addmaincategory.get('phone_number').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -140,7 +146,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="alt_phone_number" formControlName="alt_phone_number" required>
+              <input matInput  placeholder="alt_phone_number" formControlName="alt_phone_number" required>
               <mat-error *ngFor="let validation of business_validation_message.alt_phone_number">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('alt_phone_number').hasError(validation.type) && (addmaincategory.get('alt_phone_number').dirty || addmaincategory.get('alt_phone_number').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -150,7 +156,7 @@
           <div class="col-md-3">
             
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Email" formControlName="email" required>
+              <input matInput  placeholder="Email" formControlName="email" required>
               <mat-error *ngFor="let validation of business_validation_message.email">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('email').hasError(validation.type) && (addmaincategory.get('email').dirty || addmaincategory.get('email').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -159,7 +165,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Slug" formControlName="slug" required>
+              <input matInput  placeholder="Slug" formControlName="slug" required>
               <mat-error *ngFor="let validation of business_validation_message.slug">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('slug').hasError(validation.type) && (addmaincategory.get('slug').dirty || addmaincategory.get('slug').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -169,7 +175,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Rating" formControlName="rating" required>
+              <input matInput  placeholder="Rating" formControlName="rating" required>
               <mat-error *ngFor="let validation of business_validation_message.rating">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('rating').hasError(validation.type) && (addmaincategory.get('rating').dirty || addmaincategory.get('rating').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -179,7 +185,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Web" formControlName="web" required>
+              <input matInput  placeholder="Web" formControlName="web" required>
               <mat-error *ngFor="let validation of business_validation_message.web">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('web').hasError(validation.type) && (addmaincategory.get('web').dirty || addmaincategory.get('web').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -191,7 +197,7 @@
             //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,   
             // web, social_media, timing, service_name, arabic_service_name -->
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Social Media" formControlName="social_media" required>
+              <input matInput  placeholder="Social Media" formControlName="social_media" required>
               <mat-error *ngFor="let validation of business_validation_message.social_media">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('social_media').hasError(validation.type) && (addmaincategory.get('social_media').dirty || addmaincategory.get('social_media').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -201,34 +207,93 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Timing" formControlName="timing" required>
+              <input matInput  placeholder="Timing" formControlName="timing" required>
               <mat-error *ngFor="let validation of business_validation_message.timing">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('timing').hasError(validation.type) && (addmaincategory.get('timing').dirty || addmaincategory.get('timing').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
              
           </div>
-          <div class="col-md-3">
+          
+         
+        
+        </div>
+        <div class="row">
+
+          <div class="col-md-6">
            
-            <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Service Name" formControlName="service_name" required>
+            <mat-form-field class="sizefull w-100">
+              <textarea matInput placeholder="Service Name" rows="3" maxlength="2000" formControlName="service_name"></textarea> 
+              <!-- <input matInput  placeholder="Service Name" formControlName="service_name" required> -->
               <mat-error *ngFor="let validation of business_validation_message.service_name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('service_name').hasError(validation.type) && (addmaincategory.get('service_name').dirty || addmaincategory.get('service_name').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
-             
+          <!-- <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text"
+                   placeholder="Service Name"
+                   aria-label="Service Name"
+                   matInput
+                   [formControl]="service_name"
+                   [matAutocomplete]="auto2"
+                   (change)="changedata('service_name',$event)"
+                   >
+            <mat-autocomplete #auto2="matAutocomplete">
+              <mat-option class="prevent-click" *ngFor="let option of service_name_options;let i=index" [value]="option">
+                {{option}}
+                <mat-icon class="authorize-click" (click)="service_name_options.splice(i,1)">close</mat-icon>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field> -->
           </div>
-          <div class="col-md-3">
+          <div class="col-md-6">
            
-            <mat-form-field class="sizefull">
-              <input matInput class="text-danger" placeholder="Arabic Service Name" formControlName="arabic_service_name" required>
+            <mat-form-field class="sizefull w-100">
+              <textarea matInput placeholder="Arabic Service Name" rows="3" maxlength="2000" formControlName="arabic_service_name"></textarea> 
+
+              <!-- <input matInput  placeholder="Arabic Service Name" formControlName="arabic_service_name" required> -->
               <mat-error *ngFor="let validation of business_validation_message.arabic_service_name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_service_name').hasError(validation.type) && (addmaincategory.get('arabic_service_name').dirty || addmaincategory.get('arabic_service_name').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
+          <!-- <mat-form-field class="example-full-width" appearance="fill">
+            <input type="text"
+                   placeholder="Arabic Service Name"
+                   aria-label="Arabic Service Name"
+                   matInput
+                   [formControl]="arabic_service_name"
+                   [matAutocomplete]="auto3"
+                   (change)="changedata('arabic_service_name',$event)"
+                   >
+            <mat-autocomplete #auto3="matAutocomplete">
+              <mat-option class="prevent-click" *ngFor="let option of arabic_service_name_options;let i=index" [value]="option" >
+                {{option}}
+                <mat-icon class="float-right authorize-click" (click)="arabic_service_name_options.splice(i,1)">close</mat-icon>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field> -->
              
           </div>
-        
+          <div class="col-md-6">
+           
+            <mat-form-field class="sizefull w-100">
+              <textarea matInput placeholder="Description" rows="3" maxlength="2000" formControlName="description"></textarea> 
+              <!-- <input matInput  placeholder="Description" formControlName="description" required> -->
+              <mat-error *ngFor="let validation of business_validation_message.description">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('description').hasError(validation.type) && (addmaincategory.get('description').dirty || addmaincategory.get('description').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+           
+            <mat-form-field class="sizefull w-100">
+              <textarea matInput placeholder="Arabic Description" rows="3" maxlength="2000" formControlName="arabic_description"></textarea> 
+              <!-- <input matInput  placeholder="Arabic Description" formControlName="arabic_description" required> -->
+              <mat-error *ngFor="let validation of business_validation_message.arabic_description">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_description').hasError(validation.type) && (addmaincategory.get('arabic_description').dirty || addmaincategory.get('arabic_description').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field>
+          </div>
         </div>
         <div class="row">
           <div class="col-md-3"  *ngFor="let item of subcaterories; let i=index">
@@ -238,13 +303,12 @@
         <div class="row">
            <div class="col-md-3">
             <mat-form-field class="sizefull">
-              <!-- <input matInput class="text-danger" placeholder="Image Type" formControlName="imagetype" required> -->
+              <!-- <input matInput  placeholder="Image Type" formControlName="imagetype" required> -->
               <mat-label>Choose Image Type</mat-label>
               <mat-select formControlName="imagetype" required>
-                <mat-option value="1">1</mat-option>
-                <mat-option value="2">2</mat-option>
-                <mat-option value="3">3</mat-option>
-
+                <mat-option value="1">Main Image</mat-option>
+                <mat-option value="2">Sub Image</mat-option>
+                <mat-option value="3">Gallery</mat-option>
                 </mat-select>
               <mat-error *ngFor="let validation of business_validation_message.imagetype">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('imagetype').hasError(validation.type) && (addmaincategory.get('imagetype').dirty || addmaincategory.get('imagetype').touched)">{{validation.message}}</mat-error>
@@ -253,6 +317,7 @@
            </div>
            <div class="col-md-3">
               <input class="text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD BUSINESS">
+              <mat-error>{{error}}</mat-error>
            </div>
         
            
@@ -261,9 +326,9 @@
           <div class="row">
             <div class="col-md-3">
   
-            <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
+            <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload1.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
           
-          <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload/>
+          <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload1/>
         </div>
         <div class="col-md-6">
          
@@ -271,7 +336,7 @@
         </div>
         <div class="col-md-3">
          
-          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase()"  tooltip="Click to Add Image" value="ADD IMAGE">
+          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase(fileupload1)"  tooltip="Click to Add Image" value="ADD IMAGE">
         </div>
           </div>
            <div class="row" style="margin-top: 15px;">
@@ -280,7 +345,7 @@
                   <image-cropper 
                   [imageChangedEvent]="imageChangedEvent" 
                   [maintainAspectRatio]="true" 
-                  [aspectRatio]="4 / 4"
+                  [aspectRatio]="25 / 11"
                   format="png" 
                   (imageCropped)="imageCropped($event)" 
                   (imageLoaded)="imageLoaded()"
@@ -289,18 +354,20 @@
               </div>
               <div class="text-center col-md-4">
                   <h5>Preview</h5>
-                  <img class="w-100"  [src]="croppedImage" />
+                  <img class="w-100"   [src]="croppedImage" />
               </div>
           </div>
         </div>
-        <div *ngIf="cropperhide && addmaincategory.get('imagetype').value=='1'" class="text-center row">
+        <h3 *ngIf="cropperhide && type1images.length>0">Main Image</h3>
+        <div *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1' || addmaincategory.get('imagetype').value=='2' ||addmaincategory.get('imagetype').value=='3')" class="text-center row">
           <div class="col-md-6 p-1">
   
-            <img [src]="this.type1images[0].showurl" />
+            <img  height="150px" [src]="type1images[0].showurl" />
+
           </div>
-          <div class="col-md-6 p-1 d-flex flex-column">
+          <div class="col-md-6 p-1 d-flex flex-column" *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1')">
             <div class="row-md-6 p-1">
-              <input class="text-center float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide()" value="CHANGE IMAGE">
+              <input class="text-center float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide('1')" value="CHANGE IMAGE">
               <!-- <input class="text-center mr-4 float-right btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD MAIN CATEGORY"> -->
             </div>
           </div>
@@ -315,11 +382,11 @@
         </div>
         <div class="col-md-6">
          
-          <mat-progress-bar *ngIf="progresshow" mode="indeterminate" [value]="percentage"></mat-progress-bar>
+          <mat-progress-bar *ngIf="progresshow" mode="indeterminate" ></mat-progress-bar>
         </div>
         <div class="col-md-3">
          
-          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="multipleuploadtofirebase()"  tooltip="Click to Add Image" value="ADD IMAGE">
+          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="multipleuploadtofirebase(fileupload)"  tooltip="Click to Add Image" value="ADD IMAGE">
         </div>
           </div>
            <div class="row" style="margin-top: 15px;">
@@ -341,27 +408,69 @@
               </div>
           </div>
         </div>
-        <!-- *ngIf="cropperhide && addmaincategory.get('imagetype').value=='2'"  -->
-        <div class="text-center row">
+        <!-- *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1' || addmaincategory.get('imagetype').value=='2' ||addmaincategory.get('imagetype').value=='3')"  -->
+        <h3 *ngIf="cropperhide && images.length>0">Sub Images</h3>
+        <div *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1' || addmaincategory.get('imagetype').value=='2' ||addmaincategory.get('imagetype').value=='3')" class="text-center row">
           <div class="col-md-4 p-1" *ngFor="let image of images">
   
-            <img class="w-100" [src]="image.showurl" />
+            <img  width="150px" height="150px" [src]="image.showurl" />
           </div>
-          <!-- <div class="row p-1"> -->
           <div class="row-md-4 p-1 " *ngIf="cropperhide && addmaincategory.get('imagetype').value=='2'">
-            <!-- <div class="col"> -->
-              <input class="text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide()" value="ADD IMAGE">
-            <!-- </div> -->
-            <!-- <div class="col"> -->
-            <!-- </div> -->
+
+              <input class="text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide('2')" value="ADD SUB IMAGE">
+
           </div>
-          <!-- </div> -->
-          <!-- <div class="col-md-6 p-1 d-flex flex-column">
-            <div class="row-md-6 p-1">
-              <input class="text-center float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide()" value="CHANGE IMAGE">
-              <input class="text-center mr-4 float-right btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD MAIN CATEGORY">
-            </div>
-          </div> -->
+     
+        </div>
+        <div *ngIf="!cropperhide && addmaincategory.get('imagetype').value=='3'" class="card-body" >
+          <div class="row">
+            <div class="col-md-3">
+  
+            <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload3.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
+          
+          <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload3/>
+        </div>
+        <div class="col-md-6">
+         
+          <mat-progress-bar *ngIf="progresshow" mode="indeterminate" ></mat-progress-bar>
+        </div>
+        <div class="col-md-3">
+         
+          <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="multiplegalleryuploadtofirebase(fileupload3)"  tooltip="Click to Add Image" value="ADD IMAGE">
+        </div>
+          </div>
+           <div class="row" style="margin-top: 15px;">
+              <div class="text-center col-md-8">
+                  <h5>Crop Image</h5>
+                  <image-cropper 
+                  [imageChangedEvent]="imageChangedEvent" 
+                  [maintainAspectRatio]="true" 
+                  [aspectRatio]="4 / 4"
+                  format="png" 
+                  (imageCropped)="imageCropped($event)" 
+                  (imageLoaded)="imageLoaded()"
+                  (cropperReady)="cropperReady()" 
+                  (loadImageFailed)="loadImageFailed()"></image-cropper>
+              </div>
+              <div class="text-center col-md-4">
+                  <h5>Preview</h5>
+                  <img class="w-100"  [src]="croppedImage" />
+              </div>
+          </div>
+        </div>
+        <!-- *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1' || addmaincategory.get('imagetype').value=='2' ||addmaincategory.get('imagetype').value=='3')"  -->
+        <h3 *ngIf="cropperhide && galleryimages.length>0">Gallery Images</h3>
+        <div *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1' || addmaincategory.get('imagetype').value=='2' ||addmaincategory.get('imagetype').value=='3')" class="text-center row">
+          <div class="col-md-4 p-1" *ngFor="let image of galleryimages">
+  
+            <img width="150px" height="150px" [src]="image.showurl" />
+          </div>
+          <div class="row-md-4 p-1 " *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='3')">
+
+              <input class="text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide('3')" value="ADD GALLERY IMAGE">
+
+          </div>
+     
         </div>
       
       </form>

@@ -49,6 +49,11 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSelectModule} from '@angular/material/select';
+import { BusinessenqueryComponent } from './businessenquery/businessenquery.component';
+import { NotificationComponent } from './notification/notification.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { LocationComponent } from './location/location.component';
 const APP_CONTAINERS = [
   MainlayoutComponent
 ];
@@ -72,11 +77,16 @@ const APP_CONTAINERS = [
     AddsubcategoryComponent,
     BusinessComponent,
     AddbusinessComponent,
-    UsersComponent
+    UsersComponent,
+    BusinessenqueryComponent,
+    NotificationComponent,
+    LocationComponent
   ],
   imports: [
     // StorageBucket
     // AngularFirestore,
+    MatAutocompleteModule,
+    MatRadioModule,
     MatSelectModule,
     MatProgressBarModule,
     AngularFireStorageModule,

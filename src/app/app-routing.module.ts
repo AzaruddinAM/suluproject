@@ -11,6 +11,9 @@ import { AddsubcategoryComponent } from './addsubcategory/addsubcategory.compone
 import { BusinessComponent } from './business/business.component';
 import { AddbusinessComponent } from './addbusiness/addbusiness.component';
 import { UsersComponent } from './users/users.component';
+import { BusinessenqueryComponent } from './businessenquery/businessenquery.component';
+import { NotificationComponent } from './notification/notification.component';
+import { LocationComponent } from './location/location.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -28,6 +31,9 @@ const routes: Routes = [
   { path: 'business',component:BusinessComponent },
   { path: 'addbusiness',component:AddbusinessComponent },
   { path: 'users',component:UsersComponent },
+  { path: 'businessenqueries',component:BusinessenqueryComponent },
+  { path: 'notification',component:NotificationComponent },
+  { path: 'location',component:LocationComponent },
   { path: 'basic-ui', loadChildren: () => import('./basic-ui/basic-ui.module').then(m => m.BasicUiModule) },
   { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsDemoModule) },
   { path: 'forms', loadChildren: () => import('./forms/form.module').then(m => m.FormModule) },

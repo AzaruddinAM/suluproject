@@ -3,11 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
 import { ValidationmessagesService } from '../services/validationmessages.service';
 import { FirbaseService } from '../services/firbase.service';
+import { tap,finalize, map, catchError } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-addbusiness',
@@ -18,10 +20,14 @@ export class AddbusinessComponent implements OnInit {
 
   
     title = 'ngImageCrop';
-    imageurl:any="assets/images/maincategory/demo.png"
+    // imageurl:any="assets/images/maincategory/demo.png"
+    arabic_service_name = new FormControl();
+    service_name = new FormControl();
+
     imageChangedEvent: any = '';
     croppedImage: any ;
     subcaterories:any =[]
+    galleryimages:any =[]
     images:any =[]
     // [{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'}]
     type1images:any=[]
@@ -45,38 +51,45 @@ export class AddbusinessComponent implements OnInit {
       percentage:number=-1
       cropperhide:boolean=false
       progresshow:boolean=false
+      addoredit='add'
+  error: string;
+  locations:any=[]
+  arabic_service_name_options:any=[]
+  service_name_options:any=[]
       // @Input() public appFormControl: NgControl;
     constructor(private router : Router,
       private fb : FormBuilder,
       private http:HttpClient,
       private api:ApiService,
       private validationmessagesService:ValidationmessagesService,
-      private firebase: FirbaseService) {
+      private firebase: FirbaseService,
+      private storage:AngularFireStorage,) {
       this.params = this.router.getCurrentNavigation().extras.state;
       this.addmaincategory= this.fb.group({
-        name: new FormControl('ajju1', [Validators.required]),
-      arabic_name: new FormControl('ajjuarabic1', [Validators.required]),
+      name: new FormControl('', [Validators.required]),
+      arabic_name: new FormControl('', [Validators.required]),
       is_active: new FormControl(true, [Validators.required]),
-      sub_name: new FormControl('sub_name1', [Validators.required]),
-      arabic_sub_name: new FormControl('arabic_sub1', [Validators.required]),
-      discription: new FormControl('discription', [Validators.required]),
-      arabic_description: new FormControl('arabic_description', [Validators.required]),
-      address: new FormControl('address', [Validators.required]),
-      mapingname: new FormControl('mapingname', [Validators.required]),
-      arabic_mapingname: new FormControl('arabic_mapingname', [Validators.required]),
-      latitude: new FormControl(46545.56, [Validators.required]),
-      longitude: new FormControl(45665.66, [Validators.required]),
-      phone_number: new FormControl('12345678', [Validators.required]),
-      alt_phone_number: new FormControl('3456789', [Validators.required]),
-      email: new FormControl('dfchgv@hgdf.dsds', [Validators.required]),
-      slug: new FormControl('slug', [Validators.required]),
-      rating: new FormControl('rating', [Validators.required]),
-      web: new FormControl('web', [Validators.required]),
-      social_media: new FormControl('social', [Validators.required]),
-      timing: new FormControl('timing', [Validators.required]),
-      service_name: new FormControl({s1:"",data:['s1','s2']}, [Validators.required]),
-      arabic_service_name: new FormControl({sa1:"",data:['sa1','sa2']}, [Validators.required]),
-      imagetype: new FormControl()
+      sub_name: new FormControl('', [Validators.required]),
+      arabic_sub_name: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
+      arabic_description: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      arabic_address: new FormControl('', [Validators.required]),
+      mapingname: new FormControl('', [Validators.required]),
+      // arabic_mapingname: new FormControl('arabic_mapingname', [Validators.required]),
+      latitude: new FormControl(0.00, [Validators.required]),
+      longitude: new FormControl(0.00, [Validators.required]),
+      phone_number: new FormControl('', [Validators.required]),
+      alt_phone_number: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      slug: new FormControl('', [Validators.required]),
+      rating: new FormControl('', [Validators.required]),
+      web: new FormControl('', [Validators.required]),
+      social_media: new FormControl('', [Validators.required]),
+      timing: new FormControl('', [Validators.required]),
+      service_name: new FormControl('', [Validators.required]),
+      arabic_service_name: new FormControl('', [Validators.required]),
+      imagetype: new FormControl('1', [Validators.required]),
 
       })
      }
@@ -85,31 +98,36 @@ export class AddbusinessComponent implements OnInit {
       this.business_validation_message = this.validationmessagesService.Business_Validation_Message;
       this.params=history.state;
       this.business_id=this.params.business_id
+      console.log(this.params.data);
+      
       this.datas=JSON.parse(this.params.data)
-      let body = 'date='+Date();
-      this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
-      .subscribe(sub_category => {
+      var  body = 'date='+Date()+'&business_id='+this.business_id;
+      // this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
+      var api
+    if(this.business_id ==='new')
+      api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list_location" ,body )
+    else
+     api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list_in_business_locations" ,body )
+      api.subscribe(sub_category => {
         // this.subcaterories= sub_category.data
-        this.subcaterories = (sub_category.status) ? sub_category.data:[]
+        this.subcaterories = (sub_category.status) ? sub_category.sub_category_data:[]
+        this.locations = (sub_category.status) ? sub_category.location_data:[]
         this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
         console.log(this.subcaterories);
       if(this.business_id !=='new')
       {
-      // alert(JSON.stringify(this.params))
-      // let index = this.datas.findIndex(item=>item.id==this.id)
-      
+      this.addoredit='edit'
       this.addmaincategory= new FormGroup({
-        // name , image_url , order_column ,  is_active , id 
         name: new FormControl(this.datas['name'], [Validators.required]),
         arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
         is_active: new FormControl(this.datas['is_active'], [Validators.required]),
         sub_name: new FormControl(this.datas['sub_name'], [Validators.required]),
         arabic_sub_name: new FormControl(this.datas['arabic_sub_name'], [Validators.required]),
-        discription: new FormControl(this.datas['discription'], [Validators.required]),
+        description: new FormControl(this.datas['description'], [Validators.required]),
         arabic_description: new FormControl(this.datas['arabic_description'], [Validators.required]),
         address: new FormControl(this.datas['address'], [Validators.required]),
-        latitude: new FormControl(this.datas['latitude'], [Validators.required]),
-        longitude: new FormControl(this.datas['longitude'], [Validators.required]),
+        arabic_address: new FormControl(this.datas['arabic_address'], [Validators.required]),
+        mapingname: new FormControl('', [Validators.required]),
         phone_number: new FormControl(this.datas['phone_number'], [Validators.required]),
         alt_phone_number: new FormControl(this.datas['alt_phone_number'], [Validators.required]),
         email: new FormControl(this.datas['email'], [Validators.required]),
@@ -120,20 +138,65 @@ export class AddbusinessComponent implements OnInit {
         timing: new FormControl(this.datas['timing'], [Validators.required]),
         service_name: new FormControl(this.datas['service_name'], [Validators.required]),
         arabic_service_name: new FormControl(this.datas['arabic_service_name'], [Validators.required]),
-        imagetype: new FormControl(this.datas['imagetype'], [Validators.required])
-
-        // image_url: new FormControl(this.datas['image_url'], [Validators.required]),
-        // order_column: new FormControl(this.datas['order_column'], [Validators.required]),
-  
-        // business_id:new FormControl(this.business_id, [Validators.required])
-        // Isactive: ['', Validators.required],
-        // Image: ['', Validators.required],
-        // subcaterories: this.fb.array(this.subcaterories),
-        // name, arabic_name, is_active, sub_name, arabic_sub_name,description,arabic_description,
-        //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,   
-        // web, social_media, timing, service_name, arabic_service_name
-  
+        imagetype: new FormControl('1', [Validators.required])
       });
+      let api2
+        api2=this.api.Postwithouttoken(environment['Category']+'/get_businessimages_location',body)
+        // .pipe(map((data: any) => data.result ), 
+        //           catchError(error => { return throwError('Its a Trap!')})
+        //     )
+
+        api2.subscribe(
+          items=>{
+            console.log(items);
+            
+            if(items.status){
+              var images=JSON.parse(items.images)
+              if(images.length>0)
+              {
+              images.forEach(element => {
+                let json={}
+                json['business_image_id']=element.business_image_id
+                json['url']=encodeURIComponent(element.image_url)
+                json['showurl']=element.image_url
+                json['type']=element.type
+                if(element.type=='1')
+                  this.type1images.push(json)
+                else if(element.type=='2')
+                  this.images.push(json)
+                else if(element.type=='3')
+                  this.galleryimages.push(json)
+              });
+              this.cropperhide=true
+            }
+            var locations =JSON.parse(items.locations)
+            if(locations.length>0)
+              {
+              // locations.forEach(element => {
+                this.addmaincategory.get('mapingname').setValue(locations[0].name)
+                // this.addmaincategory.get('arabic_mapingname').setValue(element.arabic_name)
+                // this.addmaincategory.get('latitude').setValue(element.latitude)
+                // this.addmaincategory.get('longitude').setValue(element.longitude)
+
+                // mapingname= new FormControl('mapingname', [Validators.required]),
+                // arabic_mapingname: new FormControl('arabic_mapingname', [Validators.required]),
+                // latitude: new FormControl(46545.56, [Validators.required]),
+                // longitude: new FormControl(45665.66, [Validators.required]),
+              // });
+            }
+            }
+            else{
+              console.log("reponse error");
+              
+            }
+          }
+        )
+
+        
+      // alert(JSON.stringify(this.params))
+      // let index = this.datas.findIndex(item=>item.id==this.id)
+      // let body2='business_id='+
+   
       // this.subcaterories.forEach(element => {
       //   this.addmaincategory.addControl(element.name, new FormControl(element.value, Validators.required));
   
@@ -148,9 +211,11 @@ export class AddbusinessComponent implements OnInit {
     //       return new File([response], "myImage.png");
     //     })
     //   );
-      console.log(this.imageChangedEvent);
+      // console.log(this.imageChangedEvent);
       }
       else{
+      this.addoredit='add'
+
         let business_id=Math.random().toString(36).substr(2, 9);
        
   
@@ -180,22 +245,33 @@ export class AddbusinessComponent implements OnInit {
     }
     onSubmit(){
       // console.log("onSubmit");
+      if(this.type1images.length>0)
+      {
       console.log("onSubmit");
       console.log(this.addmaincategory.value);
       console.log(this.subcaterories);
       let body 
       this.subcaterories = this.subcaterories.filter(item=>item.value==true)
-      if(this.addmaincategory.get('imagetype').value=='1')
-      {
-        this.type1images =this.type1images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
-      body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(this.type1images)+'&date='+Date();
+      var images=[]
+      images = [...this.type1images,...this.images,...this.galleryimages]
+      images=images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
+      // console.log(this.locations);
+      // console.log(this.addmaincategory.get('mapingname').value);
       
-    }
-      else if(this.addmaincategory.get('imagetype').value=='2'){
-        this.images =this.images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
-      body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(this.images)+'&date='+Date();
+      var index=this.locations.findIndex(item=>item.name==this.addmaincategory.get('mapingname').value)
       
-      }
+    //   if(this.addmaincategory.get('imagetype').value=='1')
+    //   {
+    //     this.type1images =this.type1images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
+    //   body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(this.type1images)+'&date='+Date();
+      
+    // }
+    //   else if(this.addmaincategory.get('imagetype').value=='2'){
+    //     this.images =this.images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
+    // +'&service_name='+JSON.stringify(this.service_name_options)+'&arabic_service_name='+JSON.stringify(this.arabic_service_name_options)
+      body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(images)+'&location_id='+this.locations[index].location_id+'&business_id='+this.business_id+'&date='+Date();
+      
+      // }
       // 'name='+this.addmaincategory.get('Name').value+
       // 'image_url='+this.addmaincategory.get('Image').value+
       // 'name='+this.addmaincategory.get('Name').value+
@@ -221,91 +297,246 @@ export class AddbusinessComponent implements OnInit {
   
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(edit_business);
-      this.router.navigate(['/maincatogory'])
+      this.router.navigate(['/business'])
       })
     }
-      
+  }
+  else{
+    this.error="Should provide Main image"
+    setTimeout(() => {
+      this.error=""
+    }, 3000);
+  }
     }
     fileChangeEvent(event: any): void {
       this.imageChangedEvent = event;
       // this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
       
   }
-  uploadtofirebase(){
+  uploadtofirebase(files){
         let business_image_id =Math.random().toString(36).substr(2, 9);
 
-    localStorage.removeItem("image_url");
+    localStorage.removeItem("imageurl");
     this.progresshow=true
     const filePath = `business/type1/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
-    this.firebase.uploadfile(this.croppedImage,filePath,imagename)
-    .subscribe(
-      percentage => {
-        this.percentage = Math.round(percentage ? percentage : 0);
-        console.log(this.percentage);
-        if(this.percentage==100){
-          this.cropperhide=true
-          this.progresshow=false
-    // this.addmaincategory.get('image_url')
-  console.log(localStorage.getItem('imageurl'));
-  // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+    var n = imagename+'_'+Date.now();
+    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const file = byteString
+    console.log(file);
+    const fileRef = this.storage.ref(filePath+n);
+    const task = this.storage.upload(filePath+n, file);
+    console.log(task);
+    
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL =  fileRef.getDownloadURL();
+          
+          this.downloadURL
+          .pipe(
+            tap({
+              next: (x) => {
+                console.log('tap success', x);
+              },
+              error: (err) => {
+                console.log('tap error', err);
+              },
+              complete: () => {console.log('tap complete')
+              
+              console.log(localStorage.getItem('imageurl'));
+            }
+            }),
+            finalize(() => {
+            console.log(this.fbs);
+            files.value=""
+                console.log(this.type1images);
+                
+                this.progresshow=false
+                this.cropperhide=true
+                // localStorage.setItem('imageurl',encodeURIComponent(this.fbs))
+                this.type1images=[{business_image_id:business_image_id,url:encodeURIComponent(this.fbs),showurl:this.fbs,type:this.addmaincategory.get('imagetype').value}]
+                console.log(this.type1images);
+              // return 'completed'
+            }
+            )
+            )
+            .subscribe(url => {
+              if (url) {
+                this.fbs = url;
+                // localStorage.setItem('imageurl',encodeURIComponent(url))
+          
+            }
+          });
+        })
+      )
+      .subscribe(
+  
+      );
+      // return task.percentageChanges();
+    // this.firebase.uploadfile(this.croppedImage,filePath,imagename)
+    // .pipe(
+    //   tap({
+    //     next: (x) => {
+    //       console.log('tap success', x);
+    //       // this.isLoading = false;
+    //     },
+    //     error: (err) => {
+    //       console.log('tap error', err);
+    //       // this.isLoading = false;
+    //     },
+    //     complete: () => {console.log('tap complete')
 
-  this.type1images=[{business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value}]
-  
-        }
+    //     console.log(localStorage.getItem('imageurl'));
+
+    //   }
+    //   }),
+    //   finalize(() => {
+    //     file.value=""
+    //     console.log(this.type1images);
         
-      },
-      error => {
-        console.log(error);
-      }
-    )
-    // .subscribe(data=>{
-  
-    // }
+    //     this.progresshow=false
+    //     this.cropperhide=true
+    //     this.type1images=[{business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value}]
+    //     console.log(this.type1images);
+    //   })
     // )
-    // console.log(imageurl);
-    
-    // this.addmaincategory.get('image_url').setValue(this.firebase.uploadfile(this.croppedImage,filePath,'azar'))
-    console.log(this.addmaincategory.get('image_url').value);
-    
+    // .subscribe(
+    //   percentage => {
+    //     this.percentage = Math.round(percentage ? percentage : 0);
+    //     console.log(this.percentage);
+    //     if(this.percentage==100){
+    //     }
+        
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   }
+    // )
+  
   }
-  multipleuploadtofirebase(){
+  multipleuploadtofirebase(files){
     let business_image_id =Math.random().toString(36).substr(2, 9);
 
-    localStorage.removeItem("image_url");
+    localStorage.removeItem("imageurl");
     this.progresshow=true
     const filePath = `business/type2/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
-    this.firebase.uploadfile(this.croppedImage,filePath,imagename)
-    .subscribe(
-      percentage => {
-        this.percentage = Math.round(percentage ? percentage : 0);
-        console.log(this.percentage);
-        if(this.percentage==100){
-          this.cropperhide=true
-          this.progresshow=false
-    // this.addmaincategory.get('image_url')
-  console.log(localStorage.getItem('imageurl'));
-  // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+    var n = imagename+'_'+Date.now();
+    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const file = byteString
+    console.log(file);
+    const fileRef = this.storage.ref(filePath+n);
+    const task = this.storage.upload(filePath+n, file);
+    console.log(task);
+    
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL =  fileRef.getDownloadURL();
+          
+          this.downloadURL
+          .pipe(
+            tap({
+              next: (x) => {
+                console.log('tap success', x);
+              },
+              error: (err) => {
+                console.log('tap error', err);
+              },
+              complete: () => {console.log('tap complete')
+              
+              console.log(localStorage.getItem('imageurl'));
+            }
+            }),
+            finalize(() => {
+            console.log(this.fbs);
+            files.value=""
+                console.log(this.type1images);
+                
+                this.progresshow=false
+                this.cropperhide=true
+                this.images.push({business_image_id:business_image_id,url:encodeURIComponent(this.fbs),showurl:this.fbs,type:this.addmaincategory.get('imagetype').value})
+                console.log(this.type1images);
+    
+            }
+            )
+            )
+            .subscribe(url => {
+              if (url) {
+                this.fbs = url;
+          
+            }
+          });
+        })
+      )
+      .subscribe(
+  
+      );
+ 
+  }
+  multiplegalleryuploadtofirebase(files){
+    let business_image_id =Math.random().toString(36).substr(2, 9);
 
-  this.images.push({business_image_id:business_image_id,url:localStorage.getItem('imageurl'),showurl:decodeURIComponent(localStorage.getItem('imageurl')),type:this.addmaincategory.get('imagetype').value})
-  
-        }
-        
-      },
-      error => {
-        console.log(error);
-      }
-    )
-    // .subscribe(data=>{
-  
-    // }
-    // )
-    // console.log(imageurl);
+    localStorage.removeItem("imageurl");
+    this.progresshow=true
+    const filePath = `business/type3/`;
+    let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
+    var n = imagename+'_'+Date.now();
+    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const file = byteString
+    console.log(file);
+    const fileRef = this.storage.ref(filePath+n);
+    const task = this.storage.upload(filePath+n, file);
+    console.log(task);
     
-    // this.addmaincategory.get('image_url').setValue(this.firebase.uploadfile(this.croppedImage,filePath,'azar'))
-    // console.log(this.addmaincategory.get('image_url').value);
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL =  fileRef.getDownloadURL();
+          
+          this.downloadURL
+          .pipe(
+            tap({
+              next: (x) => {
+                console.log('tap success', x);
+              },
+              error: (err) => {
+                console.log('tap error', err);
+              },
+              complete: () => {console.log('tap complete')
+              
+              console.log(localStorage.getItem('imageurl'));
+            }
+            }),
+            finalize(() => {
+            console.log(this.fbs);
+            files.value=""
+                console.log(this.galleryimages);
+                
+                this.progresshow=false
+                this.cropperhide=true
+                this.galleryimages.push({business_image_id:business_image_id,url:encodeURIComponent(this.fbs),showurl:this.fbs,type:this.addmaincategory.get('imagetype').value})
+                console.log(this.galleryimages);
     
+            }
+            )
+            )
+            .subscribe(url => {
+              if (url) {
+                this.fbs = url;
+          
+            }
+          });
+        })
+      )
+      .subscribe(
+  
+      );
+ 
   }
   imageCropped(event:ImageCroppedEvent) {
   
@@ -359,6 +590,20 @@ export class AddbusinessComponent implements OnInit {
   
       /* show message */
   }
+  dataURLtoFile(dataurl, filename) {
+ 
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), 
+        n = bstr.length, 
+        u8arr = new Uint8Array(n);
+        
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    
+    return new File([u8arr], filename, {type:mime});
+  }
   dataURItoBlob(dataURI) {
     const byteString = window.atob(dataURI);
     const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -373,8 +618,22 @@ export class AddbusinessComponent implements OnInit {
 changesubcategory(index,value){
   this.subcaterories[index].value=value
 }
-cropperHide(){
+cropperHide(type){
+  this.addmaincategory.get('imagetype').setValue(type)
   this.cropperhide=false
+}
+changedata(type,event){
+  console.log(type);
+  console.log(event);
+  if(type=='service_name'){
+    this.service_name_options.push(this.service_name.value)
+    this.service_name.setValue('')
+  }
+  else if(type=='arabic_service_name'){
+    this.arabic_service_name_options.push(this.arabic_service_name.value)
+    this.arabic_service_name.setValue('')
+  }
+  
 }
   
 }

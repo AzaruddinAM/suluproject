@@ -3,7 +3,7 @@ import { AngularFireStorage } from "@angular/fire/storage";
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 // import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { map, finalize,catchError } from "rxjs/operators";
+import { map, finalize,catchError, tap } from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
@@ -18,9 +18,7 @@ export class FirbaseService {
   const byteString = this.dataURLtoFile(base64,filename);
   const file = byteString
   console.log(file);
-  // const filePath = `maincategory/${n}`;
   const fileRef = this.storage.ref(filePath+n);
-  // this.storage.child('ajjus').putString(file,'base64',{ contentType :'image/jpeg'})
   const task = this.storage.upload(filePath+n, file);
   console.log(task);
   
@@ -29,38 +27,42 @@ export class FirbaseService {
     .pipe(
       finalize(() => {
         this.downloadURL =  fileRef.getDownloadURL();
-        console.log(this.downloadURL);
         
-        this.downloadURL.subscribe(url => {
-          if (url) {
-            this.fbs = url;
-            // return this.fbs
-            console.log(this.sanitization.bypassSecurityTrustResourceUrl(url));
-            localStorage.setItem('imageurl',encodeURIComponent(url))
-          // return   this.fbs
-
+        this.downloadURL
+        .pipe(
+          tap({
+            next: (x) => {
+              console.log('tap success', x);
+            },
+            error: (err) => {
+              console.log('tap error', err);
+            },
+            complete: () => {console.log('tap complete')
+            
+            console.log(localStorage.getItem('imageurl'));
           }
+          }),
+          finalize(() => {
           console.log(this.fbs);
+
+            localStorage.setItem('imageurl',encodeURIComponent(this.fbs))
+            return 'completed'
+          }
+          )
+          )
+          .subscribe(url => {
+            if (url) {
+              this.fbs = url;
+              // localStorage.setItem('imageurl',encodeURIComponent(url))
+        
+          }
         });
       })
     )
     .subscribe(
-    //   url => {
-    //   if (url) {
-    //     console.log(url);
-    //     // console.log(this.fbs);
-    //     // return url
-    //   }
-    // }
+
     );
     return task.percentageChanges();
-  //   (await task).ref.getDownloadURL().then(url => {
-  //     console.log(url);
-      
-  //      this.fbs =  url;
-  //   console.log(this.fbs);
-  //   // return this.sanitization.bypassSecurityTrustResourceUrl(url)
-  // });
 
   }
   private dataURLtoFile(dataurl, filename) {

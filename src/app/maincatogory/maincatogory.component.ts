@@ -20,7 +20,7 @@ export class MaincatogoryComponent implements OnInit {
     { field: 'name', header: 'Name' },
     { field: 'arabic_name', header: 'Arabic Name' },
     // { field: 'number', header: 'number' },
-    { field: 'order_column', header: 'Order' },
+    // { field: 'order_column', header: 'Order' },
     { field: 'is_active', header: 'Isactive' },
     { field: '', header: '' }
 ];
