@@ -9,11 +9,11 @@ export const environment = {
   // 'Mobileapp': 'http://'+window.location.hostname+':3000/api',// mobileapp
   // 'Droptable': 'http://'+window.location.hostname+':3000/create_table',// create_table 
   // 'File': 'http://'+window.location.hostname+':3000/category/file',// file 
-  'Category': 'http://sulaimankc.live/v1/category',// category
+  'Category': 'https://dalelna.co/v1/category',// category
   // 'Mobileapp': 'http://sulaimankc.live/mobileapp',// mobileapp
-  'Mobileapp': 'http://sulaimankc.live/v1/api',// mobileapp
-  'Droptable': 'http://sulaimankc.live/v1/create_table',// create_table 
-  'File': 'http://sulaimankc.live/category/v1/file',// file 
+  'Mobileapp': 'https://dalelna.co/v1/api',// mobileapp
+  'Droptable': 'https://dalelna.co/v1/create_table',// create_table 
+  'File': 'https://dalelna.co/category/v1/file',// file 
   firebaseConfig : {
     apiKey: "AIzaSyDrIJrfYmg88ZF0Tnm6vwXOKdiTyU3mTLM",
     authDomain: "dalelna-abb4e.firebaseapp.com",

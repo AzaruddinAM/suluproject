@@ -64,7 +64,8 @@ export class AddmaincategoryComponent implements OnInit {
       arabic_name: new FormControl('',Validators.compose([Validators.required])),
       image_url: new FormControl('assets/images/maincategory/demo.png',Validators.compose([Validators.required])),
       order_column: new FormControl(3,Validators.compose([Validators.required])),
-      is_active: new FormControl(true,Validators.compose([Validators.required]))
+      is_active: new FormControl(true,Validators.compose([Validators.required])),
+      main_category_id:new FormControl(true,Validators.compose([Validators.required]))
 
       // main_category_id:new FormControl(main_category_id, [Validators.required])
       // Isactive: ['', Validators.required],
@@ -97,6 +98,7 @@ export class AddmaincategoryComponent implements OnInit {
   this.addmaincategory.get('image_url').setValue(this.datas['image_url'])
   this.addmaincategory.get('order_column').setValue(this.datas['order_column'])
   this.addmaincategory.get('is_active').setValue(this.datas['is_active'])
+  this.addmaincategory.get('main_category_id').setValue(this.main_category_id)
 
     // this.addmaincategory= new FormGroup({
     //   // name , image_url , order_column ,  is_active , id 
