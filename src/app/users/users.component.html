@@ -1,13 +1,5 @@
 <div>
-    <!-- <div class="row-md-6">
-        <label for=""> api</label>
-        <input [(ngModel)]="api" type="text">
-    </div>
-    <div class="row-md-6">
-        <label for=""> data</label>
-        <input [(ngModel)]="data" style="width:100%;" type="text">
-    </div> -->
-    <!-- <div><button (click)="get()">get</button></div> -->
+ 
     <p-table #dt [value]="datas"  dataKey="id" [columns]="cols" [reorderableColumns]="true"
     [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
      [paginator]="true" (onPage)="paginate()"
@@ -16,17 +8,10 @@
         <ng-template pTemplate="caption" >
             <div style="display: flex;" class="display-flex align-items-center justify-content-between tabhead">
                 Users Table
-                <!-- <mat-icon>add</mat-icon> -->
-                <!-- <button pButton type="button" icon="pi pi-plus" class="ui-button-info" [label]="'Add'" pAddRow
-                    [table]="dt" (click)="newRow(d.name,dt)"></button> -->
-                    <!-- <div>
-                        <button mat-fab class="addbutton" (click)="addnew()" ><mat-icon>add</mat-icon></button>
-                    </div> -->
             </div>
         </ng-template>
             <ng-template pTemplate="header" let-columns>
             <tr>
-                <!-- <th style="width:3rem" class="lightbluethinbg "></th> -->
                 <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '10%' : '' }">
                     <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                     <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
@@ -36,11 +21,7 @@
               <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
                 <tr class="p-selectable-row row-datas" [pReorderableRow]="index" >
       
-                    <!-- <td  [pReorderableRowHandle]="order()">
-                        <span  class="pi pi-bars"  ></span>
-                    </td> -->
-                    <td *ngFor="let col of columns">
-                    <!-- <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'">{{col.field}}</span> -->
+                    <td *ngFor="let col of columns" (click)="viewuser(rowData)">
                         <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
                         <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle 
                             class="example-margin"
@@ -49,8 +30,7 @@
                             >
                         </mat-slide-toggle></span>
                         <span *ngIf="col.field == 'image_url'" class="tablebackground" (click)="viewimage()"><img src={{rowData[col.field]}} width="50px" height="50px" alt="demo"></span>
-                        <!-- <span *ngIf="col.field == ''" class="tablebackground"><mat-icon (click)="edit(rowData)">edit</mat-icon>&nbsp;&nbsp;&nbsp; -->
-                        <!-- </span> -->
+                     
                     </td>
                 
       

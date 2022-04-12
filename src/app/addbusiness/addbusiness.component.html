@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-md-3">
            
-            <mat-form-field class="sizefull">
+            <mat-form-field class="sizefull employee-search-field">
               <input matInput  placeholder="Name" formControlName="name" required>
               <mat-error *ngFor="let validation of business_validation_message.name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('name').hasError(validation.type) && (addmaincategory.get('name').dirty || addmaincategory.get('name').touched)">{{validation.message}}</mat-error>
@@ -34,18 +34,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-3">
-            <div class="form-group row">
-              <label class="col-sm-6 col-form-label" >Is Active</label>
-              <div class="col-sm-6">
-                <mat-slide-toggle formControlName="is_active"
-                          class="example-margin"
-                          [checked]="true"
-                          >
-                      </mat-slide-toggle>
-              </div>
-            </div>
-          </div>
+        
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
@@ -58,7 +47,7 @@
           <div class="col-md-3">
            
             <mat-form-field class="sizefull">
-              <input matInput  placeholder="Sub Name" formControlName="arabic_sub_name" required>
+              <input matInput  placeholder="Arabic Sub Name" formControlName="arabic_sub_name" required>
               <mat-error *ngFor="let validation of business_validation_message.arabic_sub_name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_sub_name').hasError(validation.type) && (addmaincategory.get('arabic_sub_name').dirty || addmaincategory.get('arabic_sub_name').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -75,7 +64,6 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-3">
             <div class="col-md-3">
            
               <mat-form-field class="sizefull">
@@ -84,7 +72,6 @@
                   <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_address').hasError(validation.type) && (addmaincategory.get('arabic_address').dirty || addmaincategory.get('arabic_address').touched)">{{validation.message}}</mat-error>
                 </mat-error>
               </mat-form-field>
-            </div>
             </div>
             <div class="col-md-3">
             <!-- <mat-form-field class="sizefull">
@@ -214,7 +201,18 @@
           </mat-form-field>
              
           </div>
-          
+          <div class="col-md-3">
+            <div class="form-group row">
+              <label class="col-sm-6 col-form-label" >Is Active</label>
+              <div class="col-sm-6">
+                <mat-slide-toggle formControlName="is_active"
+                          class="example-margin"
+                          [checked]="true"
+                          >
+                      </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
          
         
         </div>
@@ -315,10 +313,7 @@
               </mat-error>
           </mat-form-field>
            </div>
-           <div class="col-md-3">
-              <input class="text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD BUSINESS">
-              <mat-error>{{error}}</mat-error>
-           </div>
+           
         
            
         </div>
@@ -472,6 +467,11 @@
           </div>
      
         </div>
+        <!-- <div class="col-md-3"> -->
+          <input *ngIf="addoredit=='add'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD BUSINESS">
+          <input *ngIf="addoredit=='edit'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="UPDATE BUSINESS">
+          <mat-error>{{error}}</mat-error>
+       <!-- </div> -->
       
       </form>
     </div>

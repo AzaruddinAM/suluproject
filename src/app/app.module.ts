@@ -54,6 +54,9 @@ import { NotificationComponent } from './notification/notification.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { LocationComponent } from './location/location.component';
+import { AuthGuard } from './auth.guard';
+import { ListlocationComponent } from './listlocation/listlocation.component';
+import { ViewusersComponent } from './viewusers/viewusers.component';
 const APP_CONTAINERS = [
   MainlayoutComponent
 ];
@@ -80,7 +83,9 @@ const APP_CONTAINERS = [
     UsersComponent,
     BusinessenqueryComponent,
     NotificationComponent,
-    LocationComponent
+    LocationComponent,
+    ListlocationComponent,
+    ViewusersComponent
   ],
   imports: [
     // StorageBucket
@@ -108,7 +113,7 @@ const APP_CONTAINERS = [
     ChartsModule
     
   ],
-  providers: [ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  providers: [AuthGuard,ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: BUCKET, useValue: "dalelna-abb4e.appspot.com" }
   ],
   bootstrap: [AppComponent]

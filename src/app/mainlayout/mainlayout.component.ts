@@ -67,5 +67,10 @@ export class MainlayoutComponent implements OnInit {
       window.scrollTo(0, 0);
     });
   }
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    
+  }
 
 }

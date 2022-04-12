@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
   //   return next.handle(request);
   // }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // let userToken = localStorage.getItem('jwt_token');
+    let userToken = localStorage.getItem('token');
     // let userUrl = localStorage.getItem('urlClicked');
     // console.log(request);
     // alert(JSON.stringify(request))
@@ -28,7 +28,8 @@ export class AuthInterceptor implements HttpInterceptor {
       
     request = request.clone({
       setHeaders: {
-        // Authorization: `${userToken}`,
+        Authorization: `${userToken}`,
+        // 'Content-Type': 'application/x-www-form-urlencoded'
         // AuthorizedUrl: `${userUrl}`,
         
         // 'Content-Type', 'multipart/form-data'

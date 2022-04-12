@@ -55,6 +55,10 @@ export class AppComponent implements OnInit{
 
 
   ngOnInit() {
+    // this.router.navigate(["/"]).then(result=>{
+    //   window.location.href='https://www.google.com/'
+    
+    // })
     this.router.events.subscribe((evt) => {
       // console.log(evt)
       if (!(evt instanceof NavigationEnd)) {

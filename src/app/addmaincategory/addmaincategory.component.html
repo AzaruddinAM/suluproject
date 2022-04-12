@@ -138,9 +138,12 @@
       </div>
       
     </div>
-    <div class="row p-3">
+    <input *ngIf="addoredit=='add'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD MAIN CATEGORY">
+          <input *ngIf="addoredit=='edit'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="UPDATE MAIN CATEGORY">
+          <!-- <mat-error>{{error}}</mat-error> -->
+    <!-- <div class="row p-3">
       <input class="text-center mr-4 float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD MAIN CATEGORY">
-    </div>
+    </div> -->
         </form>
       </div>
     </div>

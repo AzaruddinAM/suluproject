@@ -7,6 +7,9 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
 import { ValidationmessagesService } from '../services/validationmessages.service';
 import { FirbaseService } from '../services/firbase.service';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-addsubcategory',
@@ -38,13 +41,17 @@ export class AddsubcategoryComponent implements OnInit {
       progresshow:boolean=false
       addoredit:string='add'
       afterupload
+      downloadURL: Observable<string>;
+  fbs: string;
+  // type1images: {  url: string; showurl: string; }[];
       // @Input() public appFormControl: NgControl;
     constructor(private router : Router,
       private fb : FormBuilder,
       private http:HttpClient,
       private api:ApiService,
       private validationmessagesService:ValidationmessagesService,
-      private firebase:FirbaseService) {
+      private firebase:FirbaseService,
+      private storage:AngularFireStorage) {
       this.params = this.router.getCurrentNavigation().extras.state;
      }
   
@@ -124,7 +131,6 @@ export class AddsubcategoryComponent implements OnInit {
       }
     }
     onSubmit(){
-  this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
       console.log("onSubmit");
       console.log(this.addmaincategory.value);
       
@@ -144,7 +150,7 @@ export class AddsubcategoryComponent implements OnInit {
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(add_sub_category);
       // this.router.navigate()
-      this.router.navigate(['/subcategory'])
+      this.router.navigate(['/admin/subcategory'])
 
   
       })
@@ -155,7 +161,7 @@ export class AddsubcategoryComponent implements OnInit {
   
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(edit_sub_category);
-      this.router.navigate(['/subcategory'])
+      this.router.navigate(['/admin/subcategory'])
       })
     }
       
@@ -166,31 +172,87 @@ export class AddsubcategoryComponent implements OnInit {
       // this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
       
   }
-  uploadtofirebase(file){
-    localStorage.removeItem("image_url");
+  uploadtofirebase(files){
     this.progresshow=true
     const filePath = `subcategory/`;
-  let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value:'unknown'
-    this.firebase.uploadfile(this.croppedImage,filePath,imagename)
-    .subscribe(
-      percentage => {
-        this.percentage = Math.round(percentage ? percentage : 0);
-        console.log(this.percentage);
-        if(this.percentage==100){
-          this.cropperhide=true
-          this.progresshow=false
-    // this.addmaincategory.get('image_url')
-    file.value=""
-  console.log(localStorage.getItem('imageurl'));
-  this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+    let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value:'unknown'
+    var n = imagename+'_'+Date.now();
+    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const file = byteString
+    console.log(file);
+    const fileRef = this.storage.ref(filePath+n);
+    const task = this.storage.upload(filePath+n, file);
+    console.log(task);
+    
+    task
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          this.downloadURL =  fileRef.getDownloadURL();
+          
+          this.downloadURL
+          .pipe(
+            tap({
+              next: (x) => {
+                console.log('tap success', x);
+              },
+              error: (err) => {
+                console.log('tap error', err);
+              },
+              complete: () => {console.log('tap complete')
+              
+              console.log(localStorage.getItem('imageurl'));
+            }
+            }),
+            finalize(() => {
+            files.value=""
+                
+                this.progresshow=false
+                this.cropperhide=true
+                // localStorage.setItem('imageurl',encodeURIComponent(this.fbs))
+                // this.type1images=[{url:encodeURIComponent(this.fbs),showurl:this.fbs}]
+                this.afterupload=this.fbs
+                this.addmaincategory.get('image_url').setValue(encodeURIComponent(this.fbs))
+
+            }
+            )
+            )
+            .subscribe(url => {
+              if (url) {
+                this.fbs = url;
+                // localStorage.setItem('imageurl',encodeURIComponent(url))
+          
+            }
+          });
+        })
+      )
+      .subscribe(
   
-        }
+      );
+  //   localStorage.removeItem("image_url");
+  //   this.progresshow=true
+  //   const filePath = `subcategory/`;
+  // let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value:'unknown'
+  //   this.firebase.uploadfile(this.croppedImage,filePath,imagename)
+  //   .subscribe(
+  //     percentage => {
+  //       this.percentage = Math.round(percentage ? percentage : 0);
+  //       console.log(this.percentage);
+  //       if(this.percentage==100){
+  //         this.cropperhide=true
+  //         this.progresshow=false
+  //   // this.addmaincategory.get('image_url')
+  //   file.value=""
+  // console.log(localStorage.getItem('imageurl'));
+  // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
+  
+  //       }
         
-      },
-      error => {
-        console.log(error);
-      }
-    )
+  //     },
+  //     error => {
+  //       console.log(error);
+  //     }
+  //   )
     // .subscribe(data=>{
   
     // }
@@ -198,8 +260,22 @@ export class AddsubcategoryComponent implements OnInit {
     // console.log(imageurl);
     
     // this.addmaincategory.get('image_url').setValue(this.firebase.uploadfile(this.croppedImage,filePath,'azar'))
-    console.log(this.addmaincategory.get('image_url').value);
+    // console.log(this.addmaincategory.get('image_url').value);
     
+  }
+  dataURLtoFile(dataurl, filename) {
+ 
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), 
+        n = bstr.length, 
+        u8arr = new Uint8Array(n);
+        
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    
+    return new File([u8arr], filename, {type:mime});
   }
   imageCropped(event:ImageCroppedEvent) {
   
