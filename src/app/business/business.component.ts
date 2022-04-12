@@ -82,7 +82,7 @@ export class BusinessComponent implements OnInit {
  
   addnew(){
     // alert("add")
-    this.router.navigate(['/addbusiness'], { state: { business_id:'new' , data:JSON.stringify({})}})
+    this.router.navigate(['/admin/addbusiness'], { state: { business_id:'new' , data:JSON.stringify({})}})
   }
   toggle(event:MatSlideToggleChange,index:number,business_id:number){
     console.log('toggle', event.checked+" index :"+index);
@@ -101,7 +101,7 @@ export class BusinessComponent implements OnInit {
   edit(data){
     console.log(data);
     // alert(id)
-    this.router.navigate(['/addbusiness'], { state: { business_id:data.business_id , data:JSON.stringify(data)}})
+    this.router.navigate(['/admin/addbusiness'], { state: { business_id:data.business_id , data:JSON.stringify(data)}})
     
   }
   deleteone(id:string){

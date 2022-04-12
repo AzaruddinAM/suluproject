@@ -128,6 +128,8 @@ export class AddbusinessComponent implements OnInit {
         address: new FormControl(this.datas['address'], [Validators.required]),
         arabic_address: new FormControl(this.datas['arabic_address'], [Validators.required]),
         mapingname: new FormControl('', [Validators.required]),
+        latitude: new FormControl(this.datas['latitude'], [Validators.required]),
+        longitude: new FormControl(this.datas['longitude'], [Validators.required]),
         phone_number: new FormControl(this.datas['phone_number'], [Validators.required]),
         alt_phone_number: new FormControl(this.datas['alt_phone_number'], [Validators.required]),
         email: new FormControl(this.datas['email'], [Validators.required]),
@@ -287,7 +289,7 @@ export class AddbusinessComponent implements OnInit {
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(add_business);
       // this.router.navigate()
-      this.router.navigate(['/business'])
+      this.router.navigate(['/admin/business'])
   
       })
     }
@@ -297,7 +299,7 @@ export class AddbusinessComponent implements OnInit {
   
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(edit_business);
-      this.router.navigate(['/business'])
+      this.router.navigate(['/admin/business'])
       })
     }
   }
@@ -316,7 +318,7 @@ export class AddbusinessComponent implements OnInit {
   uploadtofirebase(files){
         let business_image_id =Math.random().toString(36).substr(2, 9);
 
-    localStorage.removeItem("imageurl");
+    // localStorage.removeItem("imageurl");
     this.progresshow=true
     const filePath = `business/type1/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
@@ -419,7 +421,7 @@ export class AddbusinessComponent implements OnInit {
   multipleuploadtofirebase(files){
     let business_image_id =Math.random().toString(36).substr(2, 9);
 
-    localStorage.removeItem("imageurl");
+    // localStorage.removeItem("imageurl");
     this.progresshow=true
     const filePath = `business/type2/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
@@ -480,7 +482,7 @@ export class AddbusinessComponent implements OnInit {
   multiplegalleryuploadtofirebase(files){
     let business_image_id =Math.random().toString(36).substr(2, 9);
 
-    localStorage.removeItem("imageurl");
+    // localStorage.removeItem("imageurl");
     this.progresshow=true
     const filePath = `business/type3/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id

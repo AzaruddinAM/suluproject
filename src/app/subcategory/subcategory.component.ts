@@ -62,7 +62,7 @@ export class SubcategoryComponent implements OnInit {
  
   addnew(){
     // alert("add")
-    this.router.navigate(['/addsubcategory'], { state: { sub_category_id:'new' , data:JSON.stringify({})}})
+    this.router.navigate(['/admin/addsubcategory'], { state: { sub_category_id:'new' , data:JSON.stringify({})}})
   }
   toggle(event:MatSlideToggleChange,index:number,sub_category_id:number){
     console.log('toggle', event.checked+" index :"+index);
@@ -81,7 +81,7 @@ export class SubcategoryComponent implements OnInit {
   edit(data){
     console.log(data);
     // alert(id)
-    this.router.navigate(['/addsubcategory'], { state: { sub_category_id:data.sub_category_id , data:JSON.stringify(data)}})
+    this.router.navigate(['/admin/addsubcategory'], { state: { sub_category_id:data.sub_category_id , data:JSON.stringify(data)}})
     
   }
   deleteone(id:string){

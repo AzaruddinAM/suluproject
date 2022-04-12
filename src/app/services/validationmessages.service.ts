@@ -86,18 +86,64 @@ export class ValidationmessagesService {
       { type: 'pattern', message: 'Numbers or Letters only' },
       { type: 'invalid', message: 'Arabic Name not registered.. Try again.'},
     ],
-    'image_url':[
-      { type: 'required', message: 'Image is required'}
+    'sub_name': [
+      { type: 'required', message: 'Sub Name is required' },
     ],
-    'order_column':[
-      // {type:'required', message: 'Order is required'}
+    'arabic_sub_name': [
+      { type: 'required', message: 'Arabic Sub Name is required' },
     ],
-    'main_category_id':[
-      // {type:'required', message: 'Id is required'}
+    'address': [
+      { type: 'required', message: 'Address is required' },
     ],
-    'is_active':[
-      // { type: 'required', message: 'Is active is required'}
+    'arabic_address': [
+      { type: 'required', message: 'Arabic Address is required' },
     ],
+    'mapingname': [
+      { type: 'required', message: 'Location Name is required' },
+    ],
+    'latitude': [
+      { type: 'required', message: 'Latitude is required' },
+    ],
+    'longitude': [
+      { type: 'required', message: 'Longitude is required' },
+    ],
+    'phone_number': [
+      { type: 'required', message: 'Phone Number is required' },
+    ],
+    'alt_phone_number': [
+      { type: 'required', message: 'Alternate Phone Number is required' },
+    ],
+    'email': [
+      { type: 'required', message: 'Email is required' },
+    ],
+    'slug': [
+      { type: 'required', message: 'Slug is required' },
+    ],
+    'rating': [
+      { type: 'required', message: 'Rating is required' },
+    ],
+    'web': [
+      { type: 'required', message: 'Web is required' },
+    ],
+    'social_media': [
+      { type: 'required', message: 'Social Media is required' },
+    ],
+    'timing': [
+      { type: 'required', message: 'Timing is required' },
+    ],
+    'service_name': [
+      { type: 'required', message: 'Service Name is required' },
+    ],
+    'arabic_service_name': [
+      { type: 'required', message: 'Arabic Service Name is required' },
+    ],
+    'description': [
+      { type: 'required', message: 'Description is required' },
+    ],
+    'arabic_description': [
+      { type: 'required', message: 'Arabic Description is required' },
+    ],
+    
     // 'statusContent':[
     //   { type: 'required', message: 'field required'},
     //   { type: 'validContent', message: 'Only accept  " '+localStorage.getItem('erase')+' " ' }

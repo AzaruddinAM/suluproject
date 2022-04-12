@@ -66,6 +66,7 @@ export class NotificationComponent implements OnInit {
           // order_column: new FormControl('', [Validators.required]),
           // is_active: new FormControl(true, [Validators.required]),
           // business_name:new FormControl('', [Validators.required]),
+          // business_name:new FormControl('', [Validators.required]),
           url:new FormControl('', [Validators.required]),
           // sub_category_id:new FormControl(sub_category_id, [Validators.required])
           // Isactive: ['', Validators.required],

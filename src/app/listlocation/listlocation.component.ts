@@ -5,28 +5,28 @@ import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-listlocation',
+  templateUrl: './listlocation.component.html',
+  styleUrls: ['./listlocation.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class ListlocationComponent implements OnInit {
 
   constructor(private apis:ApiService,
     private router:Router) { }
   datas=[]
   cols :Array<{field:string,header:string}>= [
 
-    { field: 'users_id', header: 'User Id' },
+    { field: 'location_id', header: 'Location Id' },
     { field: 'name', header: 'Name' },
-    { field: 'email', header: 'Email' },
+    // { field: 'email', header: 'Email' },
     // { field: 'user_token', header: 'Arabic Name' },
-    { field: 'phone_number', header: 'Phone Number' },
+    { field: 'latitude', header: 'Latitude' },
     // { field: 'address', header: 'Adress' },
     // { field: 'latitude', header: 'Id' },
     // { field: 'longitude', header: 'Image' },
     // { field: 'avatar', header: 'Avatar' },
     // { field: 'user_ip', header: 'Arabic Name' },
-    { field: 'image_url', header: 'Image' },
+    { field: 'longitude', header: 'Longitude' },
     // { field: 'notification_status', header: 'Isactive' },
     // { field: 'otp', header: 'Id' },
     // { field: 'role', header: 'Image' },
@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
     // { field: 'is_active', header: 'Is Active' },
     // { field: 'password', header: 'password' },
     // { field: 'language', header: 'language' },
-    // { field: '', header: '' }
+    { field: '', header: '' }
 
 // latitude: "2.333333"
 // longitude: "4.333333"
@@ -59,9 +59,7 @@ data;
     let body = 'data='+'test'+'&date='+Date();
     console.log(body);
     
-    this.apis.Postwithouttoken(environment["Category"] + "/get_users" ,body )
-    // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
-
+    this.apis.Postwithouttoken(environment["Category"] + "/get_location" ,body )
     .subscribe(usersdata => {
 
       this.datas =(usersdata.status)?  usersdata.data:[]
@@ -93,22 +91,8 @@ this.datas[index].isactive=event.checked
 console.log(this.datas);
 
   }
-  get(){
-    let body = 'data='+this.data+'&date='+Date();
-    console.log(body);
-    
-    this.apis.Postwithouttoken(environment["Mobileapp"] + this.api ,body )
-    // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
-
-    .subscribe(maincategorydata => {
-
-      this.datas =(maincategorydata.status)?  maincategorydata.data:[]
-    console.log(this.datas);
-    
-    })
-  }
-  viewuser(data){
+  addnew(){
     // alert("add")
-    this.router.navigate(['/admin/viewusers'], { state: { users_id:data.users_id , data:JSON.stringify(data)}})
+    this.router.navigate(['/admin/location'])
   }
 }
