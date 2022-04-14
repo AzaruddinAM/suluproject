@@ -3,41 +3,56 @@
     <div class="col-lg-4 mx-auto">
       <div class="auth-form-light text-left py-5 px-4 px-sm-5 rounded bg-info">
         <div class="brand-logo">
-          <img src="assets/images/logo.svg" alt="logo">
+          <img src="assets/images/Logo.svg" alt="logo">
         </div>
         <!-- <h4>Hello! let's get started</h4> -->
         <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
         <!-- (ngSubmit)="onSubmitLogin(LoginForm.value)" -->
-        <form class="pt-3" [formGroup]="LoginForm" (ngSubmit)="Login()" >
+        <form *ngIf="login" class="pt-3" [formGroup]="LoginForm" (ngSubmit)="Login()" >
           <div class="form-group">
             <input type="text" formControlName="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+            <mat-error *ngFor="let validation of loginvalidatemsg.username">
+              <mat-error class="error-message" *ngIf="LoginForm.get('username').hasError(validation.type) && (LoginForm.get('username').dirty || LoginForm.get('username').touched)">{{validation.message}}</mat-error>
+            </mat-error>
           </div>
           <div class="form-group">
             <input type="password" formControlName="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+            <mat-error *ngFor="let validation of loginvalidatemsg.password">
+              <mat-error class="error-message" *ngIf="LoginForm.get('password').hasError(validation.type) && (LoginForm.get('password').dirty || LoginForm.get('password').touched)">{{validation.message}}</mat-error>
+            </mat-error>
           </div>
           <div class="mt-3">
              <input class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"  value="SIGN IN">
-            <!-- <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" (click)="signIn()">SIGN IN</a> -->
+             <div class="pt-2"><a (click)="login=false;"> <span class="text-light pointer">forget password ?</span></a></div>
+             <p class="text-danger">{{error}}</p>
           </div>
           <div class="my-2 d-flex justify-content-between align-items-center">
-            <p class="text-danger">{{error}}</p>
-            <!-- <div class="form-check">
-              <label class="form-check-label text-muted">
-                <input type="checkbox" class="form-check-input">
-                <i class="input-helper"></i>
-                Keep me signed in
-              </label>
-            </div> -->
-            <!-- <a href="javascript:(void)" class="auth-link text-black">Forgot password?</a> -->
           </div>
-          <!-- <div class="mb-2">
-            <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-              <i class="mdi mdi-facebook mr-2"></i>Connect using facebook
-            </button>
+        </form>
+        <form *ngIf="!login" class="pt-3" [formGroup]="LoginForm2" (ngSubmit)="forgetPassword()" >
+          <div class="form-group">
+            <!-- (input)="onSearchChange($event.target.value)"  -->
+            <input type="text" formControlName="username" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+            <mat-error *ngFor="let validation of loginvalidatemsg.username">
+              <mat-error class="error-message" *ngIf="LoginForm.get('username').hasError(validation.type) && (LoginForm.get('username').dirty || LoginForm.get('username').touched)">{{validation.message}}</mat-error>
+            </mat-error>
+          </div>
+          <!-- <div class="form-group">
+            <input type="password" formControlName="old_password" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Old password">
           </div> -->
-          <!-- <div class="text-center mt-4 font-weight-light">
-            Don't have an account? <a routerLink="/register" class="text-primary">Create</a>
-          </div> -->
+          <div class="form-group">
+            <input type="password" formControlName="new_password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="New Password">
+            <mat-error *ngFor="let validation of loginvalidatemsg.password">
+              <mat-error class="error-message" *ngIf="LoginForm.get('password').hasError(validation.type) && (LoginForm.get('password').dirty || LoginForm.get('password').touched)">{{validation.message}}</mat-error>
+            </mat-error>
+          </div>
+          <div class="mt-3">
+            <input class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"  value="CHANGE PASSWORD">
+            <div class="pt-2"><a (click)="login=true;"> <span class="text-light pointer">Back to login</span></a></div>
+            <p class="text-danger">{{error}}</p>
+          </div>
+          <div class="my-2 d-flex justify-content-between align-items-center">
+          </div>
         </form>
       </div>
     </div>

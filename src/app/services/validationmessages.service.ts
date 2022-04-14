@@ -4,6 +4,27 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ValidationmessagesService {
+  Login_Validation_Message=
+  {
+    'username': [
+      { type: 'required', message: 'User Name is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged User Name'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'User Name not registered.. Try again.'},
+    ],
+    'password': [
+      { type: 'required', message: 'Password is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged Password'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'Password not registered.. Try again.'},
+    ],
+    'new_password': [
+      { type: 'required', message: 'New Password is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged New Password'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'New Password not registered.. Try again.'},
+    ]
+  };
   Main_Category_Validation_Message=
   {
     'name': [

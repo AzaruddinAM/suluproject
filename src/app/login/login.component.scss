@@ -4,3 +4,7 @@
     width: auto;
     min-width: -webkit-fill-available;
 }
+.pointer {
+    // pointer-events: none;
+    cursor: pointer !important;
+}
