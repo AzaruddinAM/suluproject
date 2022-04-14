@@ -1,4 +1,47 @@
-<div class="row" id="proBanner">
+<div class="row card p-2">
+ <div class="col-md-6 card p-2">
+    
+  
+  <p-table #dt [value]="users"  dataKey="id" [columns]="cols" [reorderableColumns]="true" styleClass="p-datatable-sm tablesize" 
+  [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" 
+  
+>
+      <ng-template pTemplate="caption" >
+          <div style="display: flex;" class="display-flex align-items-center justify-content-between tabheadsmall">
+              Users Table
+          </div>
+      </ng-template>
+          <ng-template pTemplate="header" let-columns>
+          <tr>
+              <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '10%' : '' }">
+                  <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
+                  <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
+              </th>
+            </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+              <tr class="p-selectable-row row-datas" [pReorderableRow]="index" >
+    
+                  <td *ngFor="let col of columns" >
+                      <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
+                      <!-- <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle 
+                          class="example-margin"
+                          (change)="toggle($event,index,rowData['users_id'])"
+                          [checked]="rowData[col.field]"
+                          >
+                      </mat-slide-toggle></span> -->
+                      <span *ngIf="col.field == 'image_url'" class="tablebackground"><img src={{rowData[col.field]}} width="20px" height="20px" alt="demo"></span>
+                   
+                  </td>
+              
+    
+              </tr>
+            </ng-template>
+
+  </p-table>
+</div>
+  </div>
+<!-- <div class="row" id="proBanner">
   <div class="col-12">
     <span class="align-items-center purchase-popup">
       <p>Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!</p>
@@ -395,4 +438,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

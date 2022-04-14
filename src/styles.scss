@@ -169,7 +169,10 @@ background-color: #b66dff !important;
   background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
   background: linear-gradient(to right, #ee5a6f, #f29263)
 }
-
+.tabheadsmall{
+  text-align: center;
+  font-size: medium;
+}
 
 //table
 .tabhead{
@@ -195,4 +198,8 @@ background-color: #b66dff !important;
   border-color: #f5a177 !important;
   //  border-color: black !important; 
   // border-width: thin !important;
+}
+.tablesize
+{
+    font-size: .9em !important;
 }

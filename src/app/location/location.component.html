@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-md-4">
               <mat-form-field class="sizefull">
-                <input matInput class="text-danger" placeholder="Name" formControlName="name" required>
+                <input matInput  placeholder="Name" formControlName="name" required>
                 <mat-error *ngFor="let validation of notification_validation_message.name">
                   <mat-error class="error-message" *ngIf="addmaincategory.get('name').hasError(validation.type) && (addmaincategory.get('name').dirty || addmaincategory.get('name').touched)">{{validation.message}}</mat-error>
                 </mat-error>
@@ -14,7 +14,7 @@
             </div>
             <div class="col-md-4">
                 <mat-form-field class="sizefull">
-                  <input matInput class="text-danger" placeholder="Arabic Name" formControlName="arabic_name" required>
+                  <input matInput  placeholder="Arabic Name" formControlName="arabic_name" required>
                   <mat-error *ngFor="let validation of notification_validation_message.arabic_name">
                     <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_name').hasError(validation.type) && (addmaincategory.get('arabic_name').dirty || addmaincategory.get('arabic_name').touched)">{{validation.message}}</mat-error>
                   </mat-error>
@@ -23,7 +23,7 @@
             <div class="col-md-4">
 
               <mat-form-field class="sizefull">
-                <input matInput class="text-danger" placeholder="Latitude" formControlName="latitude" required>
+                <input matInput  placeholder="Latitude" formControlName="latitude" required>
                 <mat-error *ngFor="let validation of notification_validation_message.latitude">
                   <mat-error class="error-message" *ngIf="addmaincategory.get('latitude').hasError(validation.type) && (addmaincategory.get('latitude').dirty || addmaincategory.get('latitude').touched)">{{validation.message}}</mat-error>
                 </mat-error>
@@ -32,7 +32,7 @@
             <div class="col-md-4">
 
             <mat-form-field class="sizefull">
-                <input matInput class="text-danger" placeholder="Longitude" formControlName="longitude" required>
+                <input matInput  placeholder="Longitude" formControlName="longitude" required>
                 <mat-error *ngFor="let validation of notification_validation_message.longitude">
                   <mat-error class="error-message" *ngIf="addmaincategory.get('longitude').hasError(validation.type) && (addmaincategory.get('longitude').dirty || addmaincategory.get('longitude').touched)">{{validation.message}}</mat-error>
                 </mat-error>
@@ -40,7 +40,7 @@
             </div>
             <!-- <div class="col-md-8">
                 <mat-form-field class="sizefull w-100">
-                  <input matInput class="text-danger" placeholder="Body" formControlName="body" required>
+                  <input matInput  placeholder="Body" formControlName="body" required>
                   <mat-error *ngFor="let validation of notification_validation_message.body">
                     <mat-error class="error-message" *ngIf="addmaincategory.get('body').hasError(validation.type) && (addmaincategory.get('body').dirty || addmaincategory.get('body').touched)">{{validation.message}}</mat-error>
                   </mat-error>
@@ -72,7 +72,7 @@
           <div class="row pe-4" *ngIf="this.addmaincategory.get('type').value==3">
             <div class="col-md-8">
                 <mat-form-field class="sizefull w-100">
-                    <input matInput class="text-danger" placeholder="Url" formControlName="url" required>
+                    <input matInput  placeholder="Url" formControlName="url" required>
                     <mat-error *ngFor="let validation of notification_validation_message.url">
                       <mat-error class="error-message" *ngIf="addmaincategory.get('url').hasError(validation.type) && (addmaincategory.get('url').dirty || addmaincategory.get('url').touched)">{{validation.message}}</mat-error>
                     </mat-error>
