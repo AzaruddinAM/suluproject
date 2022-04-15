@@ -76,4 +76,9 @@ data;
     })
   }
 
+  paginate(){
+    console.log("paginate");
+    
+  }
+
 }

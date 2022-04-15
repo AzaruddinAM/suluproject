@@ -15,7 +15,7 @@ export class Error404Component implements OnInit {
     return !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
   }
   ngOnInit() {
-    if(!this.isIOSDevice()){
+    if(this.isIOSDevice()){
       console.log("I am an IOS device!");
       window.location.href='https://apps.apple.com/us/app/dalelna/id1618244391'
    }
