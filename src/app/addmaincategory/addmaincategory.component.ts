@@ -190,7 +190,7 @@ export class AddmaincategoryComponent implements OnInit {
       // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
     console.log(add_main_category);
     // this.router.navigate()
-    this.router.navigate(['/admin/maincatogory'])
+    this.router.navigate(['/maincatogory'])
 
     })
   }
@@ -200,7 +200,7 @@ export class AddmaincategoryComponent implements OnInit {
 
       // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
     console.log(edit_main_category);
-    this.router.navigate(['/admin/maincatogory'])
+    this.router.navigate(['/maincatogory'])
     })
   }
     

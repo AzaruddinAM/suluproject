@@ -42,7 +42,7 @@ loginverify(){
         if (err.status == 401) {
           //alert('EMPTY');
           
-          this.router.navigate(['/admin/login']);
+          this.router.navigate(['/login']);
           // localStorage.clear();
         }
         else if (err.status == 207) 

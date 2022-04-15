@@ -109,6 +109,6 @@ console.log(this.datas);
   }
   viewuser(data){
     // alert("add")
-    this.router.navigate(['/admin/viewusers'], { state: { users_id:data.users_id , data:JSON.stringify(data)}})
+    this.router.navigate(['/viewusers'], { state: { users_id:data.users_id , data:JSON.stringify(data)}})
   }
 }

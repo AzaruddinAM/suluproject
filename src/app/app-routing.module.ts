@@ -21,14 +21,14 @@ import { ListlocationComponent } from './listlocation/listlocation.component';
 import { ViewusersComponent } from './viewusers/viewusers.component';
 const routes: Routes = [
   // { path: '', redirectTo: 'error', pathMatch: 'full' },
-  { path: '', component: Error404Component },
-  { path: 'privacy', component: Error500Component },
+  // { path: '', component: Error404Component },
+  // { path: 'privacy', component: Error500Component },
 
   // { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'admin', redirectTo: 'admin/login', pathMatch: 'full' },
-  { path: 'admin/login', component: LoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   {
-    path: 'admin',
+    path: '',
     component: MainlayoutComponent,
     
     canActivate: [AuthGuard],

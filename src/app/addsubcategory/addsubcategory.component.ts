@@ -150,7 +150,7 @@ export class AddsubcategoryComponent implements OnInit {
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(add_sub_category);
       // this.router.navigate()
-      this.router.navigate(['/admin/subcategory'])
+      this.router.navigate(['/subcategory'])
 
   
       })
@@ -161,7 +161,7 @@ export class AddsubcategoryComponent implements OnInit {
   
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(edit_sub_category);
-      this.router.navigate(['/admin/subcategory'])
+      this.router.navigate(['/subcategory'])
       })
     }
       

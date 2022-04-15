@@ -289,7 +289,7 @@ export class AddbusinessComponent implements OnInit {
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(add_business);
       // this.router.navigate()
-      this.router.navigate(['/admin/business'])
+      this.router.navigate(['/business'])
   
       })
     }
@@ -299,7 +299,7 @@ export class AddbusinessComponent implements OnInit {
   
         // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
       console.log(edit_business);
-      this.router.navigate(['/admin/business'])
+      this.router.navigate(['/business'])
       })
     }
   }

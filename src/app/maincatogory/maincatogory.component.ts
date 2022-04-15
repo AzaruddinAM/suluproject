@@ -64,7 +64,7 @@ export class MaincatogoryComponent implements OnInit {
  
   addnew(){
     // alert("add")
-    this.router.navigate(['/admin/addmaincategory'], { state: { main_category_id:'new' , data:JSON.stringify({})}})
+    this.router.navigate(['/addmaincategory'], { state: { main_category_id:'new' , data:JSON.stringify({})}})
   }
   toggle(event:MatSlideToggleChange,index:number,main_category_id:number){
     console.log('toggle', event.checked+" index :"+index);
@@ -83,7 +83,7 @@ export class MaincatogoryComponent implements OnInit {
   edit(data){
     console.log(data);
     // alert(id)
-    this.router.navigate(['/admin/addmaincategory'], { state: { main_category_id:data.main_category_id , data:JSON.stringify(data)}})
+    this.router.navigate(['/addmaincategory'], { state: { main_category_id:data.main_category_id , data:JSON.stringify(data)}})
     
   }
   deleteone(id:string){
