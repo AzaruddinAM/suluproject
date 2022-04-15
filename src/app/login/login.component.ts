@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     if(this.api.loginverify())
     {
-      this.Router.navigate(['/admin/dashboard'])
+      this.Router.navigate(['/dashboard'])
 
     }
     // localStorage.clear()
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
           this.error="SignIn successfull";
 
           localStorage.setItem('token',loginsuccess.token)
-          this.Router.navigate(['/admin/dashboard'])
+          this.Router.navigate(['/dashboard'])
         }
         else{
           this.error="user name or password is incorrect";
@@ -86,7 +86,7 @@ forgetPassword(){
         if(loginsuccess.status){
           // console.log(loginsuccess.token);
           // localStorage.setItem('token',loginsuccess.token)
-          // this.Router.navigate(['/admin/dashboard'])
+          // this.Router.navigate(['/dashboard'])
           this.error="Password changed successfully";
           this.login=true
           
@@ -132,7 +132,7 @@ forgetPassword(){
         check=>{
           let status=(check.status)?'success':'failed'
     if(status=='success'){
-      this.Router.navigate(['/admin/dashboard'])
+      this.Router.navigate(['/dashboard'])
     }
        else{
       this.error="Incurrect username or password "

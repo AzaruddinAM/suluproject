@@ -93,6 +93,6 @@ console.log(this.datas);
   }
   addnew(){
     // alert("add")
-    this.router.navigate(['/admin/location'])
+    this.router.navigate(['/location'])
   }
 }
