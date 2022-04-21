@@ -10,7 +10,7 @@
     <!-- <div><button (click)="get()">get</button></div> -->
     <p-table #dt [value]="datas"  dataKey="id" [columns]="cols" [reorderableColumns]="true"
     [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
-     [paginator]="true" (onPage)="paginate()"
+     
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['name','number']">
         <ng-template pTemplate="caption" >
@@ -49,7 +49,7 @@
                             [checked]="rowData[col.field]"
                             >
                         </mat-slide-toggle></span> -->
-                        <!-- <span *ngIf="col.field == 'image_url'" class="tablebackground" ><img src={{rowData[col.field]}} width="50px" height="50px" alt="demo"></span> -->
+                        <!-- <span *ngIf="col.field == 'image_url'" class="tablebackground" ><img src={{rowData[col.field]}} width="50px" height="50px" alt="No Image"></span> -->
                         <!-- <span *ngIf="col.field == ''" class="tablebackground"><mat-icon (click)="edit(rowData)">edit</mat-icon>&nbsp;&nbsp;&nbsp; -->
                         <!-- </span> -->
                     </td>

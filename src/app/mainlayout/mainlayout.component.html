@@ -1,13 +1,16 @@
 
 <div class="container-scroller">
   <app-navbar></app-navbar>
+  <!-- <app-login  ></app-login> -->
   <div class="container-fluid page-body-wrapper">
     <app-sidebar></app-sidebar>
     <div class="main-panel" >
       <div class="content-wrapper">
-        <app-spinner *ngIf="isLoading" ></app-spinner>
+        <app-spinner  *ngIf="isLoading" ></app-spinner>
         <div contentAnimate *ngIf="!isLoading" class="h-100">
-            <router-outlet></router-outlet>
+          <!-- <app-error404></app-error404> -->
+            <router-outlet [login]="login"></router-outlet>
+            <!-- <app-dashboard [login]="login"></app-dashboard> -->
         </div>
       </div>
       <app-footer></app-footer>

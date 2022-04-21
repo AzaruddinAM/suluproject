@@ -40,7 +40,7 @@
                             [checked]="rowData[col.field]"
                             >
                         </mat-slide-toggle></span>
-                        <span *ngIf="col.field == 'image_url'" class="tablebackground" (click)="viewimage()"><img src={{rowData[col.field]}} alt="demo"></span>
+                        <span *ngIf="col.field == 'image_url'" class="tablebackground" (click)="viewimage()"><img src={{rowData[col.field]}} alt="No Image"></span>
                         <span *ngIf="col.field == ''" class="tablebackground"><mat-icon (click)="edit(rowData)">edit</mat-icon>&nbsp;&nbsp;&nbsp;
                             <!-- <mat-icon (click)="deleteone(rowData['id'])">delete</mat-icon> -->
                         </span>

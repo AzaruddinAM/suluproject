@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { BehaviorSubject, Observable, TimeInterval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
 
@@ -7,14 +9,15 @@ import { ApiService } from '../services/api.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit ,OnChanges {
 
   // toggleProBanner(event) {
   //   console.log("123");
   //   event.preventDefault();
   //   document.querySelector('body').classList.toggle('removeProbanner');
   // }
-  users=[]
+  @Input() login;
+  usersobs:any
   cols :Array<{field:string,header:string}>= [
 
     { field: 'users_id', header: 'User Id' },
@@ -23,21 +26,117 @@ export class DashboardComponent implements OnInit {
     { field: 'phone_number', header: 'Phone Number' },
     { field: 'image_url', header: 'Image' },
   ]
+  totalusers:number=0
+  dailyusers:number=0
+  timer: any;
+  refreshUsers$ =new BehaviorSubject<boolean>(true);
+  users$: Observable<any>;
+users=[]
   constructor(private apis:ApiService) { }
 
-  ngOnInit() {
+  // ngOnInit() {
+  //   let body = 'data='+'test'+'&date='+Date();
+  //   console.log(body);
+    
+  //   this.apis.Postwithouttoken(environment["Category"] + "/get_last10users" ,body )
+  //   // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
+
+  //   .subscribe(usersdata => {
+
+  //     this.users =(usersdata.status)?  usersdata.data:[]
+  //     this.totalusers=usersdata.totalusers
+  //     this.dailyusers=usersdata.dailyusers
+
+  //   // console.log(this.users);
+    
+  //   })
+  // }
+  ngOnInit(): void {
+    // alert(this.login)
+    this.getusers();
+    this.apis.Refreshrequired.subscribe(respone=>{
+      this.getusers();
+    });
+    // this.timer=setInterval( () => {
+    //   this.apis.refresh()
+    // }, 3000);
+  // this.users$ = this.refreshUsers$.pipe(switchMap(_ => this.getusers()))
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("ngOnChanges");
+    console.log(changes);
+    
+    
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    
+  }
+  ngDoCheck(): void {
+    //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+    //Add 'implements DoCheck' to the class.
+    console.log("ngDoCheck");
+    
+  }
+  ngAfterContentInit(): void {
+    //Called after ngOnInit when the component's or directive's content has been initialized.
+    //Add 'implements AfterContentInit' to the class.
+    console.log("ngAfterContentInit");
+    
+  }
+  ngAfterContentChecked(): void {
+    //Called after every check of the component's or directive's content.
+    //Add 'implements AfterContentChecked' to the class.
+    console.log("ngAfterContentChecked");
+    
+  }
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    console.log("ngAfterViewInit");
+    
+  }
+  ngAfterViewChecked(): void {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
+    console.log("ngAfterViewChecked");
+    
+  }
+  getusers(){
     let body = 'data='+'test'+'&date='+Date();
     console.log(body);
-    
-    this.apis.Postwithouttoken(environment["Category"] + "/get_last10users" ,body )
+    this.usersobs=this.apis.Postwithouttoken(environment["Category"] + "/get_last10users" ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
     .subscribe(usersdata => {
 
-      this.users =(usersdata.status)?  usersdata.data:[]
-    console.log(this.users);
+         this.users$ =(usersdata.status)?  usersdata.data:[]
+      this.totalusers=usersdata.totalusers
+      this.dailyusers=usersdata.dailyusers
+      console.log(this.users$);
+      
     
-    })
+    }
+    // ,
+    // error=>{
+    //   console.log(error);
+      
+    // }
+    )
+    
+  }
+  refresh(){
+    // this.users ="azar"
+    this.users=[{name:"azar"}]
+
+    this.apis.refresh()
+    // this.refreshUsers$.next(false)
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    clearInterval(this.timer)
+    this.usersobs.unsubscribe()
   }
 
   // date: Date = new Date();

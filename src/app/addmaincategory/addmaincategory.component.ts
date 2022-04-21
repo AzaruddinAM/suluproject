@@ -67,7 +67,7 @@ export class AddmaincategoryComponent implements OnInit {
         
       name: new FormControl('',Validators.compose([Validators.required])),
       arabic_name: new FormControl('',Validators.compose([Validators.required])),
-      image_url: new FormControl('assets/images/maincategory/demo.png',Validators.compose([Validators.required])),
+      image_url: new FormControl('',Validators.compose([Validators.required])),
       order_column: new FormControl(3,Validators.compose([Validators.required])),
       is_active: new FormControl(true,Validators.compose([Validators.required])),
       main_category_id:new FormControl('',Validators.compose([Validators.required]))
@@ -103,14 +103,16 @@ export class AddmaincategoryComponent implements OnInit {
       
       // alert(JSON.stringify(this.params))
       // let index = this.datas.findIndex(item=>item.id==this.id)
+      //         this.addmaincategory.get('image_url').setValue(encodeURIComponent(this.fbs))
       this.addmaincategory.get('name').setValue(this.datas['name'])
       this.addmaincategory.get('arabic_name').setValue(this.datas['arabic_name'])
-      this.addmaincategory.get('image_url').setValue(this.datas['image_url'])
+      this.addmaincategory.get('image_url').setValue(encodeURIComponent(this.datas['image_url']))
+      this.afteruploadimage = this.datas['image_url']
       this.addmaincategory.get('order_column').setValue(this.datas['order_column'])
       this.addmaincategory.get('is_active').setValue(this.datas['is_active'])
       this.addmaincategory.get('main_category_id').setValue(this.main_category_id)
       
-      this.afteruploadimage=this.addmaincategory.get('image_url').value
+      // this.afteruploadimage=this.addmaincategory.get('image_url').value
       // this.addmaincategory= new FormGroup({
     //   // name , image_url , order_column ,  is_active , id 
     //   name: new FormControl(this.datas['name'], [Validators.required]),
@@ -167,7 +169,7 @@ export class AddmaincategoryComponent implements OnInit {
   onSubmit(){
     
   // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
-  console.log(this.addmaincategory.get('image_url').value);
+  // console.log(this.addmaincategory.get('image_url').value);
 
     console.log("onSubmit");
     console.log(this.addmaincategory.value);

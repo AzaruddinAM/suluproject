@@ -1,19 +1,33 @@
 <div class="row card p-2">
  <div class="col-md-6 card p-2">
-    
   
-  <p-table #dt [value]="users"  dataKey="id" [columns]="cols" [reorderableColumns]="true" styleClass="p-datatable-sm tablesize" 
+  
+  <p-table #dt [value]="users$"  dataKey="id" [columns]="cols" [reorderableColumns]="true" styleClass="p-datatable-sm tablesize" 
   [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" 
   
 >
       <ng-template pTemplate="caption" >
-          <div style="display: flex;" class="display-flex align-items-center justify-content-between tabheadsmall">
+        <div class="row">
+
+        
+          <div style="display: flex;" class="col-md-8 display-flex align-items-center justify-content-between tabheadsmall">
               Users Table
+            <!-- <input type="button" value="refresh" (click)="refresh()">
+            <p>{{users | json }}</p> -->
           </div>
+          <div class="col-md-4 display-flex align-items-center justify-content-end">
+            <div class="row">
+              Total Users &nbsp;&nbsp;:&nbsp;&nbsp;{{totalusers}}
+            </div>
+            <div class="row">
+              Daily Users &nbsp;&nbsp;:&nbsp;&nbsp;{{dailyusers}}
+            </div>
+          </div>
+        </div>
       </ng-template>
           <ng-template pTemplate="header" let-columns>
           <tr>
-              <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '10%' : '' }">
+              <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '15%' : '15%' }">
                   <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                   <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
               </th>
@@ -30,7 +44,7 @@
                           [checked]="rowData[col.field]"
                           >
                       </mat-slide-toggle></span> -->
-                      <span *ngIf="col.field == 'image_url'" class="tablebackground"><img src={{rowData[col.field]}} width="20px" height="20px" alt="demo"></span>
+                      <span *ngIf="col.field == 'image_url'" class="tablebackground"><img src={{rowData[col.field]}} width="40px" height="40px" alt="No image"></span>
                    
                   </td>
               
