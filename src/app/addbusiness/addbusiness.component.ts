@@ -10,7 +10,7 @@ import { ValidationmessagesService } from '../services/validationmessages.servic
 import { FirbaseService } from '../services/firbase.service';
 import { tap,finalize, map, catchError } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
-
+// import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
 @Component({
   selector: 'app-addbusiness',
   templateUrl: './addbusiness.component.html',
@@ -56,6 +56,7 @@ export class AddbusinessComponent implements OnInit {
   locations:any=[]
   arabic_service_name_options:any=[]
   service_name_options:any=[]
+  selectedTime
       // @Input() public appFormControl: NgControl;
     constructor(private router : Router,
       private fb : FormBuilder,
@@ -86,7 +87,10 @@ export class AddbusinessComponent implements OnInit {
       rating: new FormControl('', [Validators.required]),
       web: new FormControl('', [Validators.required]),
       social_media: new FormControl('', [Validators.required]),
-      timing: new FormControl('', [Validators.required]),
+      fromtiming: new FormControl('', [Validators.required]),
+      totiming: new FormControl('', [Validators.required]),
+      instagram: new FormControl('', [Validators.required]),
+      available_on: new FormControl('', [Validators.required]),
       service_name: new FormControl('', [Validators.required]),
       arabic_service_name: new FormControl('', [Validators.required]),
       imagetype: new FormControl('1', [Validators.required]),
@@ -137,7 +141,10 @@ export class AddbusinessComponent implements OnInit {
         rating: new FormControl(this.datas['rating'], [Validators.required]),
         web: new FormControl(this.datas['web'], [Validators.required]),
         social_media: new FormControl(this.datas['social_media'], [Validators.required]),
-        timing: new FormControl(this.datas['timing'], [Validators.required]),
+        fromtiming: new FormControl(this.datas['fromtiming'], [Validators.required]),
+        totiming: new FormControl(this.datas['totiming'], [Validators.required]),
+        instagram: new FormControl(this.datas['instagram'], [Validators.required]),
+        available_on: new FormControl(this.datas['available_on'], [Validators.required]),
         service_name: new FormControl(this.datas['service_name'], [Validators.required]),
         arabic_service_name: new FormControl(this.datas['arabic_service_name'], [Validators.required]),
         imagetype: new FormControl('1', [Validators.required])

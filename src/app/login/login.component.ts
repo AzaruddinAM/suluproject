@@ -75,6 +75,12 @@ export class LoginComponent implements OnInit {
       }
       )
     }
+    else{
+      this.error=" You should name and password ";
+      setTimeout(() => {
+        this.error=""
+      }, 3000);
+    }
   }
   onSearchChange(searchValue: string): void {  
     console.log(searchValue);

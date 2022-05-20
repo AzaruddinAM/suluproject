@@ -24,19 +24,24 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-             
-            <!-- <div class="col-md-3">
-              <div class="form-group row">
-                <label class="col-sm-6 col-form-label" >Is Active</label>
-                <div class="col-sm-6">
-                  <mat-slide-toggle formControlName="is_active"
-                            class="example-margin"
-                            [checked]="true"
-                            >
-                        </mat-slide-toggle>
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="sizefull">
+                <input matInput  placeholder="Arabic Title" formControlName="arabic_title" required>
+                <mat-error *ngFor="let validation of notification_validation_message.arabic_title">
+                  <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_title').hasError(validation.type) && (addmaincategory.get('arabic_title').dirty || addmaincategory.get('arabic_title').touched)">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-8">
+                <mat-form-field class="sizefull w-100">
+                  <input matInput  placeholder="Arabic Body" formControlName="arabic_body" required>
+                  <mat-error *ngFor="let validation of notification_validation_message.arabic_body">
+                    <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_body').hasError(validation.type) && (addmaincategory.get('arabic_body').dirty || addmaincategory.get('arabic_body').touched)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-form-field>
               </div>
-            </div> -->
           </div>
           <div class="row p-4">
             <mat-radio-group formControlName="type" class="d-flex flex-md-row justify-content-md-around w-100" aria-label="Select an option">

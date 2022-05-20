@@ -15,7 +15,7 @@
             <!-- <input type="button" value="refresh" (click)="refresh()">
             <p>{{users | json }}</p> -->
           </div>
-          <div class="col-md-4 display-flex align-items-center justify-content-end">
+          <div class="col-md-4 display-flex align-items-center justify-content-end textwhite">
             <div class="row">
               Total Users &nbsp;&nbsp;:&nbsp;&nbsp;{{totalusers}}
             </div>
@@ -27,7 +27,7 @@
       </ng-template>
           <ng-template pTemplate="header" let-columns>
           <tr>
-              <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '15%' : '15%' }">
+              <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '15%' : '15%' }">
                   <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                   <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
               </th>

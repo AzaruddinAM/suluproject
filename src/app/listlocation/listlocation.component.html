@@ -15,7 +15,7 @@
         </ng-template>
             <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '10%' : '' }">
+                <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '10%' : '' }">
                     <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                     <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
                 </th>

@@ -6,7 +6,7 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['name','number']">
         <ng-template pTemplate="caption" >
-            <div style="display: flex;" class="display-flex align-items-center justify-content-between tabhead">
+            <div style="display: flex;" class="display-flex align-items-center justify-content-between tabhead ">
                 Main Category Table
                 <!-- <mat-icon>add</mat-icon> -->
                 <!-- <button pButton type="button" icon="pi pi-plus" class="ui-button-info" [label]="'Add'" pAddRow
@@ -19,7 +19,7 @@
             <ng-template pTemplate="header" let-columns>
             <tr>
                 <!-- <th style="width:3rem" class="lightbluethinbg "></th> -->
-                <th *ngFor="let col of columns" class="lightbluethinbg" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '25%' : '' }">
+                <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '25%' : '' }">
                     <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                     <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
                 </th>
