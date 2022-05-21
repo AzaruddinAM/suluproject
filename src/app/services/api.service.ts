@@ -2,7 +2,7 @@ import { HttpClient , HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions,Headers } from '@angular/http';
 import { Router } from '@angular/router';
-import { Observable, Subscriber , throwError } from 'rxjs';
+import { Observable, Subject, Subscriber , throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode'
 
@@ -16,6 +16,16 @@ export class ApiService {
     private router:Router) { }
 
 //login
+private _refreshrequired = new Subject<void>();
+
+  get Refreshrequired() {
+    return this._refreshrequired;
+  }
+  refresh(){
+    console.log("refresh");
+    
+    this.Refreshrequired.next();
+  }
 DecodeToken(token) {
   // jwt_decode()
   var decoded = jwt_decode(token);
@@ -76,7 +86,7 @@ loginverify(){
      }))
    }
    /* Normal POST method without token  */
-  Postwithouttoken(url,body)
+  Postwithouttoken(url,body) : Observable<any>
   {
     console.log(url);
     

@@ -86,7 +86,7 @@
         }
 
         .menu-title {
-          color: inherit;
+          color: #FCF9F9;
           display: inline-block;
           font-size: $sidebar-menu-font-size;
           line-height: 1;
@@ -300,7 +300,7 @@
             .collapse,
             .collapsing {
               display: block;
-              background: $icon-only-menu-bg-light;
+              background: #811A3B;//$icon-only-menu-bg-light;
               @include border-radius(0 0 5px 0);
               position: absolute;
               left: $sidebar-width-icon;

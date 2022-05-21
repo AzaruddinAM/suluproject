@@ -57,6 +57,18 @@ import { LocationComponent } from './location/location.component';
 import { AuthGuard } from './auth.guard';
 import { ListlocationComponent } from './listlocation/listlocation.component';
 import { ViewusersComponent } from './viewusers/viewusers.component';
+import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
+// import {
+//   NgxMatDatetimePickerModule,
+//   NgxMatNativeDateModule,
+//   NgxMatTimepickerModule
+// } from '@angular-material-components/datetime-picker';
+// import { MatDatepickerModule } from '@angular/material/datepicker';
+// import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// schemas: [
+//   CUSTOM_ELEMENTS_SCHEMA
+// ]
 const APP_CONTAINERS = [
   MainlayoutComponent
 ];
@@ -90,6 +102,11 @@ const APP_CONTAINERS = [
   imports: [
     // StorageBucket
     // AngularFirestore,
+    // NgxMatTimepickerModule,
+    // MatDatepickerModule,
+    // NgxMatDatetimePickerModule,
+    // NgxMatNativeDateModule,
+    // NgxMatTimepickerModule,
     MatAutocompleteModule,
     MatRadioModule,
     MatSelectModule,
@@ -116,6 +133,9 @@ const APP_CONTAINERS = [
   providers: [AuthGuard,ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: BUCKET, useValue: "dalelna-abb4e.appspot.com" }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule { }

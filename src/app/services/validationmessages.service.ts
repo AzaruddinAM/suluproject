@@ -149,8 +149,14 @@ export class ValidationmessagesService {
     'social_media': [
       { type: 'required', message: 'Social Media is required' },
     ],
-    'timing': [
-      { type: 'required', message: 'Timing is required' },
+    'fromtiming': [
+      { type: 'required', message: 'From Timing is required' },
+    ],
+    'totiming': [
+      { type: 'required', message: 'To Timing is required' },
+    ],
+    'instragram': [
+      { type: 'required', message: 'Instagram is required' },
     ],
     'service_name': [
       { type: 'required', message: 'Service Name is required' },
@@ -164,7 +170,9 @@ export class ValidationmessagesService {
     'arabic_description': [
       { type: 'required', message: 'Arabic Description is required' },
     ],
-    
+    'available_on': [
+      { type: 'required', message: 'Available On is required' },
+    ],
     // 'statusContent':[
     //   { type: 'required', message: 'field required'},
     //   { type: 'validContent', message: 'Only accept  " '+localStorage.getItem('erase')+' " ' }
@@ -186,6 +194,18 @@ export class ValidationmessagesService {
       { type: 'validLocaluser', message: 'Not matching the Logged body'},
       { type: 'pattern', message: 'Numbers or Letters only' },
       { type: 'invalid', message: 'body not registered.. Try again.'},
+    ],
+    'arabic_title': [
+      { type: 'required', message: 'Arabic Title is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged Arabic title'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'Arabic Title not registered.. Try again.'},
+    ],
+    'arabic_body': [
+      { type: 'required', message: 'Arabic body is required' },
+      { type: 'validLocaluser', message: 'Not matching the Logged Arabic body'},
+      { type: 'pattern', message: 'Numbers or Letters only' },
+      { type: 'invalid', message: 'Arabic body not registered.. Try again.'},
     ],
     'type':[
       { type: 'required', message: 'Type is required'}

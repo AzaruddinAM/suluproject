@@ -62,6 +62,8 @@ export class NotificationComponent implements OnInit {
         this.addmaincategory= new FormGroup({
           title: new FormControl('', [Validators.required]),
           body: new FormControl('', [Validators.required]),
+          arabic_title: new FormControl('', [Validators.required]),
+          arabic_body: new FormControl('', [Validators.required]),
           type: new FormControl('0', [Validators.required]),
           // order_column: new FormControl('', [Validators.required]),
           // is_active: new FormControl(true, [Validators.required]),

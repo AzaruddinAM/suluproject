@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 import { ApiService } from '../services/api.service';
+
 
 @Component({
   selector: 'app-mainlayout',
@@ -8,11 +9,12 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./mainlayout.component.scss'],
   providers: [ApiService],
 
+
 })
 export class MainlayoutComponent implements OnInit {
 
   title = 'demo1';
-
+  login:string = "true"
   showSidebar: boolean = true;
   showNavbar: boolean = true;
   showFooter: boolean = true;
@@ -57,9 +59,17 @@ export class MainlayoutComponent implements OnInit {
   }
 
 
-
+ngOnChanges(changes): void {
+  //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+  //Add '${implements OnChanges}' to the class.
+  console.log("ngOnChanges parent");
+  
+}
   ngOnInit() {
     // Scroll to top after route change
+    setTimeout(() => {
+      this.login='false'
+    }, 5000);
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
           return;
