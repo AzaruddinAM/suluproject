@@ -12,16 +12,16 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '10%' : '' }">
+                <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':'15%',  'font-size': '11px', 'padding': '6px 12px' }">
                     <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                     <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
                 </th>
               </tr>
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                  <tr class="p-selectable-row row-datas" [pReorderableRow]="index" >
+                  <tr class="p-selectable-row row-datas" [pReorderableRow]="index" [ngStyle]="{'font-size': '11px', 'padding': '3px 12px' }">
       
-                    <td *ngFor="let col of columns" (click)="viewuser(rowData)">
+                    <td *ngFor="let col of columns" (click)="viewuser(rowData)"  class="tablecolumnbgcolor"  style="padding: 6px 12px;">
                         <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
                         <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle 
                             class="example-margin"
@@ -29,7 +29,7 @@
                             [checked]="rowData[col.field]"
                             >
                         </mat-slide-toggle></span>
-                        <span *ngIf="col.field == 'image_url'" class="tablebackground" (click)="viewimage()"><img src={{rowData[col.field]}} width="50px" height="50px" alt="No Image"></span>
+                        <span *ngIf="col.field == 'image_url'" class="tablebackground" (click)="viewimage()"><img src={{rowData[col.field]}} width="20px" height="20px" alt="No Image"></span>
                         
                     </td>
                 

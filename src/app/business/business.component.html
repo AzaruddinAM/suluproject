@@ -12,26 +12,27 @@
                 <!-- <button pButton type="button" icon="pi pi-plus" class="ui-button-info" [label]="'Add'" pAddRow
                     [table]="dt" (click)="newRow(d.name,dt)"></button> -->
                     <div>
-                        <button mat-fab class="addbutton" (click)="addnew()" ><mat-icon>add</mat-icon></button>
+                        <button pButton type="button" (click)="addnew()" icon="pi pi-plus" class="p-button-sm" style="border-radius: 9px; background-color: #FFB81C; padding: 4px 24px;font-size: 1px;"></button>
+                        <!-- <button mat-fab class="addbutton" (click)="addnew()" ><mat-icon>add</mat-icon></button> -->
                     </div>
             </div>
         </ng-template>
             <ng-template pTemplate="header" let-columns>
             <tr>
                 <!-- <th style="width:3rem" class="lightbluethinbg "></th> -->
-                <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '25%' : '' }">
+                <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':'15%',  'font-size': '11px', 'padding': '6px 12px' }">
                     <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                     <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
                 </th>
               </tr>
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                <tr class="p-selectable-row row-datas" [pReorderableRow]="index" >
+                <tr class="p-selectable-row row-datas" [pReorderableRow]="index" [ngStyle]="{'font-size': '11px', 'padding': '3px 12px' }">
       
                     <!-- <td  [pReorderableRowHandle]="order()">
                         <span  class="pi pi-bars"  ></span>
                     </td> -->
-                    <td *ngFor="let col of columns">
+                    <td *ngFor="let col of columns" class="tablecolumnbgcolor"  style="padding: 6px 12px;">
 
                         <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
                         <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle 

@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { BehaviorSubject, Observable, TimeInterval } from 'rxjs';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
@@ -18,26 +20,40 @@ export class DashboardComponent implements OnInit ,OnChanges {
   // }
   @Input() login;
   usersobs:any
-  cols :Array<{field:string,header:string}>= [
-
-    { field: 'users_id', header: 'User Id' },
+  userscols :Array<{field:string,header:string}>= [
+    { field: 'users_id', header: 'User ID' },
     { field: 'name', header: 'Name' },
-    // { field: 'email', header: 'Email' },
     { field: 'phone_number', header: 'Phone Number' },
-    { field: 'image_url', header: 'Image' },
+  ]
+  businesscols :Array<{field:string,header:string}>= [
+    { field: 'business_id', header: 'Business ID' },
+    { field: 'name', header: 'Name' },
+    { field: 'sub_name', header: 'Category' },
+  ]
+  enquirycols :Array<{field:string,header:string}>= [
+    { field: 'created_at', header: 'Enquiry Time' },
+    { field: 'business_name', header: 'Name' },
+    // { field: 'phone_number', header: 'Phone Number' },
   ]
   totalusers:number=0
+  totalbusiness:number=0
+  totalenquiry:number=0
   dailyusers:number=0
   timer: any;
+  fromDate = new Date();
+  toDate = new Date();
+  type:number = 1;
   refreshUsers$ =new BehaviorSubject<boolean>(true);
   users$: Observable<any>;
+  business$: Observable<any>;
+  enquiry$: Observable<any>;
 users=[]
-  constructor(private apis:ApiService) { }
+  constructor(private apis:ApiService, private router : Router) { }
 
   // ngOnInit() {
   //   let body = 'data='+'test'+'&date='+Date();
   //   console.log(body);
-    
+
   //   this.apis.Postwithouttoken(environment["Category"] + "/get_last10users" ,body )
   //   // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
@@ -48,61 +64,93 @@ users=[]
   //     this.dailyusers=usersdata.dailyusers
 
   //   // console.log(this.users);
-    
+
   //   })
   // }
   ngOnInit(): void {
     // alert(this.login)
+
+
+
+
     this.getusers();
+    this.getBusiness();
+    this.getBusinessEnquiry();
     this.apis.Refreshrequired.subscribe(respone=>{
       this.getusers();
+      this.getBusiness();
+      this.getBusinessEnquiry();
     });
     // this.timer=setInterval( () => {
     //   this.apis.refresh()
     // }, 3000);
   // this.users$ = this.refreshUsers$.pipe(switchMap(_ => this.getusers()))
   }
+
+  changeType(number){
+    this.type = number;
+    this.getusers();
+    this.getBusiness();
+    this.getBusinessEnquiry();
+  }
+
+
   ngOnChanges(changes: SimpleChanges): void {
     console.log("ngOnChanges");
     console.log(changes);
-    
-    
+
+
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-    
+
   }
   ngDoCheck(): void {
     //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
     //Add 'implements DoCheck' to the class.
     console.log("ngDoCheck");
-    
+
   }
   ngAfterContentInit(): void {
     //Called after ngOnInit when the component's or directive's content has been initialized.
     //Add 'implements AfterContentInit' to the class.
     console.log("ngAfterContentInit");
-    
+
   }
   ngAfterContentChecked(): void {
     //Called after every check of the component's or directive's content.
     //Add 'implements AfterContentChecked' to the class.
     console.log("ngAfterContentChecked");
-    
+
   }
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     console.log("ngAfterViewInit");
-    
+
   }
   ngAfterViewChecked(): void {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
     console.log("ngAfterViewChecked");
-    
+
   }
+
+  subtractMonths(numOfMonths, date) {
+    date.setMonth(date.getMonth() - numOfMonths);
+    console.log("from");
+    console.log(date.setMonth(date.getMonth() - numOfMonths));
+    console.log("from");
+
+    return date;
+  }
+
+
   getusers(){
-    let body = 'data='+'test'+'&date='+Date();
+    var date = new Date()
+    var from = this.type == 1?moment(date).format("YYYY-MM-DD"):this.type == 2?moment(new Date(date.getFullYear(), date.getMonth()-1, 1)).format("YYYY-MM-DD"):this.type == 4?moment(this.fromDate).format("YYYY-MM-DD"):'';
+    var to = this.type == 1?moment(date).format("YYYY-MM-DD"):this.type == 2?moment(new Date(date.getFullYear(), date.getMonth(), 0)).format("YYYY-MM-DD"):this.type == 4?moment(this.toDate).format("YYYY-MM-DD"):'';
+    var filtertype = this.type == 1?'today':this.type == 2?'past month':this.type == 3?'all':'custom';
+    let body = 'data='+'test'+'&date='+Date() + '&filtertype=' + filtertype + '&fromdate=' + from+' 00:00:00' + '&todate=' + to+' 23:59:59';
     console.log(body);
     this.usersobs=this.apis.Postwithouttoken(environment["Category"] + "/get_last10users" ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
@@ -111,19 +159,111 @@ users=[]
 
          this.users$ =(usersdata.status)?  usersdata.data:[]
       this.totalusers=usersdata.totalusers
-      this.dailyusers=usersdata.dailyusers
       console.log(this.users$);
-      
-    
+
+
     }
+
+
     // ,
     // error=>{
     //   console.log(error);
-      
+
     // }
     )
-    
+
   }
+
+  getBusiness(){
+    var date = new Date()
+    var from = this.type == 1?moment(date).format("YYYY-MM-DD"):this.type == 2?moment(new Date(date.getFullYear(), date.getMonth()-1, 1)).format("YYYY-MM-DD"):this.type == 4?moment(this.fromDate).format("YYYY-MM-DD"):'';
+    var to = this.type == 1?moment(date).format("YYYY-MM-DD"):this.type == 2?moment(new Date(date.getFullYear(), date.getMonth(), 0)).format("YYYY-MM-DD"):this.type == 4?moment(this.toDate).format("YYYY-MM-DD"):'';
+    var filtertype = this.type == 1?'today':this.type == 2?'past month':this.type == 3?'all':'custom';
+    let body = 'data='+'test'+'&date='+Date() + '&filtertype=' + filtertype + '&fromdate=' + from+' 00:00:00' + '&todate=' + to+' 23:59:59';
+    console.log(body);
+    this.usersobs=this.apis.Postwithouttoken(environment["Category"] + "/get_last10business" ,body )
+    // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
+
+    .subscribe(usersdata => {
+
+         this.business$ =(usersdata.status)?  usersdata.data:[]
+      this.totalbusiness=usersdata.totalbusiness
+      // this.dailyusers=usersdata.dailyusers
+      console.log(this.business$);
+
+
+    }
+
+
+    // ,
+    // error=>{
+    //   console.log(error);
+
+    // }
+    )
+  }
+
+  viewAll(status){
+    if(status == 1){
+      this.router.navigate(['/users'])
+    }
+    if(status == 2){
+      this.router.navigate(['/business'])
+    }
+    if(status == 3){
+      this.router.navigate(['/businessenqueries'])
+    }
+    if(status == 4){
+      this.router.navigate(['/addbusiness'], { state: { business_id:'new' , data:JSON.stringify({})}})
+    }
+  }
+
+  onBlurMethodFrom(){
+    setTimeout(()=>{
+      this.getusers();
+      this.getBusiness();
+      this.getBusinessEnquiry();
+    }, 100);
+  }
+
+  onBlurMethodTo( ){
+    setTimeout(()=>{
+      this.getusers();
+      this.getBusiness();
+      this.getBusinessEnquiry();
+    }, 100);
+  }
+
+  getBusinessEnquiry(){
+    var date = new Date()
+    var from = this.type == 1?moment(date).format("YYYY-MM-DD"):this.type == 2?moment(new Date(date.getFullYear(), date.getMonth()-1, 1)).format("YYYY-MM-DD"):this.type == 4?moment(this.fromDate).format("YYYY-MM-DD"):'';
+    var to = this.type == 1?moment(date).format("YYYY-MM-DD"):this.type == 2?moment(new Date(date.getFullYear(), date.getMonth(), 0)).format("YYYY-MM-DD"):this.type == 4?moment(this.toDate).format("YYYY-MM-DD"):'';
+    var filtertype = this.type == 1?'today':this.type == 2?'past month':this.type == 3?'all':'custom';
+    let body = 'data='+'test'+'&date='+Date() + '&filtertype=' + filtertype + '&fromdate=' + from+' 00:00:00' + '&todate=' + to+' 23:59:59';
+    console.log(body);
+    this.usersobs=this.apis.Postwithouttoken(environment["Category"] + "/get_last10business_enquiries" ,body )
+    // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
+
+    .subscribe(usersdata => {
+
+         this.enquiry$ =(usersdata.status)?  usersdata.data:[]
+      this.totalenquiry=usersdata.totalbusiness_enquiries
+      console.log("enquiry");
+      console.log(this.enquiry$);
+      console.log("enquiry");
+
+
+    }
+
+
+    // ,
+    // error=>{
+    //   console.log(error);
+
+    // }
+    )
+  }
+
   refresh(){
     // this.users ="azar"
     this.users=[{name:"azar"}]

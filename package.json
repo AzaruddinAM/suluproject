@@ -26,6 +26,7 @@
     "@mdi/font": "^5.7.55",
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
     "angular-cropperjs": "^1.0.2",
+    "angular-svg-icon": "^13.0.0",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.3",
     "compass-mixins": "^0.12.10",

@@ -9,7 +9,7 @@
     </div> -->
     <!-- <div><button (click)="get()">get</button></div> -->
     <p-table #dt [value]="datas"  dataKey="id" [columns]="cols" [reorderableColumns]="true"
-    [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+    [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
      
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['name','number']">
@@ -27,7 +27,7 @@
             <ng-template pTemplate="header" let-columns>
             <tr>
                 <!-- <th style="width:3rem" class="lightbluethinbg "></th> -->
-                <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn >
+                <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':'15%',  'font-size': '11px', 'padding': '6px 12px' }">
                     <!-- <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                     <span *ngIf="col.field == 'image_url'" >{{col.header}}</span> -->
                     {{col.header}}
@@ -35,12 +35,12 @@
               </tr>
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                <tr class="p-selectable-row row-datas"  >
+                <tr class="p-selectable-row row-datas" [ngStyle]="{'font-size': '11px', 'padding': '3px 12px' }" >
       
                     <!-- <td  [pReorderableRowHandle]="order()">
                         <span  class="pi pi-bars"  ></span>
                     </td> -->
-                    <td *ngFor="let col of columns">
+                    <td *ngFor="let col of columns" class="tablecolumnbgcolor"  style="padding: 6px 12px;">
                     <!-- <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'">{{col.field}}</span> -->
                         <div class="tablebackground">{{rowData[col.field]}}</div>
                         <!-- <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle 

@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule, ThemeService } from 'ng2-charts';
+import {ButtonModule} from 'primeng/button';
+import {CalendarModule} from 'primeng/calendar';
 
 
 
@@ -127,8 +129,9 @@ const APP_CONTAINERS = [
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    ChartsModule
-    
+    ChartsModule,
+    ButtonModule,
+    CalendarModule
   ],
   providers: [AuthGuard,ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: BUCKET, useValue: "dalelna-abb4e.appspot.com" }

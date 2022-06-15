@@ -1,60 +1,194 @@
-<div class="row card p-2">
- <div class="col-md-6 card p-2">
-  
-  
-  <p-table #dt [value]="users$"  dataKey="id" [columns]="cols" [reorderableColumns]="true" styleClass="p-datatable-sm tablesize" 
-  [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" 
-  
->
-      <ng-template pTemplate="caption" >
-        <div class="row">
+<div class="card p-2" style="border: 1px solid #EDE7E7;">
+  <br>
+  <div style="padding: 0 15px;">
+    <div class="row">
+      <div class="col-md-8">
+        <div style="font-size: 18px; font-weight: 500;">Hi Maha!</div>
+        <p style="font-size: 10px;">Welcome back to Dalelna admin portal. Below find quick details on the application.</p>
+      </div>
+      <div class="col-md-4" style="text-align: right;">
+        <button pButton type="button" (click)="viewAll(4)" label="Add New Business" icon="pi pi-plus" class="p-button-sm" style="border-radius: 9px; background-color: #FFB81C; padding: 8px 16px;font-size: 13px;"></button>
+        <!-- <button pButton type="button" label="Secondary" class="p-button-secondary" style="border-radius: 12px;"></button> -->
+      </div>
+    </div>
+    
+  </div>
+  <div style="padding: 0 15px;">
+    <div class="row">
+      <div class="col-md-9">
+        <button *ngIf="type == 1" pButton type="button" label="Today" class="p-button-sm" style="border-radius: 9px; background-color: #8E2748; padding: 4px 12px;font-size: 10px;"></button>
+        <button *ngIf="type != 1" (click)="changeType(1)" pButton type="button" label="Today" class="p-button-sm" style="border-radius: 9px; background-color: #F0EFEF; padding: 4px 12px;font-size: 10px; color: #989393;"></button> &nbsp;
+        <button *ngIf="type == 2" pButton type="button" label="Past Month" class="p-button-sm" style="border-radius: 9px; background-color: #8E2748; padding: 4px 12px;font-size: 10px;"></button>
+        <button *ngIf="type != 2" (click)="changeType(2)" pButton type="button" label="Past Month" class="p-button-sm" style="border-radius: 9px; background-color: #F0EFEF; padding: 4px 12px;font-size: 10px; color: #989393;"></button> &nbsp;
+        <button *ngIf="type == 3" pButton type="button" label="All time" class="p-button-sm" style="border-radius: 9px; background-color: #8E2748; padding: 4px 12px;font-size: 10px;"></button>
+        <button *ngIf="type != 3" (click)="changeType(3)" pButton type="button" label="All time" class="p-button-sm" style="border-radius: 9px; background-color: #F0EFEF; padding: 4px 12px;font-size: 10px; color: #989393;"></button>
+      </div>
+      <div class="col-md-3" style="text-align: right;">
+        <button *ngIf="type == 4" pButton type="button" label="Custom" icon="pi pi-sliders-v" class="p-button-sm" style="border-radius: 9px; background-color: #8E2748; padding: 4px 12px;font-size: 10px;"></button>
+        <button *ngIf="type != 4" (click)="changeType(4)" pButton type="button" label="Custom" icon="pi pi-sliders-v" class="p-button-sm" style="border-radius: 9px; background-color: #F0EFEF; padding: 4px 12px;font-size: 10px; color: #989393;"></button>
+      </div>
+    </div>
+  </div>
+  <br *ngIf="type == 4">
+  <div *ngIf="type == 4" style="padding: 0 15px;">
+    <div class="row">
+      <div class="col-md" style="text-align: right;">
+        <p-calendar (ngModelChange)="onBlurMethodFrom()" [(ngModel)]="fromDate"></p-calendar>
+        <p-calendar (ngModelChange)="onBlurMethodTo()" [(ngModel)]="toDate"></p-calendar>
 
-        
-          <div style="display: flex;" class="col-md-8 display-flex align-items-center justify-content-between tabheadsmall">
+        <!-- <button *ngIf="type == 4" pButton type="button" label="Custom" icon="pi pi-sliders-v" class="p-button-sm" style="border-radius: 9px; background-color: #8E2748; padding: 4px 12px;font-size: 10px;"></button>
+        <button *ngIf="type != 4" (click)="changeType(4)" pButton type="button" label="Custom" icon="pi pi-sliders-v" class="p-button-sm" style="border-radius: 9px; background-color: #F0EFEF; padding: 4px 12px;font-size: 10px; color: #989393;"></button> -->
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row "  style="margin: 0;">
+    <div class="col-md-4" style="padding: 12px 20px;">
+      <div class="card p-2 row" style="background: linear-gradient(50deg, #fcb81c, #b62f3a 100%); height: 140px; margin: 0;">
+        <div class="col-4">
+          <img src="assets/images/user.svg" style="margin: auto;
+          width: 67px;
+          padding-top: 27px;" 
+          alt="logo" >
+        </div>
+        <div class="col" style="padding-top: 38px;">
+          <div style="color: #fff; font-size: 40px; font-weight: 500;">{{totalusers}}</div>
+          <div style="height: 10px"></div>
+          <p style="font-size: 12px; color: #fff;">Users Registered</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4" style="padding: 12px 20px;">
+      <div class="card p-2 row" style="background: linear-gradient(50deg, #fcb81c, #b62f3a 100%); height: 140px; margin: 0;">
+        <div class="col-4">
+          <img src="assets/images/business.svg" style="margin: auto;
+          width: 67px;
+          padding-top: 27px;" 
+          alt="logo" >
+        </div>
+        <div class="col" style="padding-top: 38px;">
+          <div style="color: #fff; font-size: 40px; font-weight: 500;">{{totalbusiness}}</div>
+          <div style="height: 10px"></div>
+          <p style="font-size: 12px; color: #fff;">Business Added</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" style="padding: 12px 20px;">
+      <div class="card p-2 row" style="background: linear-gradient(50deg, #fcb81c, #b62f3a 100%); height: 140px; margin: 0;">
+        <div class="col-4">
+          <img src="assets/images/enquiry.svg" style="margin: auto;
+          width: 67px;
+          padding-top: 27px;" 
+          alt="logo" >
+        </div>
+        <div class="col" style="padding-top: 38px;">
+          <div style="color: #fff; font-size: 40px; font-weight: 500;">{{totalenquiry}}</div>
+          <div style="height: 10px"></div>
+          <p style="font-size: 12px; color: #fff;">Business Enquiries</p>
+        </div>
+      </div>
+    </div>
+
+  <br>
+  <div style="color: black; height: 180px;">
+
+  </div>
+
+  <div class="row" style="margin: 0;">
+    <div class="col-md-4 card p-2">
+     <p-table #dt [value]="users$"  dataKey="id" [columns]="userscols" [reorderableColumns]="true" styleClass="p-datatable-sm tablesize" 
+     [rowHover]="true" [rows]="10" [showCurrentPageReport]="true">
+         <ng-template pTemplate="caption" >
+          <div class="col-md-8 display-flex align-items-center justify-content-between tabheadsmall">
               Users Table
             <!-- <input type="button" value="refresh" (click)="refresh()">
             <p>{{users | json }}</p> -->
           </div>
-          <div class="col-md-4 display-flex align-items-center justify-content-end textwhite">
-            <div class="row">
-              Total Users &nbsp;&nbsp;:&nbsp;&nbsp;{{totalusers}}
-            </div>
-            <div class="row">
-              Daily Users &nbsp;&nbsp;:&nbsp;&nbsp;{{dailyusers}}
-            </div>
-          </div>
+         </ng-template>
+             <ng-template pTemplate="header" let-columns>
+             <tr>
+                 <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width': '15%', 'font-size': '10px', 'padding': '3px 12px'}">
+                     <span>{{col.header}}</span>
+                 </th>
+               </tr>
+               </ng-template>
+               <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                 <tr class="p-selectable-row row-datas" [pReorderableRow]="index" [ngStyle]="{'font-size': '10px', 'padding': '3px 12px' }">
+                     <td *ngFor="let col of columns" class="tablecolumnbgcolor" >
+                         <span *ngIf="col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
+                     </td>
+                 </tr>
+               </ng-template>
+               
+       </p-table>
+       <div style="text-align: center; color: #989393; font-size: 11px; font-weight: 500; cursor: pointer;" (click)="viewAll(1)">
+          view all
+       </div>
+     </div>
+     <div class="col-md-4 card p-2">
+      <p-table #dt [value]="business$"  dataKey="id" [columns]="businesscols" [reorderableColumns]="true" styleClass="p-datatable-sm tablesize" 
+      [rowHover]="true" [rows]="10" [showCurrentPageReport]="true">
+          <ng-template pTemplate="caption" >
+           <div class="col-md-8 display-flex align-items-center justify-content-between tabheadsmall">
+               Business Table
+             <!-- <input type="button" value="refresh" (click)="refresh()">
+             <p>{{users | json }}</p> -->
+           </div>
+          </ng-template>
+              <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width': '15%', 'font-size': '10px', 'padding': '3px 12px'}">
+                      <span>{{col.header}}</span>
+                  </th>
+                </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                  <tr class="p-selectable-row row-datas" [pReorderableRow]="index" [ngStyle]="{'font-size': '10px', 'padding': '3px 12px' }">
+                      <td *ngFor="let col of columns" class="tablecolumnbgcolor" >
+                          <span *ngIf="col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
+                      </td>
+                  </tr>
+                </ng-template>
+    
+        </p-table>
+        <div style="text-align: center; color: #989393; font-size: 11px; font-weight: 500; cursor: pointer;" (click)="viewAll(1)">
+          view all
+       </div>
+      </div>
+      <div class="col-md-4 card p-2">
+        <p-table #dt [value]="enquiry$"  dataKey="id" [columns]="enquirycols" [reorderableColumns]="true" styleClass="p-datatable-sm tablesize" 
+        [rowHover]="true" [rows]="10" [showCurrentPageReport]="true">
+            <ng-template pTemplate="caption" >
+             <div class="col-md-8 display-flex align-items-center justify-content-between tabheadsmall">
+                 Enquiries
+               <!-- <input type="button" value="refresh" (click)="refresh()">
+               <p>{{users | json }}</p> -->
+             </div>
+            </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width': '15%', 'font-size': '10px', 'padding': '3px 12px', 'color': '#805F69'}">
+                        <span>{{col.header}}</span>
+                    </th>
+                  </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+                    <tr class="p-selectable-row row-datas" [pReorderableRow]="index" [ngStyle]="{'font-size': '10px', 'padding': '3px 12px', 'color': '#807B7D' }">
+                        <td *ngFor="let col of columns" class="tablecolumnbgcolor" >
+                            <span *ngIf="col.field !== 'created_at'" class="tablebackground">{{rowData[col.field]}}</span>
+                            <span *ngIf="col.field == 'created_at'" class="tablebackground">{{rowData[col.field] | date: 'dd MMM yyyy' }}</span>
+                        </td>
+                    </tr>
+                  </ng-template>
+      
+          </p-table>
+          <div style="text-align: center; color: #989393; font-size: 11px; font-weight: 500; cursor: pointer;" (click)="viewAll(1)">
+            view all
+         </div>
         </div>
-      </ng-template>
-          <ng-template pTemplate="header" let-columns>
-          <tr>
-              <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':col.field === 'image_url' ? '15%' : '15%' }">
-                  <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
-                  <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
-              </th>
-            </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-              <tr class="p-selectable-row row-datas" [pReorderableRow]="index" >
-    
-                  <td *ngFor="let col of columns" >
-                      <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
-                      <!-- <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle 
-                          class="example-margin"
-                          (change)="toggle($event,index,rowData['users_id'])"
-                          [checked]="rowData[col.field]"
-                          >
-                      </mat-slide-toggle></span> -->
-                      <span *ngIf="col.field == 'image_url'" class="tablebackground"><img src={{rowData[col.field]}} width="40px" height="40px" alt="No image"></span>
-                   
-                  </td>
-              
-    
-              </tr>
-            </ng-template>
-
-  </p-table>
 </div>
-  </div>
+</div>
 <!-- <div class="row" id="proBanner">
   <div class="col-12">
     <span class="align-items-center purchase-popup">

@@ -1,0 +1,5 @@
+<svg id="sort_arrow_down" data-name="sort arrow down" xmlns="http://www.w3.org/2000/svg" width="20.878" height="13.79" viewBox="0 0 20.878 13.79">
+  <g id="Layer_137" data-name="Layer 137" transform="translate(-2.122 -5)">
+    <path id="Vector" d="M20.878,2a1,1,0,0,1-1,1h-10a1,1,0,0,1,0-2h10a1,1,0,0,1,1,1Zm-4,4h-7a1,1,0,0,0,0,2h7a1,1,0,1,0,0-2Zm-4,5h-3a1,1,0,1,0,0,2h3a1,1,0,1,0,0-2ZM6.3,9.79,4.878,11V1a1,1,0,0,0-2,0V11L1.458,9.79a.85.85,0,1,0-1.11,1.28l3,2.58a.53.53,0,0,0,.1.06.71.71,0,0,0,.15.08h.62a.71.71,0,0,0,.15-.08.53.53,0,0,0,.1-.06l3-2.58a.85.85,0,1,0-1.11-1.28Z" transform="translate(2.122 5)" fill="#e3e3e3"/>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 <div class="col-12 grid-margin ">
   <div class="card " >
-    <div class="card-body lightbluethinbg">
+    <div class="card-body lightbluethinbg" style="background: #fff !important;">
       <h4 class="card-title">Add Business</h4>
       <form class="form-sample" [formGroup]="addmaincategory"  >
         <!-- (ngSubmit)="onSubmit()" -->
@@ -8,7 +8,7 @@
           Personal info
         </p> -->
         <div class="row">
-       
+
           <div class="col-md-3">
             <!-- <mat-form-field>
               <input matInput
@@ -25,12 +25,12 @@
           <!-- <ngx-mat-timepicker #pickerA></ngx-mat-timepicker> -->
           <!-- <mat-form-field>
             <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date & time" [(ngModel)]="selectedTime">
-            
+
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        
+
             <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
         </mat-form-field> -->
-        
+
             <mat-form-field class="sizefull employee-search-field">
               <input matInput  placeholder="Name" formControlName="name" required>
               <mat-error *ngFor="let validation of business_validation_message.name">
@@ -55,9 +55,9 @@
               </mat-error>
             </mat-form-field>
           </div>
-        
+
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Sub Name" formControlName="sub_name" required>
               <mat-error *ngFor="let validation of business_validation_message.sub_name">
@@ -66,7 +66,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Arabic Sub Name" formControlName="arabic_sub_name" required>
               <mat-error *ngFor="let validation of business_validation_message.arabic_sub_name">
@@ -74,10 +74,10 @@
               </mat-error>
             </mat-form-field>
           </div>
-        
-         
+
+
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Address" formControlName="address" required>
               <mat-error *ngFor="let validation of business_validation_message.address">
@@ -86,7 +86,7 @@
             </mat-form-field>
           </div>
             <div class="col-md-3">
-           
+
               <mat-form-field class="sizefull">
                 <input matInput  placeholder="Arabic Address" formControlName="arabic_address" required>
                 <mat-error *ngFor="let validation of business_validation_message.arabic_address">
@@ -116,7 +116,7 @@
           </mat-form-field>
           </div>
           <!-- <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Arabic Mapingname" formControlName="arabic_mapingname" required>
               <mat-error *ngFor="let validation of business_validation_message.arabic_mapingname">
@@ -125,7 +125,7 @@
             </mat-form-field>
           </div> -->
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Latitude" formControlName="latitude" required>
               <mat-error *ngFor="let validation of business_validation_message.latitude">
@@ -134,7 +134,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Longitude" formControlName="longitude" required>
               <mat-error *ngFor="let validation of business_validation_message.longitude">
@@ -143,7 +143,7 @@
             </mat-form-field>
           </div>
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Phone Number" formControlName="phone_number" required>
               <mat-error *ngFor="let validation of business_validation_message.phone_number">
@@ -151,18 +151,18 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-3">
-           
+          <!-- <div class="col-md-3">
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="alt_phone_number" formControlName="alt_phone_number" required>
               <mat-error *ngFor="let validation of business_validation_message.alt_phone_number">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('alt_phone_number').hasError(validation.type) && (addmaincategory.get('alt_phone_number').dirty || addmaincategory.get('alt_phone_number').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
-             
-          </div>
+
+          </div> -->
           <div class="col-md-3">
-            
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Email" formControlName="email" required>
               <mat-error *ngFor="let validation of business_validation_message.email">
@@ -170,39 +170,39 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-3">
-           
+          <!-- <div class="col-md-3">
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Slug" formControlName="slug" required>
               <mat-error *ngFor="let validation of business_validation_message.slug">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('slug').hasError(validation.type) && (addmaincategory.get('slug').dirty || addmaincategory.get('slug').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
-             
-          </div>
+
+          </div> -->
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Rating" formControlName="rating" required>
               <mat-error *ngFor="let validation of business_validation_message.rating">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('rating').hasError(validation.type) && (addmaincategory.get('rating').dirty || addmaincategory.get('rating').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
-             
+
           </div>
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Web" formControlName="web" required>
               <mat-error *ngFor="let validation of business_validation_message.web">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('web').hasError(validation.type) && (addmaincategory.get('web').dirty || addmaincategory.get('web').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
-             
+
           </div>
           <div class="col-md-3">
             <!-- // name, arabic_name, is_active, sub_name, arabic_sub_name,description,arabic_description,
-            //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,   
+            //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,
             // web, social_media, timing, service_name, arabic_service_name -->
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Instagram" formControlName="social_media" required>
@@ -210,30 +210,35 @@
                 <mat-error class="error-message" *ngIf="addmaincategory.get('social_media').hasError(validation.type) && (addmaincategory.get('social_media').dirty || addmaincategory.get('social_media').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
-             
+
           </div>
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
-              <input matInput  placeholder="From Timing" formControlName="fromtiming" required>
+              <input matInput placeholder="From Timing" hidden  formControlName="fromtiming" required>
+                <!-- <label for="fromtiming">From Timing</label> -->
+                <p-calendar formControlName="fromtiming"  [timeOnly]="true"  (onSelect)="selecttime('from',$event)" [hourFormat]="12"  inputId="fromtiming"></p-calendar>
+
               <mat-error *ngFor="let validation of business_validation_message.fromtiming">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('fromtiming').hasError(validation.type) && (addmaincategory.get('fromtiming').dirty || addmaincategory.get('fromtiming').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
-             
+
           </div>
           <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
-              <input matInput  placeholder="To Timing" formControlName="totiming" required>
+              <input matInput  placeholder="To Timing" hidden formControlName="totiming" required>
+              <!-- <label for="totiming">To Timing</label> -->
+              <p-calendar   formControlName="totiming" [timeOnly]="true" [hourFormat]="12" (onSelect)="selecttime('to',$event)"  inputId="totiming"></p-calendar>
               <mat-error *ngFor="let validation of business_validation_message.totiming">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('totiming').hasError(validation.type) && (addmaincategory.get('totiming').dirty || addmaincategory.get('totiming').touched)">{{validation.message}}</mat-error>
               </mat-error>
           </mat-form-field>
-             
+
           </div>
           <!-- <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Instagram" formControlName="instagram" required>
               <mat-error *ngFor="let validation of business_validation_message.instagram">
@@ -254,15 +259,15 @@
               </div>
             </div>
           </div>
-         
-        
+
+
         </div>
         <div class="row">
 
           <div class="col-md-6">
-           
+
             <mat-form-field class="sizefull w-100">
-              <textarea matInput placeholder="Service Name" rows="3" maxlength="2000" formControlName="service_name"></textarea> 
+              <textarea matInput placeholder="Service Name" rows="3" maxlength="2000" formControlName="service_name"></textarea>
               <!-- <input matInput  placeholder="Service Name" formControlName="service_name" required> -->
               <mat-error *ngFor="let validation of business_validation_message.service_name">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('service_name').hasError(validation.type) && (addmaincategory.get('service_name').dirty || addmaincategory.get('service_name').touched)">{{validation.message}}</mat-error>
@@ -286,9 +291,9 @@
           </mat-form-field> -->
           </div>
           <div class="col-md-6">
-           
+
             <mat-form-field class="sizefull w-100">
-              <textarea matInput placeholder="Arabic Service Name" rows="3" maxlength="2000" formControlName="arabic_service_name"></textarea> 
+              <textarea matInput placeholder="Arabic Service Name" rows="3" maxlength="2000" formControlName="arabic_service_name"></textarea>
 
               <!-- <input matInput  placeholder="Arabic Service Name" formControlName="arabic_service_name" required> -->
               <mat-error *ngFor="let validation of business_validation_message.arabic_service_name">
@@ -311,12 +316,12 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field> -->
-             
+
           </div>
           <div class="col-md-6">
-           
+
             <mat-form-field class="sizefull w-100">
-              <textarea matInput placeholder="Description" rows="3" maxlength="2000" formControlName="description"></textarea> 
+              <textarea matInput placeholder="Description" rows="3" maxlength="2000" formControlName="description"></textarea>
               <!-- <input matInput  placeholder="Description" formControlName="description" required> -->
               <mat-error *ngFor="let validation of business_validation_message.description">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('description').hasError(validation.type) && (addmaincategory.get('description').dirty || addmaincategory.get('description').touched)">{{validation.message}}</mat-error>
@@ -324,9 +329,9 @@
             </mat-form-field>
           </div>
           <div class="col-md-6">
-           
+
             <mat-form-field class="sizefull w-100">
-              <textarea matInput placeholder="Arabic Description" rows="3" maxlength="2000" formControlName="arabic_description"></textarea> 
+              <textarea matInput placeholder="Arabic Description" rows="3" maxlength="2000" formControlName="arabic_description"></textarea>
               <!-- <input matInput  placeholder="Arabic Description" formControlName="arabic_description" required> -->
               <mat-error *ngFor="let validation of business_validation_message.arabic_description">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_description').hasError(validation.type) && (addmaincategory.get('arabic_description').dirty || addmaincategory.get('arabic_description').touched)">{{validation.message}}</mat-error>
@@ -334,9 +339,9 @@
             </mat-form-field>
           </div>
           <div class="col-md-6">
-             
+
             <mat-form-field class="sizefull w-100">
-              <textarea matInput placeholder="Available On" rows="3" maxlength="2000" formControlName="available_on"></textarea> 
+              <textarea matInput placeholder="Available On" rows="3" maxlength="2000" formControlName="available_on"></textarea>
               <!-- <input matInput  placeholder="available_on" formControlName="available_on" required> -->
               <mat-error *ngFor="let validation of business_validation_message.available_on">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('available_on').hasError(validation.type) && (addmaincategory.get('available_on').dirty || addmaincategory.get('available_on').touched)">{{validation.message}}</mat-error>
@@ -345,9 +350,18 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-3"  *ngFor="let item of subcaterories; let i=index">
-            <mat-checkbox [checked]="item.value" (change)="changesubcategory(i,$event.checked)" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" >{{item.name}}</mat-checkbox>
-            </div>
+          <!-- <div class="col-md-3"  > -->
+            <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            (change)="changesubcategory($event.value)"
+            >
+            <mat-radio-button class="example-radio-button col-md-3" *ngFor="let item of subcaterories" [checked]="item.value" [value]="item.name">
+              {{item.name}}
+            </mat-radio-button>
+          </mat-radio-group>
+            <!-- <mat-checkbox [checked]="item.value" (change)="changesubcategory(i,$event.checked)" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" >{{item.name}}</mat-checkbox> -->
+          <!-- </div> -->
         </div>
         <div class="row">
            <div class="col-md-3">
@@ -364,38 +378,38 @@
               </mat-error>
           </mat-form-field>
            </div>
-           
-        
-           
+
+
+
         </div>
           <div *ngIf="!cropperhide && addmaincategory.get('imagetype').value=='1'" class="card-body" >
           <div class="row">
             <div class="col-md-3">
-  
+
             <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload1.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
-          
+
           <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload1/>
         </div>
         <div class="col-md-6">
-         
+
           <mat-progress-bar *ngIf="progresshow" mode="indeterminate" [value]="percentage"></mat-progress-bar>
         </div>
         <div class="col-md-3">
-         
+
           <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase(fileupload1)"  tooltip="Click to Add Image" value="ADD IMAGE">
         </div>
           </div>
            <div class="row" style="margin-top: 15px;">
               <div class="text-center col-md-8">
                   <h5>Crop Image</h5>
-                  <image-cropper 
-                  [imageChangedEvent]="imageChangedEvent" 
-                  [maintainAspectRatio]="true" 
+                  <image-cropper
+                  [imageChangedEvent]="imageChangedEvent"
+                  [maintainAspectRatio]="true"
                   [aspectRatio]="25 / 11"
-                  format="png" 
-                  (imageCropped)="imageCropped($event)" 
+                  format="png"
+                  (imageCropped)="imageCropped($event)"
                   (imageLoaded)="imageLoaded()"
-                  (cropperReady)="cropperReady()" 
+                  (cropperReady)="cropperReady()"
                   (loadImageFailed)="loadImageFailed()"></image-cropper>
               </div>
               <div class="text-center col-md-4">
@@ -407,7 +421,7 @@
         <h3 *ngIf="cropperhide && type1images.length>0">Main Image</h3>
         <div *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1' || addmaincategory.get('imagetype').value=='2' ||addmaincategory.get('imagetype').value=='3')" class="text-center row">
           <div class="col-md-6 p-1">
-  
+
             <img  height="150px" [src]="type1images[0].showurl" />
 
           </div>
@@ -421,31 +435,31 @@
         <div *ngIf="!cropperhide && addmaincategory.get('imagetype').value=='2'" class="card-body" >
           <div class="row">
             <div class="col-md-3">
-  
+
             <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
-          
+
           <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload/>
         </div>
         <div class="col-md-6">
-         
+
           <mat-progress-bar *ngIf="progresshow" mode="indeterminate" ></mat-progress-bar>
         </div>
         <div class="col-md-3">
-         
+
           <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="multipleuploadtofirebase(fileupload)"  tooltip="Click to Add Image" value="ADD IMAGE">
         </div>
           </div>
            <div class="row" style="margin-top: 15px;">
               <div class="text-center col-md-8">
                   <h5>Crop Image</h5>
-                  <image-cropper 
-                  [imageChangedEvent]="imageChangedEvent" 
-                  [maintainAspectRatio]="true" 
+                  <image-cropper
+                  [imageChangedEvent]="imageChangedEvent"
+                  [maintainAspectRatio]="true"
                   [aspectRatio]="4 / 4"
-                  format="png" 
-                  (imageCropped)="imageCropped($event)" 
+                  format="png"
+                  (imageCropped)="imageCropped($event)"
                   (imageLoaded)="imageLoaded()"
-                  (cropperReady)="cropperReady()" 
+                  (cropperReady)="cropperReady()"
                   (loadImageFailed)="loadImageFailed()"></image-cropper>
               </div>
               <div class="text-center col-md-4">
@@ -458,7 +472,7 @@
         <h3 *ngIf="cropperhide && images.length>0">Sub Images</h3>
         <div *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1' || addmaincategory.get('imagetype').value=='2' ||addmaincategory.get('imagetype').value=='3')" class="text-center row">
           <div class="col-md-4 p-1" *ngFor="let image of images">
-  
+
             <img  width="150px" height="150px" [src]="image.showurl" />
           </div>
           <div class="row-md-4 p-1 " *ngIf="cropperhide && addmaincategory.get('imagetype').value=='2'">
@@ -466,36 +480,36 @@
               <input class="text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide('2')" value="ADD SUB IMAGE">
 
           </div>
-     
+
         </div>
         <div *ngIf="!cropperhide && addmaincategory.get('imagetype').value=='3'" class="card-body" >
           <div class="row">
             <div class="col-md-3">
-  
+
             <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload3.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
-          
+
           <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload3/>
         </div>
         <div class="col-md-6">
-         
+
           <mat-progress-bar *ngIf="progresshow" mode="indeterminate" ></mat-progress-bar>
         </div>
         <div class="col-md-3">
-         
+
           <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="multiplegalleryuploadtofirebase(fileupload3)"  tooltip="Click to Add Image" value="ADD IMAGE">
         </div>
           </div>
            <div class="row" style="margin-top: 15px;">
               <div class="text-center col-md-8">
                   <h5>Crop Image</h5>
-                  <image-cropper 
-                  [imageChangedEvent]="imageChangedEvent" 
-                  [maintainAspectRatio]="true" 
+                  <image-cropper
+                  [imageChangedEvent]="imageChangedEvent"
+                  [maintainAspectRatio]="true"
                   [aspectRatio]="4 / 4"
-                  format="png" 
-                  (imageCropped)="imageCropped($event)" 
+                  format="png"
+                  (imageCropped)="imageCropped($event)"
                   (imageLoaded)="imageLoaded()"
-                  (cropperReady)="cropperReady()" 
+                  (cropperReady)="cropperReady()"
                   (loadImageFailed)="loadImageFailed()"></image-cropper>
               </div>
               <div class="text-center col-md-4">
@@ -508,7 +522,7 @@
         <h3 *ngIf="cropperhide && galleryimages.length>0">Gallery Images</h3>
         <div *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='1' || addmaincategory.get('imagetype').value=='2' ||addmaincategory.get('imagetype').value=='3')" class="text-center row">
           <div class="col-md-4 p-1" *ngFor="let image of galleryimages">
-  
+
             <img width="150px" height="150px" [src]="image.showurl" />
           </div>
           <div class="row-md-4 p-1 " *ngIf="cropperhide && (addmaincategory.get('imagetype').value=='3')">
@@ -516,14 +530,14 @@
               <input class="text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide('3')" value="ADD GALLERY IMAGE">
 
           </div>
-     
+
         </div>
         <!-- <div class="col-md-3"> -->
           <input *ngIf="addoredit=='add'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD BUSINESS">
           <input *ngIf="addoredit=='edit'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="UPDATE BUSINESS">
           <mat-error>{{error}}</mat-error>
        <!-- </div> -->
-      
+
       </form>
     </div>
   </div>
