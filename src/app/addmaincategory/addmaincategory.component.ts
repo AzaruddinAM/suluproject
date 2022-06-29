@@ -39,7 +39,7 @@ export class AddmaincategoryComponent implements OnInit {
     // {id:'44',imageurl:'assets/images/maincategory/demo.png',name:'azar3',number:'1431254',order:4,isactive:true},
     // {id:'7',imageurl:'assets/images/maincategory/demo.png',name:'azar4',number:'1431254',order:5,isactive:true},
     // {id:'66',imageurl:'assets/images/maincategory/demo.png',name:'azar5',number:'1431254',order:6,isactive:false}
-  
+
     params: { [k: string]: any; };
     addmaincategory:FormGroup
     main_category_id: any;
@@ -64,7 +64,7 @@ export class AddmaincategoryComponent implements OnInit {
     private storage:AngularFireStorage) {
     this.params = this.router.getCurrentNavigation().extras.state;
     this.addmaincategory= this.fb.group({
-        
+
       name: new FormControl('',Validators.compose([Validators.required])),
       arabic_name: new FormControl('',Validators.compose([Validators.required])),
       image_url: new FormControl('',Validators.compose([Validators.required])),
@@ -87,20 +87,34 @@ export class AddmaincategoryComponent implements OnInit {
     let body = 'date='+Date()+'&main_category_id='+this.main_category_id;
     var api
     if(this.main_category_id ==='new')
+    {
       api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list" ,body )
+      api.subscribe( sub_category => {
+        // this.subcaterories= sub_category.data
+        this.subcaterories = (sub_category.status) ? sub_category.data:[]
+        this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
+        console.log(this.subcaterories);
+
+
+
+        this.addoredit='add'
+
+
+    })
+    }
     else
+    {
      api=this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_list_in_main_category" ,body )
     api.subscribe(sub_category => {
       // this.subcaterories= sub_category.data
       this.subcaterories = (sub_category.status) ? sub_category.data:[]
       this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
       console.log(this.subcaterories);
-      
-    
-    if(this.main_category_id !=='new')
-    {
+
+
+
       this.addoredit='edit'
-      
+
       // alert(JSON.stringify(this.params))
       // let index = this.datas.findIndex(item=>item.id==this.id)
       //         this.addmaincategory.get('image_url').setValue(encodeURIComponent(this.fbs))
@@ -111,70 +125,21 @@ export class AddmaincategoryComponent implements OnInit {
       this.addmaincategory.get('order_column').setValue(this.datas['order_column'])
       this.addmaincategory.get('is_active').setValue(this.datas['is_active'])
       this.addmaincategory.get('main_category_id').setValue(this.main_category_id)
-      
-      // this.afteruploadimage=this.addmaincategory.get('image_url').value
-      // this.addmaincategory= new FormGroup({
-    //   // name , image_url , order_column ,  is_active , id 
-    //   name: new FormControl(this.datas['name'], [Validators.required]),
-    //   arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
-    //   image_url: new FormControl(this.datas['image_url'], [Validators.required]),
-    //   order_column: new FormControl(this.datas['order_column'], [Validators.required]),
-    //   is_active: new FormControl(this.datas['is_active'], [Validators.required]),
 
-    //   main_category_id:new FormControl(this.main_category_id, [Validators.required])
-    //   // Isactive: ['', Validators.required],
-    //   // Image: ['', Validators.required],
-    //   // subcaterories: this.fb.array(this.subcaterories),
 
-    // });
-    // this.subcaterories.forEach(element => {
-    //   this.addmaincategory.addControl(element.name, new FormControl(element.value, Validators.required));
 
-    // });
-    // https://www.gstatic.com/webp/gallery/1.jpg
-  //   this.imageChangedEvent= this.http
-  //   .get("https://www.gstatic.com/webp/gallery/1.jpg", {
-  //     responseType: 'arraybuffer'
-  //  })
-  //   .pipe(
-  //     map((response:any) => {
-  //       return new File([response], "myImage.png");
-  //     })
-  //   );
-  //   console.log(this.imageChangedEvent);
-    }
-    else{
-      this.addoredit='add'
-      // let main_category_id=Math.random().toString(36).substr(2, 9);
-      // alert("alert")
-
-      // this.subcaterories.forEach(element => {
-      //   this.addmaincategory.addControl(element.name, new FormControl(element.value, Validators.required));
-  
-      // });
-      // https://www.gstatic.com/webp/gallery/1.jpg
-    //   this.imageChangedEvent= this.http
-    //   .get("https://www.gstatic.com/webp/gallery/1.jpg", {
-    //     responseType: 'arraybuffer'
-    //  })
-    //   .pipe(
-    //     map((response:any) => {
-    //       return new File([response], "myImage.png");
-    //     })
-    //   );
-      // console.log(this.imageChangedEvent);
-    }
   })
+}
   }
   onSubmit(){
-    
+
   // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
   // console.log(this.addmaincategory.get('image_url').value);
 
     console.log("onSubmit");
     console.log(this.addmaincategory.value);
     console.log(this.subcaterories);
-    
+
     this.subcaterories = this.subcaterories.filter(item=>item.value==true)
     let body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&date='+Date();
     // 'name='+this.addmaincategory.get('Name').value+
@@ -205,13 +170,13 @@ export class AddmaincategoryComponent implements OnInit {
     this.router.navigate(['/maincatogory'])
     })
   }
-    
+
   }
   fileChangeEvent(event: any): void {
     this.croppedImage=''
     this.imageChangedEvent = event;
     // this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
-    
+
 }
  uploadtofirebase(files){
   this.progresshow=true
@@ -224,13 +189,13 @@ export class AddmaincategoryComponent implements OnInit {
   const fileRef = this.storage.ref(filePath+n);
   const task = this.storage.upload(filePath+n, file);
   console.log(task);
-  
+
   task
     .snapshotChanges()
     .pipe(
       finalize(() => {
         this.downloadURL =  fileRef.getDownloadURL();
-        
+
         this.downloadURL
         .pipe(
           tap({
@@ -241,13 +206,13 @@ export class AddmaincategoryComponent implements OnInit {
               console.log('tap error', err);
             },
             complete: () => {console.log('tap complete')
-            
+
             console.log(localStorage.getItem('imageurl'));
           }
           }),
           finalize(() => {
           files.value=""
-              
+
               this.progresshow=false
               this.cropperhide=true
               // localStorage.setItem('imageurl',encodeURIComponent(this.fbs))
@@ -262,7 +227,7 @@ export class AddmaincategoryComponent implements OnInit {
             if (url) {
               this.fbs = url;
               // localStorage.setItem('imageurl',encodeURIComponent(url))
-        
+
           }
         });
       })
@@ -287,7 +252,7 @@ export class AddmaincategoryComponent implements OnInit {
 // this.addmaincategory.get('image_url').setValue(localStorage.getItem('imageurl'))
 
 //       }
-      
+
 //     },
 //     error => {
 //       console.log(error);
@@ -298,23 +263,23 @@ export class AddmaincategoryComponent implements OnInit {
   // }
   // )
   // console.log(imageurl);
-  
+
   // this.addmaincategory.get('image_url').setValue(this.firebase.uploadfile(this.croppedImage,filePath,'azar'))
   // console.log(this.addmaincategory.get('image_url').value);
-  
+
 }
 dataURLtoFile(dataurl, filename) {
- 
+
   var arr = dataurl.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]), 
-      n = bstr.length, 
+      bstr = atob(arr[1]),
+      n = bstr.length,
       u8arr = new Uint8Array(n);
-      
+
   while(n--){
       u8arr[n] = bstr.charCodeAt(n);
   }
-  
+
   return new File([u8arr], filename, {type:mime});
 }
 imageCropped(event:ImageCroppedEvent) {
@@ -322,10 +287,10 @@ imageCropped(event:ImageCroppedEvent) {
   //  this.addmaincategory.get('image_url').setValue('assets/images/maincategory/demo.png')
   this.croppedImage = event.base64;
   this.afteruploadimage=this.croppedImage
-  
-    
+
+
     // console.log(event);
-   
+
 //     console.log(event);
 //     this.croppedImage = event.base64
 //     const base64 = '...';
@@ -336,12 +301,12 @@ imageCropped(event:ImageCroppedEvent) {
 //     var formData = new FormData();
 //     formData.append("file", this.testfile);
 //     this.imageChangedEvent = event;
-//     var name = document.getElementById('browseAttachment'); 
+//     var name = document.getElementById('browseAttachment');
 
 //     var nameType = name['files'].item(0).type;
 //     console.log(nameType);
 //     console.log(formData);
-    
+
 //     this.http.post(environment['File'], formData)
 // .subscribe((response)=>{
 //   console.log('response receved is ', response);
@@ -354,7 +319,7 @@ imageCropped(event:ImageCroppedEvent) {
 //   }
 //   else{
 //     console.log("error");
-    
+
 //     // this._snackBar.open('File not uploaded','Upload error',this.config)
 //   }
 // })
@@ -380,7 +345,7 @@ dataURItoBlob(dataURI) {
   for (let i = 0; i < byteString.length; i++) {
     int8Array[i] = byteString.charCodeAt(i);
   }
-  const blob = new Blob([int8Array], { type: 'image/png' });    
+  const blob = new Blob([int8Array], { type: 'image/png' });
   return blob;
 }
 
@@ -394,7 +359,7 @@ changesubcategory(index,value){
 //   const fileRef = this.storage.ref(filePath);
 //   const task = this.storage.upload(`maincategory/${n}`, file);
 //   console.log(task);
-  
+
 //   task
 //     .snapshotChanges()
 //     .pipe(

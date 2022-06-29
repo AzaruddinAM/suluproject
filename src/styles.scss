@@ -51,8 +51,8 @@
 @import "./assets/scss/components/bootstrap-progress";
 @import "./assets/scss/components/bootstrap-alerts";
 @import "./assets/scss/components/tabs";
-@import "./assets/scss/components/dropdowns"; 
-@import "./assets/scss/components/date-picker"; 
+@import "./assets/scss/components/dropdowns";
+@import "./assets/scss/components/date-picker";
 @import "./assets/scss/components/pagination";
 @import "./assets/scss/components/portfolio";
 @import "./assets/scss/components/todo-list";
@@ -131,17 +131,17 @@ opacity: 1 !important;
 //     color: black !important;
 //     border-color: black;
 //   }
-  
+
 //   .employee-search-field mat-label {
 //     color: black !important;
 //     /* add label text color here */
 //   }
-  
+
 //   .employee-search-field .mat-input-element {
 //     color: black !important;
 //     /* add input text color here */
 //   }
-  
+
 //   .employee-search-field .mat-input-element::placeholder {
 //     color: black !important;
 //     /* add placeholder css here */
@@ -150,18 +150,18 @@ opacity: 1 !important;
 
     color:#212529 !important;
   }
-  
+
   ::ng-deep .mat-focused .mat-form-field-placeholder{
-  
+
     color:#212529 !important;
   }
   ::ng-deep .mat-form-field-underline .mat-form-field-ripple{
 
     background-color:#212529 !important;
   }
-  
+
   ::ng-deep .mat-form-field-underline{
-  
+
     background-color:#212529 !important;
   }
 //   .mat-form-field {
@@ -170,10 +170,10 @@ opacity: 1 !important;
 //     // color: #212529;
 //     // border-color: #212529;
 //   }
-  
+
   ::ng-deep .mat-input-element::placeholder {
     color:#212529 !important;
-      
+
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label {
@@ -200,7 +200,12 @@ opacity: 1 !important;
 
   background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
   background: linear-gradient(to right, #ee5a6f, #f29263)
-  
+
+}
+
+
+.sidebar[_ngcontent-coj-c194] .nav[_ngcontent-coj-c194] .nav-item.active[_ngcontent-coj-c194] .nav-link[_ngcontent-coj-c194] .menu-title[_ngcontent-coj-c194]{
+  color: #811A3B !important;
 }
 
 
@@ -208,7 +213,7 @@ opacity: 1 !important;
   color: #811A3B !important;
 }
 .tabheadsmall{
-  display: flex; 
+  display: flex;
   font-size: 12px !important;
   text-align: center;
   font-size: medium;
@@ -216,7 +221,12 @@ opacity: 1 !important;
   letter-spacing: 0px;
   color: #FFFFFF;
   opacity: 1;
-  
+
+}
+
+.ptablestyle{
+  border: 1px solid #dadada;
+  border-radius: 12px 12px 0px 0px !important
 }
 
 .ptablestyle{
@@ -264,7 +274,7 @@ opacity: 1 !important;
 .p-component, .p-component * {
   /* box-sizing: border-box; */
   border-color: #E6E1E1  !important;// #f5a177 !important;
-  //  border-color: black !important; 
+  //  border-color: black !important;
   // border-width: thin !important;
 }
 // .p-datatable .p-datatable-thead > tr > th {

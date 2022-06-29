@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable, TimeInterval } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
@@ -53,7 +53,7 @@ users=[]
   // ngOnInit() {
   //   let body = 'data='+'test'+'&date='+Date();
   //   console.log(body);
-    
+
   //   this.apis.Postwithouttoken(environment["Category"] + "/get_last10users" ,body )
   //   // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
@@ -64,15 +64,15 @@ users=[]
   //     this.dailyusers=usersdata.dailyusers
 
   //   // console.log(this.users);
-    
+
   //   })
   // }
   ngOnInit(): void {
     // alert(this.login)
 
 
-    
-    
+
+
     this.getusers();
     this.getBusiness();
     this.getBusinessEnquiry();
@@ -98,41 +98,41 @@ users=[]
   ngOnChanges(changes: SimpleChanges): void {
     console.log("ngOnChanges");
     console.log(changes);
-    
-    
+
+
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-    
+
   }
   ngDoCheck(): void {
     //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
     //Add 'implements DoCheck' to the class.
     console.log("ngDoCheck");
-    
+
   }
   ngAfterContentInit(): void {
     //Called after ngOnInit when the component's or directive's content has been initialized.
     //Add 'implements AfterContentInit' to the class.
     console.log("ngAfterContentInit");
-    
+
   }
   ngAfterContentChecked(): void {
     //Called after every check of the component's or directive's content.
     //Add 'implements AfterContentChecked' to the class.
     console.log("ngAfterContentChecked");
-    
+
   }
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     console.log("ngAfterViewInit");
-    
+
   }
   ngAfterViewChecked(): void {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
     console.log("ngAfterViewChecked");
-    
+
   }
 
   subtractMonths(numOfMonths, date) {
@@ -140,7 +140,7 @@ users=[]
     console.log("from");
     console.log(date.setMonth(date.getMonth() - numOfMonths));
     console.log("from");
-    
+
     return date;
   }
 
@@ -160,18 +160,17 @@ users=[]
          this.users$ =(usersdata.status)?  usersdata.data:[]
       this.totalusers=usersdata.totalusers
       console.log(this.users$);
-      
-    
+
+
     }
 
-    
     // ,
     // error=>{
     //   console.log(error);
-      
+
     // }
     )
-    
+
   }
 
   getBusiness(){
@@ -190,15 +189,15 @@ users=[]
       this.totalbusiness=usersdata.totalbusiness
       // this.dailyusers=usersdata.dailyusers
       console.log(this.business$);
-      
-    
+
+
     }
 
-    
+
     // ,
     // error=>{
     //   console.log(error);
-      
+
     // }
     )
   }
@@ -217,20 +216,21 @@ users=[]
       this.router.navigate(['/addbusiness'], { state: { business_id:'new' , data:JSON.stringify({})}})
     }
   }
+
   onBlurMethodFrom(){
-    setTimeout(()=>{  
+    setTimeout(()=>{
       this.getusers();
       this.getBusiness();
       this.getBusinessEnquiry();
-    }, 100);    
+    }, 100);
   }
 
   onBlurMethodTo( ){
-    setTimeout(()=>{  
+    setTimeout(()=>{
       this.getusers();
       this.getBusiness();
       this.getBusinessEnquiry();
-    }, 100);  
+    }, 100);
   }
 
   getBusinessEnquiry(){
@@ -250,15 +250,15 @@ users=[]
       console.log("enquiry");
       console.log(this.enquiry$);
       console.log("enquiry");
-      
-    
+
+
     }
 
-    
+
     // ,
     // error=>{
     //   console.log(error);
-      
+
     // }
     )
   }
