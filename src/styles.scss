@@ -94,6 +94,14 @@ opacity: 1 !important;
 .secondheaderbgcolor{
   background: #EBE5E7 0% 0% no-repeat padding-box !important;
   opacity: 1 !important;
+  padding: 0px;
+  margin: 0px;
+  height: 10px;
+}
+.tablecolumnbgcolor{
+  background: #FAFAFA 0% 0% no-repeat padding-box !important;
+  opacity: 1 !important;
+  color: #807B7D;
 }
 .yellowbg{
   background: #FCB81C 0% 0% no-repeat padding-box !important;
@@ -194,7 +202,14 @@ opacity: 1 !important;
   background: linear-gradient(to right, #ee5a6f, #f29263)
   
 }
+
+
+.sidebar[_ngcontent-coj-c194] .nav[_ngcontent-coj-c194] .nav-item.active[_ngcontent-coj-c194] .nav-link[_ngcontent-coj-c194] .menu-title[_ngcontent-coj-c194]{
+  color: #811A3B !important;
+}
 .tabheadsmall{
+  display: flex; 
+  font-size: 12px !important;
   text-align: center;
   font-size: medium;
   font: normal normal medium 18px/39px Roboto;
@@ -204,11 +219,16 @@ opacity: 1 !important;
   
 }
 
+.ptablestyle{
+  border: 1px solid #dadada; 
+  border-radius: 12px 12px 0px 0px !important
+}
+
 //table
 .tabhead{
   text-align: center;
-  font-size: x-large;
-  font: normal normal medium 18px/39px Roboto;
+  font-size: 12px !important;
+  // font: normal normal medium 18px/39px Roboto;
   letter-spacing: 0px;
   color: #FFFFFF;
   opacity: 1;
@@ -218,6 +238,11 @@ opacity: 1 !important;
 }
 .row-datas {
   background-color: #e4f2f7 !important;
+}
+.p-datatable{
+  border: 1px solid #C3C3C3 !important;
+  border-radius: 12px 12px 0px 0px !important;
+
 }
 .p-datatable .p-datatable-header {
   // background-color: #add8e6 !important;
@@ -234,10 +259,11 @@ opacity: 1 !important;
   opacity: 1 !important;
   border-bottom-color: black !important;
   border-bottom-width: thin !important;
+  padding: 8px 12px !important;
 }
 .p-component, .p-component * {
   /* box-sizing: border-box; */
-  border-color: #AF677E  !important;// #f5a177 !important;
+  border-color: #E6E1E1  !important;// #f5a177 !important;
   //  border-color: black !important; 
   // border-width: thin !important;
 }
@@ -271,6 +297,10 @@ opacity: 1 !important;
 .maincenterbgwhite{
   background: #FCF9F9 0% 0% no-repeat padding-box !important;
   opacity: 1 !important;
+  padding-left: 15px;
+  padding-right: 0;
+  // padding-top: 12px;
+  padding-bottom: 15px;
 }
 .navselectionrose{
   background: #811A3B 0% 0% no-repeat padding-box !important;

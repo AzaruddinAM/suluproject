@@ -16,6 +16,9 @@
     <li class="nav-item" [ngClass]="{ 'active': dashboard.isActive }">
       <a class="nav-link" routerLink="/dashboard" routerLinkActive #dashboard="routerLinkActive">
         <span class="menu-title">Dashboard</span>
+        <!-- <span style="text-align: right;padding-left: 100px;">
+          <img src="assets/icons/dashboard.svg" alt="logo" style="color: transparent;" />
+        </span> -->
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
@@ -28,37 +31,43 @@
     <li class="nav-item" [ngClass]="{ 'active': subcategory.isActive }">
       <a class="nav-link" routerLink="/subcategory" routerLinkActive #subcategory="routerLinkActive">
         <span class="menu-title">Subcategory</span>
-        <i class="mdi mdi-content-copy menu-icon"></i>
+        <i class="pi pi-sort-amount-down menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': business.isActive }">
       <a class="nav-link" routerLink="/business" routerLinkActive #business="routerLinkActive">
         <span class="menu-title">Business</span>
-        <i class="mdi mdi-content-duplicate menu-icon"></i>
+        <i class="mdi mdi-wallet-travel menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': users.isActive }">
       <a class="nav-link" routerLink="/users" routerLinkActive #users="routerLinkActive">
         <span class="menu-title">Users</span>
-        <i class="mdi mdi-account-multiple menu-icon"></i>
+        <i class="mdi mdi-account-outline menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': businessenqueries.isActive }">
       <a class="nav-link" routerLink="/businessenqueries" routerLinkActive #businessenqueries="routerLinkActive">
         <span class="menu-title">Business Enqueries</span>
-        <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+        <i class="mdi mdi-forum menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': notification.isActive }">
       <a class="nav-link" routerLink="/notification" routerLinkActive #notification="routerLinkActive">
         <span class="menu-title">Notification</span>
-        <i class="mdi mdi-bell-ring menu-icon"></i>
+        <i class="mdi mdi-bell-outline menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ 'active': location.isActive }">
       <a class="nav-link" routerLink="/listlocation" routerLinkActive #location="routerLinkActive">
         <span class="menu-title">Location</span>
-        <i class="mdi mdi-google-maps menu-icon"></i>
+        <i class="mdi mdi-map-marker-outline menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="logout()">
+        <span class="menu-title">Log Out</span>
+        <i class="mdi mdi-power menu-icon"></i>
       </a>
     </li>
     <!-- <li class="nav-item" [ngClass]="{'active' : accordions.isActive || buttons.isActive || badges.isActive || breadcrumbs.isActive || dropdowns.isActive || modals.isActive || notifications.isActive || progressbar.isActive || pagination.isActive || tabs.isActive || typography.isActive || tooltips.isActive }">

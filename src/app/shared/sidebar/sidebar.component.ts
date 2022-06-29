@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +10,7 @@ export class SidebarComponent implements OnInit {
   public uiBasicCollapsed = false;
   public samplePagesCollapsed = false;
   
-  constructor() { }
+  constructor(private router : Router,) { }
 
   ngOnInit() {
     const body = document.querySelector('body');
@@ -27,6 +28,11 @@ export class SidebarComponent implements OnInit {
         }
       });
     });
+  }
+
+  logout(){
+    localStorage.clear()
+    this.router.navigate(['/login'])
   }
 
 }
