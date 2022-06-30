@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'listlocation',component:ListlocationComponent,canActivate: [AuthGuard] },
   { path: 'location',component:LocationComponent,canActivate: [AuthGuard] },
 
-  { path: 'basic-ui', loadChildren: () => import('./basic-ui/basic-ui.module').then(m => m.BasicUiModule) },
+  // { path: 'basic-ui', loadChildren: () => import('./basic-ui/basic-ui.module').then(m => m.BasicUiModule) },
   // { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsDemoModule) },
   // { path: 'forms', loadChildren: () => import('./forms/form.module').then(m => m.FormModule) },
   // { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },

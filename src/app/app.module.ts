@@ -60,6 +60,9 @@ import { AuthGuard } from './auth.guard';
 import { ListlocationComponent } from './listlocation/listlocation.component';
 import { ViewusersComponent } from './viewusers/viewusers.component';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AgmCoreModule } from '@agm/core';
+import {DialogModule} from 'primeng/dialog';
+
 // import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
 // import {
 //   NgxMatDatetimePickerModule,
@@ -131,7 +134,11 @@ const APP_CONTAINERS = [
     ReactiveFormsModule,
     ChartsModule,
     ButtonModule,
-    CalendarModule
+    CalendarModule,
+    DialogModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCJwKwmn11UBX7EQL4J2xKIEC2HgkzQ24o'
+    })
   ],
   providers: [AuthGuard,ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: BUCKET, useValue: "dalelna-abb4e.appspot.com" }

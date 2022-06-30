@@ -18,8 +18,19 @@ import * as moment from 'moment';
   styleUrls: ['./addbusiness.component.scss']
 })
 export class AddbusinessComponent implements OnInit {
-
-
+  display = false;
+  zoom: number = 13;
+  isLocationSelected = false;
+  lat = 25.2888072;
+  lng = 51.5114271;
+  time_array = [
+    "12:00 AM", "12:30 AM", "01:00 AM", "01:30 AM", "02:00 AM", "02:30 AM", "03:00 AM", "03:30 AM", "04:00 AM", 
+    "04:30 AM", "05:00 AM", "05:30 AM", "06:00 AM", "06:30 AM", "07:00 AM", "07:30 AM", "08:00 AM", "08:30 AM",
+    "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+    "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", 
+    "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", "08:00 PM", "08:30 PM",
+    "09:00 PM", "09:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM",
+  ];
     title = 'ngImageCrop';
     // imageurl:any="assets/images/maincategory/demo.png"
     arabic_service_name = new FormControl();
@@ -264,6 +275,17 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
       }
     })
     }
+
+    mapClicked(event){
+      console.log(this.addmaincategory.value.latitude);
+      this.addmaincategory.get('latitude').setValue(event.coords.lat)
+      this.addmaincategory.get('longitude').setValue(event.coords.lng)
+      this.isLocationSelected = true;
+      this.lat = event.coords.lat;
+      this.lng = event.coords.lng;
+      this.display = false;
+    }
+
     onSubmit(){
       // console.log("onSubmit");
       if(this.type1images.length>0)

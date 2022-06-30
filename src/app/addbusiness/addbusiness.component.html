@@ -65,7 +65,7 @@
               </mat-error>
             </mat-form-field>
           </div> -->
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
 
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Arabic Sub Name" formControlName="arabic_sub_name" required>
@@ -73,6 +73,27 @@
                 <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_sub_name').hasError(validation.type) && (addmaincategory.get('arabic_sub_name').dirty || addmaincategory.get('arabic_sub_name').touched)">{{validation.message}}</mat-error>
               </mat-error>
             </mat-form-field>
+          </div> -->
+          <div class="col-md-3">
+            <!-- <mat-form-field class="sizefull">
+              <input matInput  placeholder="Mapingname" formControlName="mapingname" required>
+              <mat-error *ngFor="let validation of business_validation_message.mapingname">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('mapingname').hasError(validation.type) && (addmaincategory.get('mapingname').dirty || addmaincategory.get('mapingname').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+            </mat-form-field> -->
+            <mat-form-field class="sizefull">
+              <!-- <input matInput  placeholder="Image Type" formControlName="imagetype" required> -->
+              <mat-label>Category</mat-label>
+              <mat-select (selectionChange)="changesubcategory($event.value)" required style="color: black;">
+                <mat-option *ngFor="let item of subcaterories" [value]="item.name" style="background-color: white; color: black;">{{item.name}}</mat-option>
+                <!-- <mat-option value="2">Sub Image</mat-option>
+                <mat-option value="3">Gallery</mat-option> -->
+
+                </mat-select>
+              <mat-error *ngFor="let validation of business_validation_message.mapingname">
+                <mat-error class="error-message" *ngIf="addmaincategory.get('mapingname').hasError(validation.type) && (addmaincategory.get('mapingname').dirty || addmaincategory.get('mapingname').touched)">{{validation.message}}</mat-error>
+              </mat-error>
+          </mat-form-field>
           </div>
 
 
@@ -127,7 +148,7 @@
           <div class="col-md-3">
 
             <mat-form-field class="sizefull">
-              <input matInput  placeholder="Latitude" formControlName="latitude" required>
+              <input matInput  placeholder="Latitude" (click)="display = true" formControlName="latitude" required>
               <mat-error *ngFor="let validation of business_validation_message.latitude">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('latitude').hasError(validation.type) && (addmaincategory.get('latitude').dirty || addmaincategory.get('latitude').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -136,7 +157,7 @@
           <div class="col-md-3">
 
             <mat-form-field class="sizefull">
-              <input matInput  placeholder="Longitude" formControlName="longitude" required>
+              <input matInput  placeholder="Longitude" (click)="display = true" formControlName="longitude" required>
               <mat-error *ngFor="let validation of business_validation_message.longitude">
                 <mat-error class="error-message" *ngIf="addmaincategory.get('longitude').hasError(validation.type) && (addmaincategory.get('longitude').dirty || addmaincategory.get('longitude').touched)">{{validation.message}}</mat-error>
               </mat-error>
@@ -164,10 +185,7 @@
           <div class="col-md-3">
 
             <mat-form-field class="sizefull">
-              <input matInput  placeholder="Email" formControlName="email" required>
-              <mat-error *ngFor="let validation of business_validation_message.email">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('email').hasError(validation.type) && (addmaincategory.get('email').dirty || addmaincategory.get('email').touched)">{{validation.message}}</mat-error>
-              </mat-error>
+              <input matInput  placeholder="Email" formControlName="email">
             </mat-form-field>
           </div>
           <!-- <div class="col-md-3">
@@ -193,10 +211,7 @@
           <div class="col-md-3">
 
             <mat-form-field class="sizefull">
-              <input matInput  placeholder="Web" formControlName="web" required>
-              <mat-error *ngFor="let validation of business_validation_message.web">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('web').hasError(validation.type) && (addmaincategory.get('web').dirty || addmaincategory.get('web').touched)">{{validation.message}}</mat-error>
-              </mat-error>
+              <input matInput  placeholder="Web" formControlName="web">
           </mat-form-field>
 
           </div>
@@ -205,23 +220,31 @@
             //  address, latitude, longitude, phone_number ,alt_phone_number, email, slug, rating,
             // web, social_media, timing, service_name, arabic_service_name -->
             <mat-form-field class="sizefull">
-              <input matInput  placeholder="Instagram" formControlName="social_media" required>
-              <mat-error *ngFor="let validation of business_validation_message.social_media">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('social_media').hasError(validation.type) && (addmaincategory.get('social_media').dirty || addmaincategory.get('social_media').touched)">{{validation.message}}</mat-error>
-              </mat-error>
+              <input matInput  placeholder="Instagram" formControlName="social_media">
           </mat-form-field>
 
           </div>
           <div class="col-md-3">
+            <mat-form-field class="sizefull">
+              <mat-label>From Timing</mat-label>
+              <mat-select formControlName="fromtiming">
+                <mat-option *ngFor="let item of time_array" [value]="item">{{item}}</mat-option>
+              </mat-select>
+          </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field class="sizefull">
+              <mat-label>From Timing</mat-label>
+              <mat-select formControlName="totiming">
+                <mat-option *ngFor="let item of time_array" [value]="item">{{item}}</mat-option>
+              </mat-select>
+          </mat-form-field>
+          </div>
+          <!-- <div class="col-md-3">
 
             <mat-form-field class="sizefull">
               <input matInput placeholder="From Timing" hidden  formControlName="fromtiming" required>
-                <!-- <label for="fromtiming">From Timing</label> -->
                 <p-calendar formControlName="fromtiming"  [timeOnly]="true"  (onSelect)="selecttime('from',$event)" [hourFormat]="12"  inputId="fromtiming"></p-calendar>
-
-              <mat-error *ngFor="let validation of business_validation_message.fromtiming">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('fromtiming').hasError(validation.type) && (addmaincategory.get('fromtiming').dirty || addmaincategory.get('fromtiming').touched)">{{validation.message}}</mat-error>
-              </mat-error>
           </mat-form-field>
 
           </div>
@@ -229,14 +252,10 @@
 
             <mat-form-field class="sizefull">
               <input matInput  placeholder="To Timing" hidden formControlName="totiming" required>
-              <!-- <label for="totiming">To Timing</label> -->
               <p-calendar   formControlName="totiming" [timeOnly]="true" [hourFormat]="12" (onSelect)="selecttime('to',$event)"  inputId="totiming"></p-calendar>
-              <mat-error *ngFor="let validation of business_validation_message.totiming">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('totiming').hasError(validation.type) && (addmaincategory.get('totiming').dirty || addmaincategory.get('totiming').touched)">{{validation.message}}</mat-error>
-              </mat-error>
           </mat-form-field>
 
-          </div>
+          </div> -->
           <!-- <div class="col-md-3">
 
             <mat-form-field class="sizefull">
@@ -247,7 +266,7 @@
           </mat-form-field>
 
           </div> -->
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <div class="form-group row">
               <label class="col-sm-6 col-form-label" >Is Active</label>
               <div class="col-sm-6">
@@ -258,7 +277,7 @@
                       </mat-slide-toggle>
               </div>
             </div>
-          </div>
+          </div> -->
 
 
         </div>
@@ -269,9 +288,7 @@
             <mat-form-field class="sizefull w-100">
               <textarea matInput placeholder="Service Name" rows="3" maxlength="2000" formControlName="service_name"></textarea>
               <!-- <input matInput  placeholder="Service Name" formControlName="service_name" required> -->
-              <mat-error *ngFor="let validation of business_validation_message.service_name">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('service_name').hasError(validation.type) && (addmaincategory.get('service_name').dirty || addmaincategory.get('service_name').touched)">{{validation.message}}</mat-error>
-              </mat-error>
+              
           </mat-form-field>
           <!-- <mat-form-field class="example-full-width" appearance="fill">
             <input type="text"
@@ -296,9 +313,7 @@
               <textarea matInput placeholder="Arabic Service Name" rows="3" maxlength="2000" formControlName="arabic_service_name"></textarea>
 
               <!-- <input matInput  placeholder="Arabic Service Name" formControlName="arabic_service_name" required> -->
-              <mat-error *ngFor="let validation of business_validation_message.arabic_service_name">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_service_name').hasError(validation.type) && (addmaincategory.get('arabic_service_name').dirty || addmaincategory.get('arabic_service_name').touched)">{{validation.message}}</mat-error>
-              </mat-error>
+              
           </mat-form-field>
           <!-- <mat-form-field class="example-full-width" appearance="fill">
             <input type="text"
@@ -323,9 +338,7 @@
             <mat-form-field class="sizefull w-100">
               <textarea matInput placeholder="Description" rows="3" maxlength="2000" formControlName="description"></textarea>
               <!-- <input matInput  placeholder="Description" formControlName="description" required> -->
-              <mat-error *ngFor="let validation of business_validation_message.description">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('description').hasError(validation.type) && (addmaincategory.get('description').dirty || addmaincategory.get('description').touched)">{{validation.message}}</mat-error>
-              </mat-error>
+              
             </mat-form-field>
           </div>
           <div class="col-md-6">
@@ -333,9 +346,7 @@
             <mat-form-field class="sizefull w-100">
               <textarea matInput placeholder="Arabic Description" rows="3" maxlength="2000" formControlName="arabic_description"></textarea>
               <!-- <input matInput  placeholder="Arabic Description" formControlName="arabic_description" required> -->
-              <mat-error *ngFor="let validation of business_validation_message.arabic_description">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('arabic_description').hasError(validation.type) && (addmaincategory.get('arabic_description').dirty || addmaincategory.get('arabic_description').touched)">{{validation.message}}</mat-error>
-              </mat-error>
+              
             </mat-form-field>
           </div>
           <div class="col-md-6">
@@ -343,14 +354,11 @@
             <mat-form-field class="sizefull w-100">
               <textarea matInput placeholder="Available On" rows="3" maxlength="2000" formControlName="available_on"></textarea>
               <!-- <input matInput  placeholder="available_on" formControlName="available_on" required> -->
-              <mat-error *ngFor="let validation of business_validation_message.available_on">
-                <mat-error class="error-message" *ngIf="addmaincategory.get('available_on').hasError(validation.type) && (addmaincategory.get('available_on').dirty || addmaincategory.get('available_on').touched)">{{validation.message}}</mat-error>
-              </mat-error>
+              
             </mat-form-field>
           </div>
         </div>
-        <div class="row">
-          <!-- <div class="col-md-3"  > -->
+        <!-- <div class="row">
             <mat-radio-group
             aria-labelledby="example-radio-group-label"
             class="example-radio-group"
@@ -360,9 +368,7 @@
               {{item.name}}
             </mat-radio-button>
           </mat-radio-group>
-            <!-- <mat-checkbox [checked]="item.value" (change)="changesubcategory(i,$event.checked)" id="subcategories-{{ item.name }}" class="subcategories-{{ item.name }}" >{{item.name}}</mat-checkbox> -->
-          <!-- </div> -->
-        </div>
+        </div> -->
         <div class="row">
            <div class="col-md-3">
             <mat-form-field class="sizefull">
@@ -542,3 +548,9 @@
     </div>
   </div>
 </div>
+<p-dialog header="Title" position="top" [(visible)]="display">
+  <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="mapClicked($event)" [zoom]="zoom">
+    <agm-marker *ngIf="isLocationSelected" [latitude]="lat" [longitude]="lng"></agm-marker>
+  </agm-map>
+</p-dialog>
+
