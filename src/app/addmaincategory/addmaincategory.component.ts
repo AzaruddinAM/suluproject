@@ -53,6 +53,7 @@ export class AddmaincategoryComponent implements OnInit {
     progresshow:boolean=false
     addoredit:string='add'
     afteruploadimage
+    old_subselect :Array<any>= [];
     // @Input() public appFormControl: NgControl;
   constructor(private router : Router,
     private fb : FormBuilder,
@@ -70,7 +71,9 @@ export class AddmaincategoryComponent implements OnInit {
       image_url: new FormControl('',Validators.compose([Validators.required])),
       order_column: new FormControl(3,Validators.compose([Validators.required])),
       is_active: new FormControl(true,Validators.compose([Validators.required])),
-      main_category_id:new FormControl('',Validators.compose([Validators.required]))
+      main_category_id:new FormControl('',Validators.compose([Validators.required])),
+      selectedsub:new FormControl('',Validators.compose([Validators.required])),
+
       // main_category_id:new FormControl(main_category_id, [Validators.required])
       // Isactive: ['', Validators.required],
       // Image: ['', Validators.required],
@@ -108,16 +111,20 @@ export class AddmaincategoryComponent implements OnInit {
     api.subscribe(sub_category => {
       // this.subcaterories= sub_category.data
       this.subcaterories = (sub_category.status) ? sub_category.data:[]
-      this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
+      this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value,selected }) => ({name, sub_category_id ,value,selected}))
       console.log(this.subcaterories);
 
 
 
-      this.addoredit='edit'
 
+      this.addoredit='edit'
       // alert(JSON.stringify(this.params))
       // let index = this.datas.findIndex(item=>item.id==this.id)
       //         this.addmaincategory.get('image_url').setValue(encodeURIComponent(this.fbs))
+      console.log("params dataaas ",this.datas);
+      let findIndex = this.subcaterories.findIndex(item=> item.value ==true )
+      this.old_subselect.push(this.subcaterories[findIndex])
+      this.subcaterories = this.subcaterories.filter(item=> item.value ==true || item.selected ==false)
       this.addmaincategory.get('name').setValue(this.datas['name'])
       this.addmaincategory.get('arabic_name').setValue(this.datas['arabic_name'])
       this.addmaincategory.get('image_url').setValue(encodeURIComponent(this.datas['image_url']))
@@ -125,6 +132,9 @@ export class AddmaincategoryComponent implements OnInit {
       this.addmaincategory.get('order_column').setValue(this.datas['order_column'])
       this.addmaincategory.get('is_active').setValue(this.datas['is_active'])
       this.addmaincategory.get('main_category_id').setValue(this.main_category_id)
+      this.addmaincategory.get('selectedsub').setValue(this.old_subselect[0].name)
+
+
 
 
 
@@ -139,9 +149,14 @@ export class AddmaincategoryComponent implements OnInit {
     console.log("onSubmit");
     console.log(this.addmaincategory.value);
     console.log(this.subcaterories);
+    let selected_subcategory = []
+    let index = this.subcaterories.findIndex( item =>item.name == this.addmaincategory.get('selectedsub').value )
+    console.log(index);
 
-    this.subcaterories = this.subcaterories.filter(item=>item.value==true)
-    let body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&date='+Date();
+    if(index !==-1)
+      selected_subcategory.push(this.subcaterories[index])
+    // this.subcaterories = this.subcaterories.filter(item=>item.value==true)
+    let body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(selected_subcategory)+'&old_sub_categories_id='+JSON.stringify(this.old_subselect)+'&date='+Date();
     // 'name='+this.addmaincategory.get('Name').value+
     // 'image_url='+this.addmaincategory.get('Image').value+
     // 'name='+this.addmaincategory.get('Name').value+
