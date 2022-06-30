@@ -1,7 +1,7 @@
 <div class="col-12 grid-margin ">
   <div class="card " >
     <div class="card-body lightbluethinbg" style="background: #fff !important;">
-      <h4 class="card-title">Add Main Category</h4>
+      <h4 class="card-title">Add Sub Category</h4>
       <form class="form-sample" [formGroup]="addmaincategory"  >
         <!-- (ngSubmit)="onSubmit()" -->
         <!-- <p class="card-description">
@@ -14,7 +14,7 @@
               <div class="col-sm-9">
                 <input type="text" formControlName="name" class="form-control" />
               </div>
-              
+
             </div> -->
             <mat-form-field class="sizefull">
               <input matInput  placeholder="Name" formControlName="name" required>
@@ -43,10 +43,10 @@
               </mat-error>
             </mat-form-field>
           </div>
-        
+
 
           <!-- <div class="col-md-3">
-           
+
             <mat-form-field class="sizefull">
               <input matInput type="number" placeholder="Order" formControlName="order_column" required>
               <mat-error *ngFor="let validation of sub_category_validation_message.order_column">
@@ -81,15 +81,15 @@
         <div class="col-md-3">
 
         <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
-      
+
       <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload/>
     </div>
     <div class="col-md-6">
-     
+
       <mat-progress-bar *ngIf="progresshow" mode="indeterminate" [value]="percentage"></mat-progress-bar>
     </div>
     <div class="col-md-3">
-     
+
       <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase(fileupload)"  tooltip="Click to Add Image" value="ADD IMAGE">
     </div>
 
@@ -97,17 +97,17 @@
       <div class="row" style="margin-top: 15px;">
           <div class="text-center col-md-8">
               <h5>Crop Image</h5>
-              <image-cropper 
+              <image-cropper
               width="200px"
               height="200px"
               class="imagecropsize"
-              [imageChangedEvent]="imageChangedEvent" 
-              [maintainAspectRatio]="true" 
+              [imageChangedEvent]="imageChangedEvent"
+              [maintainAspectRatio]="true"
               [aspectRatio]="4 / 4"
-              format="png" 
-              (imageCropped)="imageCropped($event)" 
+              format="png"
+              (imageCropped)="imageCropped($event)"
               (imageLoaded)="imageLoaded()"
-              (cropperReady)="cropperReady()" 
+              (cropperReady)="cropperReady()"
               (loadImageFailed)="loadImageFailed()"></image-cropper>
           </div>
           <div class="text-center col-md-4">
@@ -129,7 +129,7 @@
         <div class="row-md-6 p-1">
           <input class="text-center float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide()" value="CHANGE IMAGE">
         </div>
-        
+
         <!-- <div class="row-md-6 p-1">
         </div> -->
       </div>
