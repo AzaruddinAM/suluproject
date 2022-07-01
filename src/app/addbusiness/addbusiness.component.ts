@@ -24,10 +24,10 @@ export class AddbusinessComponent implements OnInit {
   lat = 25.2888072;
   lng = 51.5114271;
   time_array = [
-    "12:00 AM", "12:30 AM", "01:00 AM", "01:30 AM", "02:00 AM", "02:30 AM", "03:00 AM", "03:30 AM", "04:00 AM", 
+    "12:00 AM", "12:30 AM", "01:00 AM", "01:30 AM", "02:00 AM", "02:30 AM", "03:00 AM", "03:30 AM", "04:00 AM",
     "04:30 AM", "05:00 AM", "05:30 AM", "06:00 AM", "06:30 AM", "07:00 AM", "07:30 AM", "08:00 AM", "08:30 AM",
     "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-    "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", 
+    "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM",
     "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", "08:00 PM", "08:30 PM",
     "09:00 PM", "09:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM",
   ];
@@ -39,6 +39,7 @@ export class AddbusinessComponent implements OnInit {
     imageChangedEvent: any = '';
     croppedImage: any ;
     subcaterories:any =[]
+    maincaterories:any = []
     galleryimages:any =[]
     images:any =[]
     // [{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'},{url:"assets/images/maincategory/demo.png",type:'2'}]
@@ -71,6 +72,8 @@ export class AddbusinessComponent implements OnInit {
   selectedTime
   fromtime:Date;
   totime:Date;
+  toppingList:Array<string> =['Talabat','Snoonu','Rafeeq']
+
       // @Input() public appFormControl: NgControl;
     constructor(private router : Router,
       private fb : FormBuilder,
@@ -84,6 +87,7 @@ export class AddbusinessComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       arabic_name: new FormControl('', [Validators.required]),
       is_active: new FormControl(true, [Validators.required]),
+      sub_category_name: new FormControl('', [Validators.required]),
       sub_name: new FormControl('', [Validators.required]),
       arabic_sub_name: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -91,6 +95,7 @@ export class AddbusinessComponent implements OnInit {
       address: new FormControl('', [Validators.required]),
       arabic_address: new FormControl('', [Validators.required]),
       mapingname: new FormControl('', [Validators.required]),
+
       // arabic_mapingname: new FormControl('arabic_mapingname', [Validators.required]),
       latitude: new FormControl(0.00, [Validators.required]),
       longitude: new FormControl(0.00, [Validators.required]),
@@ -107,6 +112,7 @@ export class AddbusinessComponent implements OnInit {
       available_on: new FormControl('', [Validators.required]),
       service_name: new FormControl('', [Validators.required]),
       arabic_service_name: new FormControl('', [Validators.required]),
+      keyword: new FormControl('', [Validators.required]),
       imagetype: new FormControl('1', [Validators.required]),
 
       })
@@ -129,8 +135,10 @@ export class AddbusinessComponent implements OnInit {
       api.subscribe(sub_category => {
         // this.subcaterories= sub_category.data
         this.subcaterories = (sub_category.status) ? sub_category.sub_category_data:[]
-        this.locations = (sub_category.status) ? sub_category.location_data:[]
         this.subcaterories =this.subcaterories.map(({ name, sub_category_id ,value }) => ({name, sub_category_id ,value}))
+        this.locations = (sub_category.status) ? sub_category.location_data:[]
+        this.maincaterories = (sub_category.status) ? sub_category.main_category_data:[]
+        this.maincaterories =this.maincaterories.map(({ name,arabic_name , main_category_id ,value }) => ({name,arabic_name , main_category_id ,value}))
         console.log(this.subcaterories);
       if(this.business_id !=='new')
       {
@@ -143,13 +151,14 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
       // console.log(moment(this.datas['fromtiming']).valueOf());
       // console.log(moment(this.datas['totiming']).toDate());
 
-
+        let temp =this.maincaterories.filter(item =>item.name==this.datas['sub_name'])
       this.addmaincategory= new FormGroup({
         name: new FormControl(this.datas['name'], [Validators.required]),
         arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
         is_active: new FormControl(this.datas['is_active'], [Validators.required]),
-        sub_name: new FormControl(this.datas['sub_name'], [Validators.required]),
-        arabic_sub_name: new FormControl(this.datas['arabic_sub_name'], [Validators.required]),
+        sub_category_name: new FormControl(this.subcaterories.filter( item =>item.value ==true)[0].name, [Validators.required]),
+        sub_name: new FormControl(temp[0].name, [Validators.required]),
+        arabic_sub_name: new FormControl(temp[0].arabic_name, [Validators.required]),
         description: new FormControl(this.datas['description'], [Validators.required]),
         arabic_description: new FormControl(this.datas['arabic_description'], [Validators.required]),
         address: new FormControl(this.datas['address'], [Validators.required]),
@@ -167,9 +176,10 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
         fromtiming: new FormControl(this.datas['fromtiming'], [Validators.required]),
         totiming: new FormControl(this.datas['totiming'], [Validators.required]),
         instagram: new FormControl(this.datas['instagram'], [Validators.required]),
-        available_on: new FormControl(this.datas['available_on'], [Validators.required]),
+        available_on: new FormControl(this.datas['available_on'].split(','), [Validators.required]),
         service_name: new FormControl(this.datas['service_name'], [Validators.required]),
         arabic_service_name: new FormControl(this.datas['arabic_service_name'], [Validators.required]),
+        keyword: new FormControl(this.datas['keyword'], [Validators.required]),
         imagetype: new FormControl('1', [Validators.required])
       });
       let api2
@@ -295,6 +305,7 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
       console.log(this.subcaterories);
       let body
       this.subcaterories = this.subcaterories.filter(item=>item.value==true)
+      this.maincaterories = this.maincaterories.filter(item => item.value == true)
       var images=[]
       images = [...this.type1images,...this.images,...this.galleryimages]
       images=images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
@@ -312,7 +323,7 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
     //   else if(this.addmaincategory.get('imagetype').value=='2'){
     //     this.images =this.images.map(({ business_image_id, url ,type }) => ({business_image_id, url ,type}))
     // +'&service_name='+JSON.stringify(this.service_name_options)+'&arabic_service_name='+JSON.stringify(this.arabic_service_name_options)
-      body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&images='+JSON.stringify(images)+'&location_id='+this.locations[index].location_id+'&business_id='+this.business_id+'&date='+Date();
+      body = 'data='+JSON.stringify(this.addmaincategory.value)+'&sub_categories_id='+JSON.stringify(this.subcaterories)+'&main_categories_id='+JSON.stringify(this.maincaterories)+'&images='+JSON.stringify(images)+'&location_id='+this.locations[index].location_id+'&business_id='+this.business_id+'&date='+Date();
 
       // }
       // 'name='+this.addmaincategory.get('Name').value+
@@ -357,6 +368,8 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
 
   }
   uploadtofirebase(files){
+    console.log(files);
+
         let business_image_id =Math.random().toString(36).substr(2, 9);
 
     // localStorage.removeItem("imageurl");
@@ -364,7 +377,7 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
     const filePath = `business/type1/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
     var n = imagename+'_'+Date.now();
-    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const byteString = files//this.dataURLtoFile(this.croppedImage,imagename);
     const file = byteString
     console.log(file);
     const fileRef = this.storage.ref(filePath+n);
@@ -467,7 +480,7 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
     const filePath = `business/type2/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
     var n = imagename+'_'+Date.now();
-    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const byteString = files//this.dataURLtoFile(this.croppedImage,imagename);
     const file = byteString
     console.log(file);
     const fileRef = this.storage.ref(filePath+n);
@@ -498,6 +511,7 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
             console.log(this.fbs);
             files.value=""
                 console.log(this.type1images);
+console.log(this.fbs);
 
                 this.progresshow=false
                 this.cropperhide=true
@@ -521,6 +535,7 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
 
   }
   multiplegalleryuploadtofirebase(files){
+
     let business_image_id =Math.random().toString(36).substr(2, 9);
 
     // localStorage.removeItem("imageurl");
@@ -528,7 +543,7 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
     const filePath = `business/type3/`;
     let imagename=(this.addmaincategory.get('name').value!=='')?this.addmaincategory.get('name').value+'_'+business_image_id:business_image_id
     var n = imagename+'_'+Date.now();
-    const byteString = this.dataURLtoFile(this.croppedImage,imagename);
+    const byteString = files//this.dataURLtoFile(this.croppedImage,imagename);
     const file = byteString
     console.log(file);
     const fileRef = this.storage.ref(filePath+n);
@@ -657,8 +672,25 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
     const blob = new Blob([int8Array], { type: 'image/png' });
     return blob;
   }
+  changemaincategory(event){
 
+    this.addmaincategory.get('sub_name').setValue(event)
+    let index =this.maincaterories.findIndex( item => item.name==event)
+    this.addmaincategory.get('arabic_sub_name').setValue(this.maincaterories[index].arabic_name)
+
+    console.log(event)
+
+    // this.maincaterories = this.maincaterories.map( (item) => {
+    //   if(item.name==event)
+    //     return { name:item.name ,arabic_name:item.arabic_name ,main_category_id:item.main_category_id,value:true }
+    //   else
+    //     return { name:item.name ,arabic_name:item.arabic_name  ,main_category_id:item.main_category_id,value:false }
+    // })
+
+  }
 changesubcategory(event){
+  console.log("Available On : ",this.addmaincategory.get('available_on').value);
+
   console.log(event)
   // alert(value)
   // let index = this.subcaterories.findIndex(item => item.name == event)

@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {  Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit ,OnChanges {
   fromDate = new Date();
   toDate = new Date();
   type:number = 1;
-  refreshUsers$ =new BehaviorSubject<boolean>(true);
+  // refreshUsers$ =new BehaviorSubject<boolean>(true);
   users$: Observable<any>;
   business$: Observable<any>;
   enquiry$: Observable<any>;
