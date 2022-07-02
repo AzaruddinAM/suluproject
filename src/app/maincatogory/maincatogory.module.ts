@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTMLPipe } from '../services/html.pipe'
+// import { HTMLPipe } from '../services/html.pipe'
 
 import { MaincatogoryRoutingModule } from './maincatogory-routing.module';
 import { AddmaincategoryComponent } from '../addmaincategory/addmaincategory.component';

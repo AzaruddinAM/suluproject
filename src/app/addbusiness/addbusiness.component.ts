@@ -259,6 +259,7 @@ console.log(new Date(moment(new Date()).format("YYYY-MM-DD")+' '+this.datas['fro
       this.addoredit='add'
 
         let business_id=Math.random().toString(36).substr(2, 9);
+        this.addmaincategory.get('rating').setValue('5');
 
 
           // business_id:new FormControl(business_id, [Validators.required])

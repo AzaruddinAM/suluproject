@@ -54,18 +54,9 @@
               </mat-form-field>
             </div> -->
             <div class="col-md-3">
-              <mat-form-field class="sizefull">
-                <!-- <input matInput  placeholder="Image Type" formControlName="imagetype" required> -->
-                <mat-label>SubCategory Name</mat-label>
-                <mat-select formControlName="selectedsub" required>
-                  <mat-option *ngFor="let item of subcaterories" [value]="item.name">{{item.name}}</mat-option>
-                  </mat-select>
-                <mat-error *ngFor="let validation of main_category_validation_message.sub_category_name">
-                  <mat-error class="error-message" *ngIf="addmaincategory.get('sub_category_name').hasError(validation.type) && (addmaincategory.get('sub_category_name').dirty || addmaincategory.get('sub_category_name').touched)">{{validation.message}}</mat-error>
-                </mat-error>
-            </mat-form-field>
+              
             </div>
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
 
               <div class="form-group row">
                 <label class="col-sm-6 col-form-label" >Is Active</label>
@@ -77,7 +68,7 @@
                         </mat-slide-toggle>
                 </div>
               </div>
-            </div>
+            </div> -->
 
           </div>
           <!-- [formControlName]="item.name" -->
@@ -92,19 +83,20 @@
       </div> -->
       <div *ngIf="!cropperhide" class="card-body" >
         <div class="row">
-          <div class="col-md-3">
-
-          <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE">
+          <div class="col-md-4">
+            <button pButton type="button" (click)="fileupload.click()" label="Upload Image" icon="pi pi-upload" class="p-button-sm" style="border-radius: 9px; background-color: #FFB81C; padding: 8px 16px;font-size: 13px;"></button>
+          <!-- <input class="btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="fileupload.click()" tooltip="Click to Upload Image" value="UPLOAD IMAGE"> -->
 
         <input type="file" id="browseAttachment" style="visibility: hidden;"  (change)="fileChangeEvent($event)" accept="image/*" #fileupload/>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-5">
 
         <mat-progress-bar *ngIf="progresshow" mode="indeterminate" [value]="percentage"></mat-progress-bar>
       </div>
       <div class="col-md-3">
+        <button pButton type="button" (click)="uploadtofirebase(fileupload)" label="Add Image" icon="pi pi-plus" class="p-button-sm" style="border-radius: 9px; background-color: #FFB81C; padding: 8px 16px;font-size: 13px;"></button>
 
-        <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase(fileupload)"  tooltip="Click to Add Image" value="ADD IMAGE">
+        <!-- <input class="float-right btn w-100 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit"(click)="uploadtofirebase(fileupload)"  tooltip="Click to Add Image" value="ADD IMAGE"> -->
       </div>
 
         <!-- <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" (click)="signIn()">SIGN IN</a> -->
@@ -143,7 +135,8 @@
         <!-- <div class="col-md-3"></div> -->
         <div class="col-md-6 p-1 d-flex flex-column">
           <div class="row-md-6 p-1">
-            <input class="text-center float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide()" value="CHANGE IMAGE">
+            <button pButton type="button" (click)="cropperHide()" label="Change Image" icon="pi pi-user-edit" class="p-button-sm" style="border-radius: 9px; background-color: #FFB81C; padding: 8px 16px;font-size: 13px;"></button>
+            <!-- <input class="text-center float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="cropperHide()" value="CHANGE IMAGE"> -->
           </div>
 
           <!-- <div class="row-md-6 p-1">
@@ -152,8 +145,12 @@
       </div>
 
     </div>
-    <input *ngIf="addoredit=='add'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD MAIN CATEGORY">
-          <input *ngIf="addoredit=='edit'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="UPDATE MAIN CATEGORY">
+    <br>
+    <button *ngIf="addoredit=='add'" pButton type="button" (click)="onSubmit()" label="Add Main Category" icon="pi pi-plus" class="p-button-sm" style="border-radius: 9px; background-color: #FFB81C; padding: 8px 16px;font-size: 13px;"></button>
+    <button *ngIf="addoredit=='edit'" pButton type="button" (click)="onSubmit()" label="Update Main Category" icon="pi pi-plus" class="p-button-sm" style="border-radius: 9px; background-color: #FFB81C; padding: 8px 16px;font-size: 13px;"></button>
+
+    <!-- <input *ngIf="addoredit=='add'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD MAIN CATEGORY">
+          <input *ngIf="addoredit=='edit'" class="mt-1 text-center btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="UPDATE MAIN CATEGORY"> -->
           <!-- <mat-error>{{error}}</mat-error> -->
     <!-- <div class="row p-3">
       <input class="text-center mr-4 float-left btn w-80 btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" (click)="onSubmit()" value="ADD MAIN CATEGORY">

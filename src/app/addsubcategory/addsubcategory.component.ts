@@ -23,6 +23,9 @@ export class AddsubcategoryComponent implements OnInit {
     croppedImage: any = '';
     subcaterories:any =[]
     datas={}
+    maincategorydata
+    maincategory
+    main_category_id
       // {id:'11',imageurl:'https://www.gstatic.com/webp/gallery/1.jpgg',name:'azar',number:'1431254',order:1,isactive:true},
       // {id:'22',imageurl:'assets/images/maincategory/demo.png',name:'azar1',number:'1431254',order:2,isactive:true},
       // {id:'33',imageurl:'assets/images/maincategory/demo.png',name:'azar2',number:'1431254',order:3,isactive:true},
@@ -60,17 +63,59 @@ export class AddsubcategoryComponent implements OnInit {
       this.params=history.state;
       this.sub_category_id=this.params.sub_category_id
       this.datas=JSON.parse(this.params.data)
+
+      let body = 'data='+'test'+'&date='+Date();
+      console.log(body);
+      
+      this.api.Postwithouttoken(environment["Category"] + "/get_main_category" ,body)
+      // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
+
+      .subscribe(maincategorydata => {
+
+        this.maincategorydata =(maincategorydata.status)?  maincategorydata.data:[]
+        console.log(this.maincategorydata);
+      
+      })
+
+
       if(this.sub_category_id !=='new')
       {
         this.addoredit='edit'
       // alert(JSON.stringify(this.params))
       // let index = this.datas.findIndex(item=>item.id==this.id)
+
+      let body = 'data='+'test'+'&date='+Date();
+      console.log(body);
       
+      this.api.Postwithouttoken(environment["Category"] + "/get_main_category" ,body)
+      // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
+
+      .subscribe(maincategorydata => {
+
+        this.maincategorydata =(maincategorydata.status)?  maincategorydata.data:[]
+        console.log(this.maincategorydata);
+        let body1 = 'sub_category_id='+this.sub_category_id;
+        this.api.Postwithouttoken(environment["Category"] + "/get_sub_category_by_id" ,body1)
+        .subscribe(main_category_id => {
+          // this.main_category_id = main_category_id.data.main_category_id;
+          // this.maincategorydata =(maincategorydata.status)?  maincategorydata.data:[]
+          console.log(this.main_category_id);
+          var temp = this.maincategorydata.filter(item =>item.main_category_id==main_category_id.data.main_category_id)
+          this.main_category_id = temp[0];
+          this.maincategory = this.main_category_id;
+          console.log(temp[0].name);
+          this.addmaincategory.get('main_category_name').setValue(temp[0].name)
+        
+        })
+      
+      })
+        
       this.addmaincategory= new FormGroup({
         // name , image_url , order_column ,  is_active , id 
         name: new FormControl(this.datas['name'], [Validators.required]),
         arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
         image_url: new FormControl(this.datas['image_url'], [Validators.required]),
+        main_category_name: new FormControl('', [Validators.required]),
         order_column: new FormControl(this.datas['order_column'], [Validators.required]),
         is_active: new FormControl(this.datas['is_active'], [Validators.required]),
   
@@ -104,6 +149,7 @@ export class AddsubcategoryComponent implements OnInit {
           name: new FormControl('', [Validators.required]),
           arabic_name: new FormControl(this.datas['arabic_name'], [Validators.required]),
           image_url: new FormControl('assets/images/maincategory/demo.png', [Validators.required]),
+          main_category_name: new FormControl('', [Validators.required]),
           order_column: new FormControl('', [Validators.required]),
           is_active: new FormControl(true, [Validators.required]),
   
@@ -129,12 +175,34 @@ export class AddsubcategoryComponent implements OnInit {
     //     );
         console.log(this.imageChangedEvent);
       }
+      
     }
+
+
+    changemaincategory(event){
+
+      // this.addmaincategory.get('main_category_name').setValue(event)
+      let index =this.maincategorydata.findIndex( item => item.name==event)
+      // this.addmaincategory.get('arabic_sub_name').setValue(this.maincategorydata[index].arabic_name)
+  
+      console.log(this.maincategorydata[index])
+      this.maincategory = this.maincategorydata[index];
+      // this.maincaterories = this.maincaterories.map( (item) => {
+      //   if(item.name==event)
+      //     return { name:item.name ,arabic_name:item.arabic_name ,main_category_id:item.main_category_id,value:true }
+      //   else
+      //     return { name:item.name ,arabic_name:item.arabic_name  ,main_category_id:item.main_category_id,value:false }
+      // })
+  
+    }
+
+
+    
     onSubmit(){
       console.log("onSubmit");
       console.log(this.addmaincategory.value);
       
-      let body = 'data='+JSON.stringify(this.addmaincategory.value)
+      let body = 'data='+JSON.stringify(this.addmaincategory.value)+'&main_category_id='+this.maincategory['main_category_id'];
       // 'name='+this.addmaincategory.get('Name').value+
       // 'image_url='+this.addmaincategory.get('Image').value+
       // 'name='+this.addmaincategory.get('Name').value+

@@ -39,6 +39,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UsersComponent } from './users/users.component';
+import { Pipe, PipeTransform } from '@angular/core';
+
 import {
   AngularFireStorageModule,
   AngularFireStorageReference,
@@ -60,7 +62,7 @@ import { AuthGuard } from './auth.guard';
 import { ListlocationComponent } from './listlocation/listlocation.component';
 import { ViewusersComponent } from './viewusers/viewusers.component';
 import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-// import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule } from '@agm/core';
 import {DialogModule} from 'primeng/dialog';
 
 // import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
@@ -129,10 +131,10 @@ const APP_CONTAINERS = [
     ChartsModule,
     ButtonModule,
     CalendarModule,
-  //   DialogModule,
-  //   AgmCoreModule.forRoot({
-  //     apiKey: 'AIzaSyCJwKwmn11UBX7EQL4J2xKIEC2HgkzQ24o'
-  //   })
+    DialogModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCJwKwmn11UBX7EQL4J2xKIEC2HgkzQ24o'
+    })
   ],
   providers: [AuthGuard,ThemeService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: BUCKET, useValue: "dalelna-abb4e.appspot.com" }
