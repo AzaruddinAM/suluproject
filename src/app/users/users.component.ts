@@ -58,7 +58,7 @@ data;
   ngOnInit(): void {
     let body = 'data='+'test'+'&date='+Date();
     console.log(body);
-    
+
     this.apis.Postwithouttoken(environment["Category"] + "/get_users" ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
@@ -66,25 +66,25 @@ data;
 
       this.datas =(usersdata.status)?  usersdata.data:[]
     console.log(this.datas);
-    
+
     })
   }
   paginate(){
     console.log("paginate");
-    
+
   }
   toggle(event:MatSlideToggleChange,index:number,users_id:number){
 
     console.log('toggle', event.checked+" index :"+index);
     let body = 'users_id='+users_id+'&is_active='+event.checked+'&date='+Date();
     console.log(body);
-    
+
     this.apis.Postwithouttoken(environment["Category"] + "/active_users" ,body )
     .subscribe(active_users => {
 this.datas[index].isactive=event.checked
       // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
     console.log(active_users);
-    
+
     })
         // this.useDefault = event.checked;
   }
@@ -96,7 +96,7 @@ console.log(this.datas);
   get(){
     let body = 'data='+this.data+'&date='+Date();
     console.log(body);
-    
+
     this.apis.Postwithouttoken(environment["Mobileapp"] + this.api ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
@@ -104,11 +104,11 @@ console.log(this.datas);
 
       this.datas =(maincategorydata.status)?  maincategorydata.data:[]
     console.log(this.datas);
-    
+
     })
   }
+  // alert("add")
   viewuser(data){
-    // alert("add")
-    this.router.navigate(['/viewusers'], { state: { users_id:data.users_id , data:JSON.stringify(data)}})
+    this.router.navigate(['/viewusers'], { state: { users_id:data.users_id , data:JSON.stringify(data), type :'users'}})
   }
 }

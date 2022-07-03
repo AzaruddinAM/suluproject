@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
 
@@ -9,7 +10,8 @@ import { ApiService } from '../services/api.service';
 })
 export class BusinessenqueryComponent implements OnInit {
 
-  constructor(private apis:ApiService) { }
+  constructor(private apis:ApiService,
+    private router:Router) { }
   datas=[]
   cols :Array<{field:string,header:string}>= [
     // "name" VARCHAR(100),
@@ -64,7 +66,7 @@ data;
   ngOnInit(): void {
     let body = 'data='+'test'+'&date='+Date();
     console.log(body);
-    
+
     this.apis.Postwithouttoken(environment["Category"] + "/get_business_enqueries" ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
@@ -72,13 +74,15 @@ data;
 
       this.datas =(usersdata.status)?  usersdata.data:[]
     console.log(this.datas);
-    
+
     })
   }
 
   paginate(){
     console.log("paginate");
-    
-  }
 
+  }
+  viewuser(data){
+    this.router.navigate(['/viewusers'], { state: { users_id:data.users_id , data:JSON.stringify(data), type :'enquiries'}})
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { TableModule } from 'primeng/table';
+import { Table } from 'primeng/table';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../services/api.service';
@@ -13,7 +13,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
   // providers: [ApiService],
 })
 export class MaincatogoryComponent implements OnInit {
-  @ViewChild('dt') table: TableModule;
+  @ViewChild('dt') table: Table;
   cols :Array<{field:string,header:string}>= [
     { field: 'main_category_id', header: 'Id' },
     { field: 'image_url', header: 'Image' },
@@ -50,7 +50,7 @@ export class MaincatogoryComponent implements OnInit {
   ngOnInit(): void {
     let body = 'data='+'test'+'&date='+Date();
     console.log(body);
-    
+
     this.apis.Postwithouttoken(environment["Category"] + "/get_main_category" ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
 
@@ -58,10 +58,10 @@ export class MaincatogoryComponent implements OnInit {
 
       this.datas =(maincategorydata.status)?  maincategorydata.data:[]
     console.log(this.datas);
-    
+
     })
   }
- 
+
   addnew(){
     // alert("add")
     this.router.navigate(['/addmaincategory'], { state: { main_category_id:'new' , data:JSON.stringify({})}})
@@ -70,13 +70,13 @@ export class MaincatogoryComponent implements OnInit {
     console.log('toggle', event.checked+" index :"+index);
     let body = 'main_category_id='+main_category_id+'&is_active='+event.checked+'&date='+Date();
     console.log(body);
-    
+
     this.apis.Postwithouttoken(environment["Category"] + "/active_main_category" ,body )
     .subscribe(active_main_category => {
 
       // this.datas =(maincategorydata.status)?  maincategorydata.data:[]
     console.log(active_main_category);
-    
+
     })
         // this.useDefault = event.checked;
   }
@@ -84,7 +84,7 @@ export class MaincatogoryComponent implements OnInit {
     console.log(data);
     // alert(id)
     this.router.navigate(['/addmaincategory'], { state: { main_category_id:data.main_category_id , data:JSON.stringify(data)}})
-    
+
   }
   deleteone(id:string){
     // console.log(id);
@@ -92,13 +92,13 @@ export class MaincatogoryComponent implements OnInit {
     // this.datas.splice(index,1)
     // let body = 'data='+'test'+'&date='+Date();
     // console.log(body);
-    
+
     // this.apis.Postwithouttoken(environment["Category"] + "/get_main_category" ,body )
     // .subscribe(maincategorydata => {
 
     //   this.datas =(maincategorydata.status)?  maincategorydata.data:[]
     // console.log(this.datas);
-    
+
     // })
   }
   viewimage()
@@ -106,16 +106,38 @@ export class MaincatogoryComponent implements OnInit {
 console.log(this.datas);
 
   }
+  onRowReorder()
+  {
+    console.log("onRowReorder ");
+
+  }
   order(){
+    console.log(this.table);
+
+    // this.datas.map((item,index)=>{ return item.order=index+1})
+    console.log("order");
+// console.log(this.table);
+// console.log(this.table);
+
+    // let body = 'ordereddata='+this.table._value+'&date='+Date();
+    // console.log(body);
+
+    // this.apis.Postwithouttoken(environment["Category"] + "/reordermaincategory" ,body )
+    // .subscribe( item => {
+
+    // },
+    // error => {
+    //   console.log(error);
+
+    // })
     // console.log(this.datas);
 
-    this.datas.map((item,index)=>{ return item.order=index+1})
     // console.log(this.datas);
-    
+
   }
 
   paginate(){
     console.log("paginate");
-    
+
   }
 }

@@ -1,7 +1,7 @@
 <div>
-    
-    <p-table #dt [value]="datas"  dataKey="id" [columns]="cols" [reorderableColumns]="true"
-    [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+
+    <p-table #dt [value]="datas"  dataKey="id" [columns]="cols" [reorderableColumns]="true" responsiveLayout="scroll"
+    [rowHover]="true" [rows]="25" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
      [paginator]="true" (onPage)="paginate()"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['name','number']">
@@ -19,7 +19,7 @@
         </ng-template>
             <ng-template pTemplate="header" let-columns>
             <tr>
-                <!-- <th style="width:3rem" class="lightbluethinbg "></th> -->
+                <th style="width:3rem" class="lightbluethinbg "></th>
                 <th *ngFor="let col of columns" class="secondheaderbgcolor" pReorderableColumn [ngStyle]="{'width':'15%',  'font-size': '11px', 'padding': '6px 12px' }">
                     <span *ngIf="col.field !== 'image_url'">{{col.header}}</span>
                     <span *ngIf="col.field == 'image_url'" >{{col.header}}</span>
@@ -27,15 +27,15 @@
               </tr>
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                <tr class="p-selectable-row row-datas" [ngStyle]="{'font-size': '11px', 'padding': '3px 12px' }" >
-      
-                    <!-- <td  [pReorderableRowHandle]="order()">
-                        <span  class="pi pi-bars"  ></span>
-                    </td> -->
+                <tr  [pReorderableRow]="index" class="p-selectable-row row-datas" [ngStyle]="{'font-size': '11px', 'padding': '3px 12px' }" >
+
+                    <td  >
+                        <span  class="pi pi-bars"  [pReorderableRowHandle]="order()"></span>
+                    </td>
                     <td *ngFor="let col of columns"  class="tablecolumnbgcolor"  style="padding: 6px 12px;">
 
                         <span *ngIf="col.field !== 'image_url' && col.field !== 'is_active'" class="tablebackground">{{rowData[col.field]}}</span>
-                        <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle 
+                        <span *ngIf="col.field == 'is_active'" class="tablebackground"><mat-slide-toggle
                             class="example-margin"
                             (change)="toggle($event,index,rowData['main_category_id'])"
                             [checked]="rowData[col.field]"
@@ -46,11 +46,11 @@
                             <!-- <mat-icon (click)="deleteone(rowData['id'])">delete</mat-icon> -->
                         </span>
                     </td>
-                
-      
+
+
                 </tr>
               </ng-template>
 
     </p-table>
-   
+
     </div>

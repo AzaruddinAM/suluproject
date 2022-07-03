@@ -154,11 +154,10 @@ users=[]
     console.log(body);
     this.usersobs=this.apis.Postwithouttoken(environment["Category"] + "/get_last10users" ,body )
     // this.apis.Postwithouttoken(environment["Droptable"]  ,body )
-
     .subscribe(usersdata => {
 
          this.users$ =(usersdata.status)?  usersdata.data:[]
-      this.totalusers=usersdata.totalusers
+      this.totalusers=usersdata.data.length//.totalusers
       console.log(this.users$);
 
 
@@ -186,7 +185,7 @@ users=[]
     .subscribe(usersdata => {
 
          this.business$ =(usersdata.status)?  usersdata.data:[]
-      this.totalbusiness=usersdata.totalbusiness
+      this.totalbusiness=usersdata.data.length//.totalbusiness
       // this.dailyusers=usersdata.dailyusers
       console.log(this.business$);
 
@@ -246,7 +245,7 @@ users=[]
     .subscribe(usersdata => {
 
          this.enquiry$ =(usersdata.status)?  usersdata.data:[]
-      this.totalenquiry=usersdata.totalbusiness_enquiries
+      this.totalenquiry=usersdata.data.length//.totalbusiness_enquiries
       console.log("enquiry");
       console.log(this.enquiry$);
       console.log("enquiry");

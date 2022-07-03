@@ -6,7 +6,7 @@
                     <div class="row m-l-0 m-r-0">
                         <div class="col-sm-4 bg-c-lite-green user-profile height70vh">
                             <div class="card-block text-center text-white pt-4">
-                                <div class="m-b-25"> <img [src]="profiledata.image_url" height="200px" width="200px" class="img-radius" alt="User-Profile-Image"> </div>
+                                <div class="m-b-25"> <img *ngIf="this.params.type !=='enquiries'" [src]="profiledata.image_url" height="200px" width="200px" class="img-radius" alt="User-Profile-Image"> </div>
                                 <h4 class="f-w-600">{{profiledata.name}}</h4>
                                 <!-- <p>Web Designer</p>  -->
                                 <!-- <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i> -->
