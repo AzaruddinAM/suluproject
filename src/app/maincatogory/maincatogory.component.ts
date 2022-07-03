@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
@@ -106,16 +106,49 @@ export class MaincatogoryComponent implements OnInit {
 console.log(this.datas);
 
   }
-  onRowReorder()
-  {
-    console.log("onRowReorder ");
+  // onRowReorder()
+  // {
+  //   console.log("onRowReorder ");
 
+  // }
+  //  // Working fine
+  //  @HostListener('mouseleave') onMouseLeave() {
+  //   console.log('mouse leaving')
+  // }
+
+  // // --- Not working ---
+  // @HostListener('dragover', ['$event']) onDragOver(evt) {
+  //   console.log('A')
+  // }
+
+  // // --- Not working ---
+  // @HostListener('dragleave', ['$event']) public onDragLeave(evt) {
+  //   console.log('B')
+  // }
+
+  // --- Not working ---
+  @HostListener('drop', ['$event']) public ondrop(evt) {
+    console.log('C')
+     let body = 'ordereddata='+JSON.stringify(this.table._value)+'&date='+Date();
+    console.log(body);
+
+    this.apis.Postwithouttoken(environment["Category"] + "/reordermaincategory" ,body )
+    .subscribe( item => {
+
+    },
+    error => {
+      console.log(error);
+
+    })
   }
   order(){
-    console.log(this.table);
+    // console.log(this.table);
+// console.log(this.table.onRowDragLeave);
+// console.log(this.table.onRowReorder)
+
 
     // this.datas.map((item,index)=>{ return item.order=index+1})
-    console.log("order");
+    // console.log("order");
 // console.log(this.table);
 // console.log(this.table);
 
