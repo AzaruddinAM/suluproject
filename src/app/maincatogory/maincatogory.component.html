@@ -29,7 +29,7 @@
               <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
                 <tr  [pReorderableRow]="index" class="p-selectable-row row-datas" [ngStyle]="{'font-size': '11px', 'padding': '3px 12px' }" >
 
-                    <td  [pReorderableRowHandle]="order()">
+                    <td  pReorderableRowHandle>
                         <span  class="pi pi-bars"  ></span>
                     </td>
                     <td *ngFor="let col of columns"  class="tablecolumnbgcolor"  style="padding: 6px 12px;">

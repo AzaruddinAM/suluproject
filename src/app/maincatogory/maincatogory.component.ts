@@ -129,11 +129,12 @@ console.log(this.datas);
   // --- Not working ---
   @HostListener('drop', ['$event']) public ondrop(evt) {
     console.log('C')
-     let body = 'ordereddata='+JSON.stringify(this.table._value)+'&date='+Date();
+     let body = 'ordereddata='+JSON.stringify(this.table._value.map((item) =>{ return {main_category_id:item.main_category_id}}))+'&date='+Date();
     console.log(body);
 
     this.apis.Postwithouttoken(environment["Category"] + "/reordermaincategory" ,body )
     .subscribe( item => {
+console.log(item);
 
     },
     error => {
@@ -141,7 +142,7 @@ console.log(this.datas);
 
     })
   }
-  order(){
+  // order(){
     // console.log(this.table);
 // console.log(this.table.onRowDragLeave);
 // console.log(this.table.onRowReorder)
@@ -167,7 +168,7 @@ console.log(this.datas);
 
     // console.log(this.datas);
 
-  }
+  // }
 
   paginate(){
     console.log("paginate");
